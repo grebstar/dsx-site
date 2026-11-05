@@ -1,0 +1,5 @@
+/film-*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/seal.*.webp
+  Cache-Control: public, max-age=31536000, immutable

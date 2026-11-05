@@ -1,0 +1,19 @@
+{
+  "name": "draft-stock-exchange",
+  "compatibility_date": "2026-11-05",
+  "assets": {
+    "directory": "./public"
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "thedraftstockexchange.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.thedraftstockexchange.com",
+      "custom_domain": true
+    }
+  ]
+}
