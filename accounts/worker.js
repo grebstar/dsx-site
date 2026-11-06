@@ -11,6 +11,7 @@
  *   DISCORD_CLIENT_ID      variable                        (required for Discord)
  *   DISCORD_CLIENT_SECRET  secret                          (required for Discord)
  *   IP_SALT                secret, any long random string  (recommended)
+ *   OWNER_IDS              variable, comma-separated user ids allowed to take reserved names (Cory)
  * Custom domain: api.thedraftstockexchange.com  (same site as the board, so the
  *   session cookie is first-party).  Cron (optional): "17 9 * * *" cleans up.
  *
@@ -128,12 +129,13 @@ const RESERVED = ['admin', 'administrator', 'moderator', 'mod', 'dsx', 'dse', 'd
 const BAD = ['fuck', 'shit', 'cunt', 'nigg', 'kike', 'retard', 'whore', 'slut', 'hitler', 'nazi', 'porn', 'jizz', 'tranny', 'wetback', 'kkk', 'faggot', 'bitch'];
 const BAD_WORD = ['anal', 'anus', 'sex', 'cum', 'dick', 'cock', 'coon', 'spic', 'rape', 'rapist', 'fag', 'fags', 'pussy', 'penis', 'vagina', 'chink', 'tits', 'boobs', 'dildo', 'hoe', 'hoes', 'nig'];
 const nameKey = n => n.toLowerCase().replace(/[ ._-]/g, '');
-function nameProblem(n) {
+function nameProblem(n, owner) {
   if (typeof n !== 'string') return 'Pick an analyst name.';
   n = n.trim().replace(/\s+/g, ' ');
   if (!NAME_RE.test(n)) return 'Use 3-20 letters, numbers, spaces, dots, dashes or underscores, starting and ending with a letter or number.';
   const k = nameKey(n), leet = k.replace(/0/g, 'o').replace(/1/g, 'i').replace(/3/g, 'e').replace(/4/g, 'a').replace(/5/g, 's').replace(/7/g, 't').replace(/\$/g, 's');
-  if (RESERVED.some(r => k === r || (r.length > 4 && k.includes(r)))) return 'That name is reserved.';
+  // reserved names (DSX / DHJ / Demas...) are kept for the site owner: OWNER_IDS = comma-separated user ids (Worker variable)
+  if (!owner && RESERVED.some(r => k === r || (r.length > 4 && k.includes(r)))) return 'That name is reserved.';
   const words = n.toLowerCase().split(/[ ._-]+/).concat(n.split(/[ ._-]+|(?<=[a-z])(?=[A-Z])/).map(w => w.toLowerCase()));
   if (BAD.some(b => k.includes(b) || leet.includes(b)) || words.some(w => BAD_WORD.includes(w))) return 'Pick a different name.';
   return null;
@@ -321,7 +323,8 @@ async function handle(req, env) {
 
   if (path === '/me/name' && m === 'POST') {
     let body; try { body = await req.json(); } catch (_) { return json(req, env, { error: 'bad' }, 400); }
-    const why = nameProblem(body && body.name);
+    const owner = String(env.OWNER_IDS || '').split(',').map(x => x.trim()).filter(Boolean).includes(user.id);
+    const why = nameProblem(body && body.name, owner);
     if (why) return json(req, env, { error: 'name', message: why }, 400);
     const name = body.name.trim().replace(/\s+/g, ' '), key = nameKey(name);
     if (!(await limit(env, 'name:' + user.id, 10, 864e5))) return json(req, env, { error: 'busy', message: 'Too many name changes today.' }, 429);
