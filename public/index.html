@@ -1294,6 +1294,106 @@ td.lv .lvtags .lvt{margin-left:0}
 .wn .wn-foot{font-size:11px;color:var(--mute);letter-spacing:.04em;border-top:1px solid var(--line);padding-top:12px;margin-top:4px;line-height:1.6}
 @media (max-width:760px){.wn .wn-day{grid-template-columns:1fr;gap:10px;padding:14px 0}.wn .wn-date b{font-size:18px;display:inline;margin-right:10px}.wn .wn-date .wn-n{display:inline}.wn .wn-list{grid-template-columns:1fr}}
 /*WN-CSS-END*/
+/*DESK-CSS-START*/
+/* ANALYST DESK: sign in, file your own board, track record vs the market */
+.herotools #deskBtn{grid-column:1 / -1}
+@media (min-width:1340px){.hero .herotools #cmpBtn{grid-column:1;grid-row:3}.hero .herotools #deskBtn{grid-column:2;grid-row:3}}
+.dk{max-width:1180px}
+.dk .dk-card{background:var(--panel);border:1px solid var(--line);padding:18px 20px;margin:0 0 14px}
+.dk .dk-card h3{margin:0 0 10px;font-family:var(--cond);font-size:17px;letter-spacing:.1em;color:var(--amber);font-weight:700}
+.dk .dk-card h3 em{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--mute);margin-left:8px;font-weight:600}
+.dk p{line-height:1.6;color:var(--ink);margin:0 0 10px}
+.dk .dk-mute{color:var(--mute)}
+.dk .dk-pitch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:4px 0 16px}
+.dk .dk-pitch div{border-top:2px solid var(--amber-d);padding-top:10px}
+.dk .dk-pitch b{display:block;font-family:var(--cond);font-size:16px;letter-spacing:.08em;color:var(--gold);margin-bottom:4px}
+.dk .dk-pitch span{color:var(--mute);line-height:1.55;font-size:12px}
+.dk .dk-signin{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 12px}
+.dk .dk-sbtn{display:inline-flex;align-items:center;gap:10px;padding:11px 18px;border:1.5px solid var(--amber);background:var(--amber-g);color:var(--amber);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-decoration:none;cursor:pointer}
+.dk .dk-sbtn:hover{background:var(--amber);color:#14100A}
+.dk .dk-sbtn svg{width:18px;height:18px;flex:none}
+.dk .dk-btn{background:transparent;border:1px solid var(--line2);color:var(--lbl);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;padding:7px 12px;cursor:pointer}
+.dk .dk-btn:hover{border-color:var(--amber-d);color:var(--amber)}
+.dk .dk-btn.prim{border-color:var(--amber);color:var(--amber);background:var(--amber-g)}
+.dk .dk-btn.prim:hover{background:var(--amber);color:#14100A}
+.dk .dk-btn.warn{border-color:#7A2A2F;color:var(--down)}
+.dk .dk-btn.warn.arm{background:var(--down);color:#fff;border-color:var(--down)}
+.dk .dk-btn[disabled]{opacity:.45;cursor:default}
+.dk .dk-err{color:var(--down);margin:8px 0 0;font-size:12px}
+.dk .dk-note{border-left:2px solid var(--amber-d);padding:8px 12px;background:var(--amber-g);color:var(--ink);margin:0 0 14px;font-size:12px;line-height:1.55}
+.dk .dk-note.bad{border-left-color:var(--down);background:rgba(255,71,87,.08)}
+.dk details{margin-top:6px}
+.dk summary{cursor:pointer;color:var(--lbl);font-size:11px;letter-spacing:.12em}
+.dk details p,.dk details li{font-size:12px;color:var(--mute);line-height:1.6}
+.dk details ul{margin:8px 0;padding-left:18px}
+.dk .dk-name{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.dk input[type=text]{background:var(--bg);border:1px solid var(--line2);color:var(--ink);font-family:var(--mono);font-size:13px;padding:8px 10px;min-width:0;width:260px;max-width:100%}
+.dk input[type=text]:focus{border-color:var(--amber);outline:none}
+.dk .dk-acct{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border:1px solid var(--line);background:var(--panel);padding:12px 16px;margin-bottom:14px}
+.dk .dk-acct .who{font-family:var(--cond);font-size:22px;font-weight:700;letter-spacing:.06em;color:var(--gold)}
+.dk .dk-acct .who small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--mute);font-weight:600;margin-bottom:2px}
+.dk .dk-acct .meta{color:var(--mute);font-size:11px;letter-spacing:.08em}
+.dk .dk-acct .sp{flex:1}
+.dk .dk-cls{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:0 0 12px}
+.dk .dk-cls h2{margin:0;font-family:var(--cond);font-size:26px;letter-spacing:.06em;color:var(--ink)}
+.dk .dk-cls .tag{font-size:10px;letter-spacing:.14em;padding:3px 8px;border:1px solid var(--up);color:var(--up)}
+.dk .dk-cls .tag.lock{border-color:var(--mute);color:var(--mute)}
+.dk .dk-cls .st{color:var(--mute);font-size:11px;letter-spacing:.08em}
+.dk .dk-cls .st b{color:var(--ink)}
+.dk .dk-cls .st .ok{color:var(--up)}.dk .dk-cls .st .bad{color:var(--down)}
+.dk .dk-tools{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.dk .dk-calls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 14px}
+.dk .dk-calls>div{border:1px solid var(--line);background:var(--panel);padding:10px 14px}
+.dk .dk-calls h4{margin:0 0 6px;font-size:10px;letter-spacing:.14em;color:var(--mute);font-weight:600}
+.dk .dk-calls .c{display:flex;justify-content:space-between;gap:8px;padding:3px 0;font-size:12px}
+.dk .dk-calls .c b{font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dk .dk-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}
+.dk .dk-pane{border:1px solid var(--line);background:var(--panel)}
+.dk .dk-pane>header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.dk .dk-pane>header h3{margin:0;font-family:var(--cond);font-size:16px;letter-spacing:.1em;color:var(--amber)}
+.dk .dk-pane>header span{color:var(--mute);font-size:10px;letter-spacing:.12em}
+.dk .dk-pane input[type=text]{width:100%;margin:0;border-width:0 0 1px 0;padding:9px 12px}
+.dk ol.dk-list{list-style:none;margin:0;padding:0}
+.dk .dk-row{display:grid;grid-template-columns:22px 34px minmax(0,1fr) auto auto;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--line);background:var(--panel)}
+.dk .dk-mkt .dk-row{grid-template-columns:44px minmax(0,1fr) auto}
+.dk .dk-row:last-child{border-bottom:0}
+.dk .dk-row.drag{background:var(--panel2);outline:1px solid var(--amber);position:relative;z-index:2;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.dk .dk-grip{cursor:grab;color:var(--mute);font-size:14px;line-height:1;user-select:none;touch-action:none;text-align:center}
+.dk .dk-row.drag .dk-grip{cursor:grabbing}
+.dk .dk-rk{font-family:var(--cond);font-size:19px;font-weight:700;color:var(--amber);text-align:right}
+.dk .dk-mkt .dk-rk{font-size:12px;font-family:var(--mono);color:var(--mute);font-weight:600;text-align:left}
+.dk .dk-pl{min-width:0}
+.dk .dk-pl button{background:none;border:0;padding:0;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:13px;cursor:pointer;text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.dk .dk-pl button:hover{color:var(--amber)}
+.dk .dk-sub{display:none}
+.dk .dk-pl small{display:block;color:var(--mute);font-size:10.5px;letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.dk .dk-d{font-size:10.5px;letter-spacing:.06em;white-space:nowrap;text-align:right;min-width:74px}
+.dk .dk-d b{display:block;font-size:12px}
+.dk .dk-d.up b{color:var(--up)}.dk .dk-d.dn b{color:var(--down)}.dk .dk-d.eq b{color:var(--mute)}
+.dk .dk-d span{color:var(--mute)}
+.dk .dk-acts{display:flex;gap:4px}
+.dk .dk-ic{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line2);color:var(--lbl);font-family:var(--mono);font-size:12px;cursor:pointer;padding:0}
+.dk .dk-ic:hover{border-color:var(--amber);color:var(--amber)}
+.dk .dk-ic[disabled]{opacity:.3;cursor:default}
+.dk .dk-ic.add{width:auto;padding:0 10px;font-size:10.5px;letter-spacing:.1em;border-color:var(--amber-d);color:var(--amber)}
+.dk .dk-empty{padding:22px 14px;color:var(--mute);line-height:1.6;font-size:12px}
+.dk .dk-foot{font-size:11px;color:var(--mute);letter-spacing:.04em;border-top:1px solid var(--line);padding-top:12px;margin-top:16px;line-height:1.6}
+.dk .dk-danger{margin-top:18px}
+@media (max-width:900px){.dk .dk-grid{grid-template-columns:1fr}.dk .dk-pitch{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .dk .dk-calls{grid-template-columns:1fr}
+  .dk .dk-board .dk-row{grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"rk pl d" "rk sub acts";row-gap:4px;column-gap:8px;padding:7px 10px}
+  .dk .dk-board .dk-grip{display:none}
+  .dk .dk-board .dk-rk{grid-area:rk;align-self:center}.dk .dk-board .dk-pl{grid-area:pl}.dk .dk-board .dk-d{grid-area:d;display:flex;gap:6px;align-items:baseline;justify-content:flex-end;min-width:0}
+  .dk .dk-board .dk-d b{display:inline}
+  .dk .dk-board .dk-pl small{display:none}
+  .dk .dk-board .dk-sub{grid-area:sub;display:block;align-self:center;color:var(--mute);font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .dk .dk-board .dk-acts{grid-area:acts;justify-content:flex-end}
+  .dk .dk-mkt .dk-row{grid-template-columns:40px minmax(0,1fr) auto;grid-template-areas:none}
+  .dk .dk-ic{width:36px;height:30px}
+  .dk .dk-acct .who{font-size:19px}
+}
+/*DESK-CSS-END*/
 </style>
 </head>
 <body>
@@ -2848,7 +2948,7 @@ function market(){
   const rtot=D.reduce((a,p)=>a+rpx(p),0);
   const h=`
   <div class="hero">
-    <div><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
+    <div><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
       <div class="sub">${D.length} LISTED OFFERINGS &middot; PRICED OFF A ${CM().nbw.split(' ')[0]}-BOARD COMPOSITE &middot; ${SETTLED()?(NSEAS()===1?'ROOKIE SEASON SETTLED':NSEAS()+' SEASONS SETTLED'):'POST-SUMMER-LEAGUE'}</div></div>
     <div style="text-align:right">
       <div style="font-family:var(--cond);font-size:30px;font-weight:700">${f2(tot)}</div>
@@ -3797,7 +3897,7 @@ function wireClassSel(k){
   const hero=document.getElementById('classSelHero');
   if(hero){ hero.value=CURCLASS; hero.onchange=function(){ setClass(this.value); }; }
   const pill=document.getElementById('classPill');
-  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW') ? 'none' : '';
+  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK') ? 'none' : '';
   const top=document.getElementById('classSel');
   if(top) top.value=CURCLASS;
 }
@@ -3815,7 +3915,8 @@ function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteK
   if(k!=='UNI' && typeof uniClearHash==='function') uniClearHash();
   if(k!=='BELL' && typeof bellClearHash==='function') bellClearHash();
   if(k!=='OPEN' && typeof obClearHash==='function') obClearHash();
-  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else player(byT[k]);
+  if(k!=='DESK' && typeof deskClearHash==='function') deskClearHash();
+  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else player(byT[k]);
   annotateTerms(); wireClassSel(k); if(typeof obBackFix==='function') obBackFix(k); }
 route('MKT');
 
@@ -3826,7 +3927,7 @@ route('MKT');
    have. Escape closes it the same way. */
 let aboutReturnKey='MKT';
 function closeAbout(){
-  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || byT[aboutReturnKey]))
+  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || aboutReturnKey==='DESK' || byT[aboutReturnKey]))
     ? aboutReturnKey : 'MKT';
   route(back);
 }
@@ -6288,6 +6389,8 @@ obLoadHash();
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-06',tag:'NEW FEATURE',t:'The Analyst Desk: file your own big board',go:['OPEN THE ANALYST DESK','DESK'],
+  b:'Sign in with Google or Discord, pick an analyst name and rank the 2027 class your way. Drag players on a computer or use the arrows on a phone; your board saves as you go and shows where you are higher or lower than the market on every player. Boards lock when the 2027 draft starts and get graded against the DSX consensus every season after. No email or password is stored, and it is free like everything else on the exchange.'},
  {d:'2026-11-05',tag:'THE CLOSING BELL',t:'Game breakdowns and past nights on The Closing Bell',go:['OPEN THE CLOSING BELL','BELL'],
   b:'Click any final on the scoreboard to open the game: a team stat breakdown, the board players in it with their lines and price moves, the full box score for both teams, and film from that game. A night bar under the league tabs steps back through earlier slates, and every game has its own link you can copy. The Closing Bell&rsquo;s secondary text is also brighter and easier to read.'},
  {d:'2026-11-05',tag:'PROSPECT PAGES',t:'A link for every prospect, and a working back button',
@@ -6363,7 +6466,7 @@ function whatsNew(){
   try{ if(location.hash!=='#whatsnew') history.replaceState(history.state,'',location.pathname+location.search+'#whatsnew'); }catch(_){}
 }
 function wnClearHash(){ try{ if(/^#whatsnew/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
-function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
+function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||wnReturnKey==='DESK'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
 function wnAct(a){
   if(a.indexOf('CLASS:')===0){ const y=a.slice(6); if(CURCLASS!==y){ if(!setClass(y)) return; } else route('MKT'); }
   else if(a==='TOUR'){ route('MKT'); const t=document.getElementById('tourBtn'); if(t) t.click(); }
@@ -6386,6 +6489,291 @@ window.addEventListener('hashchange',wnLoadHash);
 wnDot(); wnLoadHash();
 /*WN-JS-END*/
 </script>
+<script>/*DESK-JS-START*/
+/* ================= ANALYST DESK ===============================================
+   Sign in (Google / Discord), pick an analyst name, rank a class, autosave it.
+   Accounts live in the dsx-accounts Worker (D1) at DESK_API; the page never sees
+   an email or a password, only the analyst name and the boards.
+   Fast-load rule: nothing is requested until someone opens the desk.
+   Fan boards never feed the DHJ Price, the composite or any ranking.
+   #desk opens it; #desk?err=<why> is where a failed sign-in comes back to. */
+var DESK_API='https://api.thedraftstockexchange.com', DESK_YEAR='2027', DESK_MIN=10;
+var DESK={me:undefined, err:null, loading:null, board:null, picks:null, saved:null, saveState:'', saveT:0, inflight:false,
+  again:false, q:'', arm:null, armT:0, nameErr:'', renaming:false, flash:''};
+var deskReturnKey='MKT';
+function deskFetch(path, opt){
+  opt=opt||{};
+  const o={method:opt.method||'GET', credentials:'include', cache:'no-store'};
+  if(opt.body!==undefined){ o.headers={'Content-Type':'application/json'}; o.body=JSON.stringify(opt.body); }
+  return fetch(DESK_API+path,o).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(j){
+      if(!r.ok){ const e=new Error(j.message||j.error||('HTTP '+r.status)); e.code=j.error; e.status=r.status; throw e; }
+      return j;
+    });
+  });
+}
+function deskFlag(on){ try{ if(on) localStorage.setItem('dsx_desk','1'); else localStorage.removeItem('dsx_desk'); }catch(_){} }
+function deskWasIn(){ try{ return localStorage.getItem('dsx_desk')==='1'; }catch(_){ return false; } }
+function deskEsc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function deskBadge(){
+  const b=document.getElementById('deskTop'); if(!b) return;
+  const inn=!!(DESK.me && DESK.me.user);
+  b.classList.toggle('in', inn);
+  b.title = inn ? ('Analyst Desk: signed in as '+(DESK.me.user.name||'a new analyst')) : 'Analyst Desk: sign in and file your own big board';
+}
+function deskLoadMe(force){
+  if(DESK.loading && !force) return DESK.loading;
+  DESK.loading=deskFetch('/me').then(function(j){
+    DESK.me=j; DESK.err=null; deskFlag(!!j.user); deskBadge();
+    if(j.user && j.user.name) return deskLoadBoard();
+  }).catch(function(e){ DESK.err=e; if(DESK.me===undefined) DESK.me=null; })
+  .then(function(){ DESK.loading=null; if(currentRouteKey==='DESK') desk(); });
+  return DESK.loading;
+}
+function deskLoadBoard(){
+  return deskFetch('/boards/'+DESK_YEAR).then(function(b){
+    DESK.board=b; DESK.picks=(b.picks||[]).filter(function(t){ return !!deskP(t); }); DESK.saved=b.updated; DESK.saveState=b.updated?'saved':'';
+  });
+}
+function deskPool(){ const c=CLASSES[DESK_YEAR]; return c ? c.top.concat(c.otc||[]).filter(function(p){ return p && p.tkr; }) : []; }
+var DESK_IDX=null;
+function deskP(t){ if(!DESK_IDX){ DESK_IDX={}; deskPool().forEach(function(p){ DESK_IDX[p.tkr]=p; }); } return DESK_IDX[t]; }
+function deskOpen(){ const c=DESK.me && DESK.me.classes && DESK.me.classes[DESK_YEAR]; return !!(c && c.status==='open'); }
+function deskTime(ms){ if(!ms) return ''; const d=new Date(ms); return d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); }
+function deskDay(ms){ if(!ms) return ''; return new Date(ms).toLocaleDateString([], {month:'short', year:'numeric'}).toUpperCase(); }
+function deskSignUrl(p){ return DESK_API+'/auth/'+p+'/start?return='+encodeURIComponent(location.origin+location.pathname+location.search); }
+const DESK_ERR={cancelled:'Sign-in was cancelled, so nothing changed.', expired:'That sign-in took too long or started in another browser. Try again.',
+  provider:'The sign-in service didn&rsquo;t confirm who you are. Try again in a moment.', busy:'Too many new accounts were opened from your network today. Try again tomorrow.'};
+const DESK_G='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3zM12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22zM6.4 14a6 6 0 0 1 0-3.9V7.5H3.1a10 10 0 0 0 0 9zM12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.5l3.3 2.6C7.2 7.8 9.4 6 12 6z"/></svg>';
+const DESK_D='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.5 5.3A16.5 16.5 0 0 0 15.4 4l-.5 1a15.3 15.3 0 0 0-5.8 0l-.5-1a16.5 16.5 0 0 0-4.1 1.3A17.3 17.3 0 0 0 1.5 17a16.6 16.6 0 0 0 5 2.6l1.1-1.7a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.8 11.8 0 0 0 11.4 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.7a16.6 16.6 0 0 0 5-2.6 17.2 17.2 0 0 0-3-11.7zM8.7 14.6c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>';
+
+function desk(){
+  const main=document.getElementById('main'); if(!main) return;
+  const hm=/^#desk\?err=(\w+)/.exec(location.hash); if(hm){ DESK.flash=DESK_ERR[hm[1]]||DESK_ERR.provider; }
+  try{ if(location.hash!=='#desk') history.replaceState(history.state,'',location.pathname+location.search+'#desk'); }catch(_){}
+  if(DESK.me===undefined && !DESK.err){ deskLoadMe(); }
+  const head=`<div class="cmp-title"><button type="button" id="deskBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>ANALYST DESK</h1>
+    <p>File your own big board. Rank the ${DESK_YEAR} class your way; it locks when the draft starts, then gets graded against the market every season after.</p></div>`;
+  const flash=DESK.flash?`<div class="dk-note bad">${DESK.flash}</div>`:'';
+  let body;
+  if(DESK.me===undefined || (DESK.loading && !DESK.me)) body=`<div class="dk-card"><p class="dk-mute">CONNECTING TO THE DESK&hellip;</p></div>`;
+  else if(DESK.err && !(DESK.me && DESK.me.user)) body=`<div class="dk-card"><h3>THE DESK IS OFFLINE</h3><p>The Analyst Desk can&rsquo;t be reached right now. The rest of the exchange works as usual.</p><button type="button" class="dk-btn prim" data-dk="retry">TRY AGAIN</button></div>`;
+  else if(!DESK.me.user) body=deskSignedOut();
+  else if(!DESK.me.user.name || DESK.renaming) body=deskNameCard();
+  else body=deskBoardView();
+  main.innerHTML=`<div class="cmp dk">${head}${flash}${body}
+    <p class="dk-foot">Fan boards are display-only: they never feed the DHJ Price, the consensus composite or any DSX ranking. Market rank = the DSX consensus rank, the same rank the IPO price is built from.</p></div>`;
+  deskBadge();
+}
+function deskSignedOut(){
+  return `<div class="dk-card"><h3>BECOME A DSX MARKET ANALYST <em>FREE &middot; NO PAYWALL</em></h3>
+    <div class="dk-pitch">
+      <div><b>FILE YOUR BOARD</b><span>Rank the ${DESK_YEAR} class from the DSX market list. Drag players on a computer, tap the arrows on a phone. It saves as you go.</span></div>
+      <div><b>LOCK ON DRAFT NIGHT</b><span>Boards freeze when the draft starts, the same way the IPO price does. No editing after the fact.</span></div>
+      <div><b>BEAT THE MARKET</b><span>Every season after, your board is graded against the DSX consensus and what actually happened: where you were right, and where the market beat you.</span></div>
+    </div>
+    <div class="dk-signin"><a class="dk-sbtn" data-dksign="google" href="${deskSignUrl('google')}">${DESK_G}SIGN IN WITH GOOGLE</a>
+      <a class="dk-sbtn" data-dksign="discord" href="${deskSignUrl('discord')}">${DESK_D}SIGN IN WITH DISCORD</a></div>
+    ${deskPrivacy()}</div>`;
+}
+function deskPrivacy(){
+  return `<details><summary>WHAT THE DSX STORES (PRIVACY)</summary>
+    <ul><li>Only the account number Google or Discord gives the DSX for you, the analyst name you pick, your boards, and when you made them. No email, no password, no real name, no profile picture.</li>
+    <li>Your session is a cookie that page scripts can&rsquo;t read. The DSX keeps only a scrambled (hashed) copy of it.</li>
+    <li>Your analyst name and boards may be shown publicly on the DSX in later updates (profiles and a leaderboard). You can make a board private when that ships.</li>
+    <li>Delete your account any time from this page. It removes the account, your sign-in link and every board right away.</li>
+    <li>Nothing is sold, shared or used for ads. There are no ads.</li>
+    <li>Questions: demasthehoopjunkie@gmail.com</li></ul></details>`;
+}
+function deskNameCard(){
+  const cur=(DESK.me.user.name||'');
+  return `<div class="dk-card"><h3>${cur?'CHANGE YOUR ANALYST NAME':'PICK YOUR ANALYST NAME'} <em>SHOWN ON YOUR BOARDS</em></h3>
+    <p class="dk-mute">3&ndash;20 letters, numbers, spaces, dots, dashes or underscores. Keep it clean; names that aren&rsquo;t may be removed.</p>
+    <form class="dk-name" id="dkNameForm" autocomplete="off"><input type="text" id="dkName" maxlength="20" value="${deskEsc(cur)}" placeholder="e.g. Bayou Scout" aria-label="Analyst name">
+      <button type="submit" class="dk-btn prim">${cur?'SAVE NAME':'OPEN MY DESK'}</button>${cur?'<button type="button" class="dk-btn" data-dk="cancelname">CANCEL</button>':''}
+      ${cur?'':'<button type="button" class="dk-btn" data-dk="logout">SIGN OUT</button>'}</form>
+    ${DESK.nameErr?`<p class="dk-err">${deskEsc(DESK.nameErr)}</p>`:''}</div>`;
+}
+function deskRowBoard(p,i,n){
+  const y=i+1, m=p.crank, d=m-y, cls=d>0?'up':(d<0?'dn':'eq');
+  const dl=d>0?('+'+d):(d<0?String(d):'EVEN');
+  return `<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-grip" title="Drag to move" aria-hidden="true">&#8942;&#8942;</span><span class="dk-rk">${y}</span>
+    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Open the prospect page">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small></span>
+    <span class="dk-sub">$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</span>
+    <span class="dk-d ${cls}" title="Market (consensus) rank ${m}"><b>${dl}</b><span>MKT #${m}</span></span>
+    <span class="dk-acts"><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="-1" aria-label="Move ${deskEsc(p.name)} up" ${i===0?'disabled':''}>&#9650;</button><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="1" aria-label="Move ${deskEsc(p.name)} down" ${i===n-1?'disabled':''}>&#9660;</button><button type="button" class="dk-ic" data-dkrm="${p.tkr}" aria-label="Remove ${deskEsc(p.name)} from your board">&times;</button></span></li>`;
+}
+function deskRowMkt(p){
+  return `<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-rk">#${p.crank}</span>
+    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Open the prospect page">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small></span>
+    <span class="dk-acts"><button type="button" class="dk-ic add" data-dkadd="${p.tkr}" aria-label="Add ${deskEsc(p.name)} to your board">+ ADD</button></span></li>`;
+}
+function deskBoardView(){
+  const u=DESK.me.user, open=deskOpen(), pool=deskPool(), picks=DESK.picks||[];
+  const on={}; picks.forEach(function(t){ on[t]=1; });
+  const rest=pool.filter(function(p){ return !on[p.tkr]; }).sort(function(a,b){ return a.crank-b.crank; });
+  const q=DESK.q.trim().toLowerCase();
+  const restShown=q?rest.filter(function(p){ return (p.name+' '+p.tkr+' '+(p.school||'')+' '+(p.pos||'')).toLowerCase().indexOf(q)>=0; }):rest;
+  const info=(DESK.me.classes||{})[DESK_YEAR]||{};
+  const st=DESK.saveState==='saving'?'<b>SAVING&hellip;</b>':DESK.saveState==='saved'?`<span class="ok">SAVED ${deskTime(DESK.saved)}</span>`:DESK.saveState==='error'?`<span class="bad">NOT SAVED</span> <button type="button" class="dk-btn" data-dk="save">RETRY</button>`:DESK.saveState==='locked'?'<span class="bad">LOCKED &mdash; NOT SAVED</span>':'';
+  const tag=open?'<span class="tag">OPEN</span>':'<span class="tag lock">LOCKED</span>';
+  const lockTxt=open?(info.lockAt?('LOCKS '+new Date(info.lockAt).toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}).toUpperCase()):'LOCKS WHEN THE '+DESK_YEAR+' DRAFT STARTS'):'FROZEN AS OF THE DRAFT';
+  const P=picks.map(deskP).filter(Boolean);
+  const deltas=P.map(function(p,i){ return {p:p, d:p.crank-(i+1)}; });
+  const bull=deltas.filter(function(x){ return x.d>0; }).sort(function(a,b){ return b.d-a.d; }).slice(0,3);
+  const bear=deltas.filter(function(x){ return x.d<0; }).sort(function(a,b){ return a.d-b.d; }).slice(0,3);
+  const call=function(x){ return `<div class="c"><b>${deskEsc(x.p.name)}</b><span class="dk-d ${x.d>0?'up':'dn'}"><b style="display:inline">${x.d>0?'+':''}${x.d}</b> <span>YOU #${P.indexOf(x.p)+1} &middot; MKT #${x.p.crank}</span></span></div>`; };
+  const calls=P.length?`<div class="dk-calls"><div><h4>YOUR BIGGEST BULL CALLS &middot; HIGHER THAN THE MARKET</h4>${bull.length?bull.map(call).join(''):'<div class="c dk-mute">None yet</div>'}</div>
+    <div><h4>YOUR BIGGEST BEAR CALLS &middot; LOWER THAN THE MARKET</h4>${bear.length?bear.map(call).join(''):'<div class="c dk-mute">None yet</div>'}</div></div>`:'';
+  const arm=function(k){ return DESK.arm===k; };
+  return `<div class="dk-acct"><div class="who"><small>MARKET ANALYST</small>${deskEsc(u.name)}</div>
+      <div class="meta">MEMBER SINCE ${deskDay(u.since)} &middot; SIGNED IN WITH ${(u.providers||[]).map(function(x){ return x.toUpperCase(); }).join(' + ')}</div><div class="sp"></div>
+      <button type="button" class="dk-btn" data-dk="rename">CHANGE NAME</button><button type="button" class="dk-btn" data-dk="logout">SIGN OUT</button></div>
+    <div class="dk-cls"><h2>${DESK_YEAR} CLASS &middot; YOUR BOARD</h2>${tag}<span class="st">${lockTxt}</span>
+      <span class="st"><b>${P.length}</b> RANKED &middot; ${rest.length} UNRANKED${P.length && P.length<DESK_MIN?' &middot; RANK AT LEAST '+DESK_MIN+' TO BE GRADED':''}</span><span class="st">${st}</span></div>
+    ${open?`<div class="dk-tools">
+      <button type="button" class="dk-btn${P.length?' warn'+(arm('market')?' arm':''):' prim'}" data-dk="market">${P.length?(arm('market')?'CONFIRM: REPLACE MY BOARD':'RESET TO MARKET ORDER'):'START FROM THE MARKET ORDER'}</button>
+      ${rest.length&&P.length?'<button type="button" class="dk-btn" data-dk="addall">ADD THE REST IN MARKET ORDER</button>':''}
+      ${P.length?`<button type="button" class="dk-btn warn${arm('clear')?' arm':''}" data-dk="clear">${arm('clear')?'CONFIRM: CLEAR MY BOARD':'CLEAR BOARD'}</button>`:''}</div>`:''}
+    ${calls}
+    <div class="dk-grid">
+      <section class="dk-pane dk-board"><header><h3>YOUR BOARD</h3><span>${open?'DRAG OR USE THE ARROWS &middot; +/&minus; VS MARKET':'READ-ONLY'}</span></header>
+        ${P.length?`<ol class="dk-list" id="dkList">${P.map(function(p,i){ return deskRowBoard(p,i,P.length); }).join('')}</ol>`:`<div class="dk-empty">Your board is empty. Start from the market order and move players up or down, or add players one at a time from the market list.</div>`}</section>
+      <section class="dk-pane dk-mkt"><header><h3>THE MARKET</h3><span>DSX CONSENSUS &middot; NOT ON YOUR BOARD</span></header>
+        ${rest.length?`<input type="text" id="dkQ" placeholder="Search name, ticker, school" value="${deskEsc(DESK.q)}" aria-label="Search the market list">`:''}
+        ${restShown.length?`<ol class="dk-list">${restShown.map(deskRowMkt).join('')}</ol>`:`<div class="dk-empty">${rest.length?'No match.':'Every player in the class is on your board.'}</div>`}</section>
+    </div>
+    <div class="dk-card dk-danger"><h3>ACCOUNT</h3>${deskPrivacy()}
+      <p style="margin-top:12px"><button type="button" class="dk-btn warn${arm('delete')?' arm':''}" data-dk="delete">${arm('delete')?'CONFIRM: DELETE MY ACCOUNT AND BOARDS':'DELETE MY ACCOUNT'}</button></p></div>`;
+}
+/* ---------- edits + autosave ---------- */
+function deskChanged(){
+  DESK.saveState='saving'; clearTimeout(DESK.saveT);
+  DESK.saveT=setTimeout(deskSave, 900);
+  desk(); deskKeepFocus();
+}
+function deskSave(){
+  if(DESK.inflight){ DESK.again=true; return; }
+  DESK.inflight=true; DESK.saveState='saving';
+  const sent=(DESK.picks||[]).slice();
+  deskFetch('/boards/'+DESK_YEAR,{method:'PUT', body:{picks:sent}}).then(function(b){
+    DESK.saved=b.updated; DESK.saveState='saved';
+  }).catch(function(e){
+    DESK.saveState=(e.status===423)?'locked':'error';
+    if(e.status===423 && DESK.me && DESK.me.classes && DESK.me.classes[DESK_YEAR]) DESK.me.classes[DESK_YEAR].status='locked';
+    if(e.status===401){ DESK.me={user:null, classes:(DESK.me||{}).classes}; deskFlag(false); }
+  }).then(function(){
+    DESK.inflight=false;
+    if(DESK.again){ DESK.again=false; deskSave(); return; }
+    if(currentRouteKey==='DESK'){ const y=window.scrollY; desk(); window.scrollTo(0,y); deskKeepFocus(); }
+  });
+}
+var deskFocus=null;
+function deskKeepFocus(){
+  if(!deskFocus) return;
+  const el=document.querySelector(deskFocus); deskFocus=null;
+  if(el && !el.disabled){ try{ el.focus({preventScroll:true}); }catch(_){ el.focus(); } }
+}
+function deskArm(k){ DESK.arm=k; clearTimeout(DESK.armT); DESK.armT=setTimeout(function(){ DESK.arm=null; if(currentRouteKey==='DESK') desk(); }, 5000); desk(); }
+function deskDisarm(){ DESK.arm=null; clearTimeout(DESK.armT); }
+function deskAct(a){
+  if(a==='retry'){ DESK.err=null; DESK.me=undefined; desk(); return; }
+  if(a==='logout'){ deskFetch('/auth/logout',{method:'POST'}).catch(function(){}).then(function(){ DESK.me={user:null, classes:(DESK.me||{}).classes}; DESK.picks=null; DESK.renaming=false; deskFlag(false); desk(); }); return; }
+  if(a==='rename'){ DESK.renaming=true; DESK.nameErr=''; desk(); const i=document.getElementById('dkName'); if(i) i.focus(); return; }
+  if(a==='cancelname'){ DESK.renaming=false; DESK.nameErr=''; desk(); return; }
+  if(a==='save'){ deskSave(); desk(); return; }
+  if(a==='delete'){
+    if(!DESK.arm || DESK.arm!=='delete'){ deskArm('delete'); return; }
+    deskDisarm();
+    deskFetch('/me',{method:'DELETE'}).then(function(){ DESK.me={user:null, classes:(DESK.me||{}).classes}; DESK.picks=null; deskFlag(false); DESK.flash='Your account and boards were deleted.'; desk(); })
+      .catch(function(){ DESK.flash='Delete failed. Try again in a moment.'; desk(); });
+    return;
+  }
+  if(!deskOpen()) return;
+  const pool=deskPool().slice().sort(function(a,b){ return a.crank-b.crank; });
+  if(a==='market'){
+    if((DESK.picks||[]).length && DESK.arm!=='market'){ deskArm('market'); return; }
+    deskDisarm(); DESK.picks=pool.map(function(p){ return p.tkr; }); deskChanged(); return;
+  }
+  if(a==='addall'){ const on={}; DESK.picks.forEach(function(t){ on[t]=1; }); pool.forEach(function(p){ if(!on[p.tkr]) DESK.picks.push(p.tkr); }); deskChanged(); return; }
+  if(a==='clear'){ if(DESK.arm!=='clear'){ deskArm('clear'); return; } deskDisarm(); DESK.picks=[]; deskChanged(); return; }
+}
+document.addEventListener('click',function(ev){
+  const t=ev.target; if(!t.closest) return;
+  if(t.closest('#deskBtn')){
+    if(currentRouteKey==='DESK'){ route(deskBackKey()); return; }
+    deskReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('DESK'); window.scrollTo({top:0,behavior:'instant'}); return;
+  }
+  if(currentRouteKey!=='DESK') return;
+  if(t.closest('#deskBack')){ route(deskBackKey()); return; }
+  const s=t.closest('[data-dksign]'); if(s){ deskFlag(true); return; }
+  const b=t.closest('[data-dk]'); if(b){ DESK.flash=''; deskAct(b.dataset.dk); return; }
+  const o=t.closest('[data-dkopen]');
+  if(o){ const k=o.dataset.dkopen; if(CURCLASS!==DESK_YEAR){ CURCLASS=DESK_YEAR; reindex(); renderTape(); } route(k); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(!deskOpen()) return;
+  const add=t.closest('[data-dkadd]');
+  if(add){ DESK.flash=''; const k=add.dataset.dkadd; if(DESK.picks.indexOf(k)<0) DESK.picks.push(k); deskFocus='#dkQ'; deskChanged(); return; }
+  const rm=t.closest('[data-dkrm]');
+  if(rm){ DESK.flash=''; const k=rm.dataset.dkrm, i=DESK.picks.indexOf(k); if(i>=0) DESK.picks.splice(i,1); deskChanged(); return; }
+  const mv=t.closest('[data-dkmv]');
+  if(mv){ DESK.flash=''; const i=+mv.dataset.dkmv, j=i+(+mv.dataset.dir); if(j<0||j>=DESK.picks.length) return;
+    const x=DESK.picks[i]; DESK.picks[i]=DESK.picks[j]; DESK.picks[j]=x;
+    deskFocus='[data-dkmv="'+j+'"][data-dir="'+mv.dataset.dir+'"]'; deskChanged(); return; }
+});
+document.addEventListener('submit',function(ev){
+  if(!ev.target || ev.target.id!=='dkNameForm') return;
+  ev.preventDefault();
+  const v=(document.getElementById('dkName')||{}).value||'';
+  DESK.nameErr='';
+  deskFetch('/me/name',{method:'POST', body:{name:v}}).then(function(j){
+    DESK.me.user.name=j.name; DESK.renaming=false; DESK.flash='';
+    return DESK.picks?null:deskLoadBoard();
+  }).catch(function(e){ DESK.nameErr=e.message||"That name didn't work."; }).then(function(){ desk(); if(DESK.nameErr){ const i=document.getElementById('dkName'); if(i){ i.value=v; i.focus(); } } });
+});
+document.addEventListener('input',function(ev){
+  if(!ev.target || ev.target.id!=='dkQ') return;
+  DESK.q=ev.target.value; const pos=ev.target.selectionStart; desk();
+  const i=document.getElementById('dkQ'); if(i){ i.focus(); try{ i.setSelectionRange(pos,pos); }catch(_){} }
+});
+/* drag to reorder (mouse / pen; phones use the arrows) */
+(function(){
+  let drag=null;
+  document.addEventListener('pointerdown',function(ev){
+    const g=ev.target.closest && ev.target.closest('.dk-board .dk-grip');
+    if(!g || currentRouteKey!=='DESK' || !deskOpen() || ev.button!==0) return;
+    const row=g.closest('.dk-row'), list=row && row.parentNode; if(!row) return;
+    ev.preventDefault();
+    drag={row:row, list:list, y0:ev.clientY, moved:false};
+    row.classList.add('drag');
+    try{ g.setPointerCapture(ev.pointerId); }catch(_){}
+  });
+  document.addEventListener('pointermove',function(ev){
+    if(!drag) return;
+    const rows=[...drag.list.children].filter(function(r){ return r!==drag.row; });
+    let before=null;
+    for(const r of rows){ const b=r.getBoundingClientRect(); if(ev.clientY < b.top+b.height/2){ before=r; break; } }
+    if(before!==drag.row.nextSibling){ drag.list.insertBefore(drag.row, before); drag.moved=true; }
+    const ae=document.scrollingElement||document.documentElement;
+    if(ev.clientY<60) ae.scrollTop-=12; else if(ev.clientY>window.innerHeight-60) ae.scrollTop+=12;
+  });
+  function end(){
+    if(!drag) return;
+    const d=drag; drag=null; d.row.classList.remove('drag');
+    if(!d.moved) return;
+    DESK.picks=[...d.list.children].map(function(r){ return r.dataset.tkr; });
+    deskChanged();
+  }
+  document.addEventListener('pointerup',end); document.addEventListener('pointercancel',end);
+})();
+window.addEventListener('beforeunload',function(e){ if(DESK.saveState==='saving'||DESK.saveState==='error'){ e.preventDefault(); e.returnValue=''; } });
+function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
+function deskClearHash(){ try{ if(/^#desk/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
+function deskLoadHash(){ if(!/^#desk/.test(location.hash)) return; if(currentRouteKey!=='DESK'){ deskReturnKey='MKT'; route('DESK'); } else if(/^#desk\?err=/.test(location.hash)) desk(); }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape' && currentRouteKey==='DESK' && !(e.target && e.target.tagName==='INPUT')) route(deskBackKey()); });
+window.addEventListener('hashchange',deskLoadHash);
+deskLoadHash();
+/*DESK-JS-END*/
+</script>
 <script>/*DEEPLINK-JS-START*/
 /* ================= PROSPECT LINKS + BACK BUTTON ===============================
    Every view now gets its own history entry, so the browser / phone BACK button
@@ -6403,8 +6791,8 @@ wnDot(); wnLoadHash();
    Every replaceState in the page now passes history.state, so the views that
    write their own hash never wipe the entry's state. */
 var NAV={pop:false, tick:false, boot:true, home:'2026'};
-var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1};
-var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/};
+var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1};
+var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/};
 function navKey(k){ return (k==='MKT') ? CURCLASS+'/MKT' : (NAV_VIEWS[k] ? k : CURCLASS+'/'+k); }
 function navUrl(k){
   const base=location.pathname+location.search;
