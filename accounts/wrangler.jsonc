@@ -4,6 +4,10 @@
   "compatibility_date": "2025-09-01",
   "workers_dev": true,
   "keep_vars": true,
+  "vars": {
+    "GOOGLE_CLIENT_ID": "229111043373-rslpe2evgn6vk5qg7jpo3s2kl1dn9u4l.apps.googleusercontent.com",
+    "DISCORD_CLIENT_ID": "1568295712570085416"
+  },
   "d1_databases": [
     { "binding": "DB", "database_name": "dsx-accounts-db", "database_id": "8ca33c07-bdd4-4971-b616-fe8c2ee395e2" }
   ],
