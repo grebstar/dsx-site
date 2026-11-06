@@ -1,0 +1,15 @@
+{
+  "name": "dsx-accounts",
+  "main": "worker.js",
+  "compatibility_date": "2025-09-01",
+  "workers_dev": true,
+  "keep_vars": true,
+  "d1_databases": [
+    { "binding": "DB", "database_name": "dsx-accounts-db", "database_id": "8ca33c07-bdd4-4971-b616-fe8c2ee395e2" }
+  ],
+  "triggers": { "crons": ["17 9 * * *"] },
+  "routes": [
+    { "pattern": "api.thedraftstockexchange.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}
