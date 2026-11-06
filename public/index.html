@@ -1004,6 +1004,59 @@ html.bl-lock,html.bl-lock body{overflow:hidden}
   .bl-modal .bl-film{grid-template-columns:1fr}
 }
 /*BELL-CSS-END*/
+/*OB-CSS-START*/
+/* Opening Bell Preview (Nov 5 2026): rides on the Closing Bell styles (.bell = lavender secondary text) */
+.cmpcta.bellcta.obcta .ob-sun{position:absolute;top:8px;right:10px;width:7px;height:7px;border-radius:50%;background:#14100A;opacity:.55}
+/* wide screens: the two bells share the top row (these out-rank the DOCK-CSS 2x2 placement that comes later in the file) */
+@media (min-width:1340px){
+  .hero .herotools #bellBtn{grid-column:1;grid-row:1}.hero .herotools #openBtn{grid-column:2;grid-row:1}
+  .hero .herotools #uniBtn{grid-column:1;grid-row:2}.hero .herotools #psBtn{grid-column:2;grid-row:2}
+  .hero .herotools #cmpBtn{grid-column:1 / span 2;grid-row:3}
+  .hero .herotools #openBtn{padding-right:24px}
+}
+.ob .bl-pc .ln{display:flex;flex-wrap:wrap;row-gap:2px}
+.ob .ob-dd{font-family:var(--cond);font-size:16px;letter-spacing:.08em;color:var(--ink);padding:0 4px}
+.ob .ob-tag{display:inline-block;margin-left:6px;padding:0 5px;border:1px solid currentColor;font-size:9px;font-weight:700;letter-spacing:.1em;line-height:15px;vertical-align:1px;white-space:nowrap}
+.ob .ob-tag.out{color:var(--down)}
+.ob .ob-tag.gtd{color:var(--gold)}
+.ob .ob-mks{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-top:8px;font-size:10.5px;color:var(--lbl)}
+.ob .ob-mkl{font-size:9px;font-weight:700;letter-spacing:.14em;color:var(--mute)}
+.ob .ob-mk{white-space:nowrap;letter-spacing:.06em}
+.ob .ob-mk b{color:var(--ink);font-weight:700;margin-left:2px}
+.ob .ob-mk i{font-style:normal;margin-left:3px;font-size:9px}
+.ob .bl-g[data-obgame]{cursor:pointer;transition:background .12s}
+.ob .bl-g[data-obgame]:hover{background:var(--panel2)}
+.ob .bl-g[data-obgame]:hover .bx{color:var(--amber)}
+.ob .bl-g .tm{color:var(--ink)}
+.ob .bl-g .tm .nm small{color:var(--mute);font-size:10px}
+.ob .bl-g .tm .sc{font-size:15px;color:var(--gold)}
+.ob .bl-g .tm .sc small{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;color:var(--mute);margin-right:4px;vertical-align:2px}
+.ob .ob-gl{display:flex;flex-wrap:wrap;gap:2px 12px;margin-top:6px;font-size:10.5px;color:var(--lbl);letter-spacing:.04em}
+.ob .ob-wp{position:relative;display:flex;justify-content:space-between;margin-top:6px;height:15px;background:var(--line);font-size:9px;letter-spacing:.08em;line-height:15px;overflow:hidden}
+.ob .ob-wp i{position:absolute;left:0;top:0;bottom:0;background:var(--amber-g);border-right:2px solid var(--amber)}
+.ob .ob-wp span{position:relative;padding:0 5px;color:var(--ink)}
+.ob .bl-g .bp .ob-o,.ob .bl-g .bp .bl-lk.ob-o{text-decoration:line-through;opacity:.6}
+.ob .ob-tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ob .bl-tbl td.l .ob-tag{margin-left:4px}
+.ob.bl-modal .bl-mt .sc.ob-pj{font-size:28px;color:var(--gold)}
+.ob.bl-modal .bl-mt .sc.ob-pj::before{content:'PROJ ';font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--mute);vertical-align:8px}
+.ob.bl-modal .ob-two{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ob.bl-modal .ob-two>div{padding:10px 16px;min-width:0}
+.ob.bl-modal .ob-two>div+div{border-left:1px solid var(--line)}
+.ob.bl-modal .ob-th{font-family:var(--cond);font-size:16px;font-weight:700;letter-spacing:.05em;margin-bottom:6px}
+.ob.bl-modal .ob-th small{font-family:var(--mono);font-size:10px;color:var(--mute);margin-left:6px}
+.ob.bl-modal .ob-ir{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line);font-size:11.5px}
+.ob.bl-modal .ob-ir .n{color:var(--ink)}
+.ob.bl-modal .ob-ir small{flex-basis:100%;font-size:10px;color:var(--mute)}
+.ob.bl-modal .ob-ir .gold{color:var(--gold)}
+.ob.bl-modal .bl-bx td.l small{color:var(--mute)}
+@media (max-width:640px){
+  .ob .ob-dd{font-size:14px}
+  .ob .bl-games{grid-template-columns:1fr}
+  .ob.bl-modal .ob-two{grid-template-columns:1fr}
+  .ob.bl-modal .ob-two>div+div{border-left:0;border-top:1px solid var(--line)}
+}
+/*OB-CSS-END*/
 
 /*FIND-CSS-START*/
 .cmp-list.ps-list{position:static;max-height:none;margin:8px 0 0}
@@ -2795,7 +2848,7 @@ function market(){
   const rtot=D.reduce((a,p)=>a+rpx(p),0);
   const h=`
   <div class="hero">
-    <div><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
+    <div><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
       <div class="sub">${D.length} LISTED OFFERINGS &middot; PRICED OFF A ${CM().nbw.split(' ')[0]}-BOARD COMPOSITE &middot; ${SETTLED()?(NSEAS()===1?'ROOKIE SEASON SETTLED':NSEAS()+' SEASONS SETTLED'):'POST-SUMMER-LEAGUE'}</div></div>
     <div style="text-align:right">
       <div style="font-family:var(--cond);font-size:30px;font-weight:700">${f2(tot)}</div>
@@ -3744,7 +3797,7 @@ function wireClassSel(k){
   const hero=document.getElementById('classSelHero');
   if(hero){ hero.value=CURCLASS; hero.onchange=function(){ setClass(this.value); }; }
   const pill=document.getElementById('classPill');
-  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='NEW') ? 'none' : '';
+  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW') ? 'none' : '';
   const top=document.getElementById('classSel');
   if(top) top.value=CURCLASS;
 }
@@ -3761,8 +3814,9 @@ function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteK
   if(k!=='CMP' && typeof cmpClearHash==='function') cmpClearHash();
   if(k!=='UNI' && typeof uniClearHash==='function') uniClearHash();
   if(k!=='BELL' && typeof bellClearHash==='function') bellClearHash();
-  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='NEW') whatsNew(); else player(byT[k]);
-  annotateTerms(); wireClassSel(k); }
+  if(k!=='OPEN' && typeof obClearHash==='function') obClearHash();
+  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else player(byT[k]);
+  annotateTerms(); wireClassSel(k); if(typeof obBackFix==='function') obBackFix(k); }
 route('MKT');
 
 /* ABOUT is a toggle: it remembers whatever you were looking at and puts you
@@ -3772,7 +3826,7 @@ route('MKT');
    have. Escape closes it the same way. */
 let aboutReturnKey='MKT';
 function closeAbout(){
-  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='NEW' || byT[aboutReturnKey]))
+  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || byT[aboutReturnKey]))
     ? aboutReturnKey : 'MKT';
   route(back);
 }
@@ -5644,13 +5698,597 @@ function bellLoadHash(){
 window.addEventListener('hashchange',bellLoadHash);
 bellLoadHash();
 /*BELL-JS-END*/
+/*OB-JS-START*/
+/* ================= OPENING BELL PREVIEW =======================================
+   The pre-game mirror of the Closing Bell: tonight's slate before tip-off. Every board player who is
+   scheduled to play, his DSX projected line and the sportsbook's player props, the line on every game
+   (spread, total, moneyline, projected team points), ESPN's win probability, the injury report and the
+   most recent tape on each board player in action.
+   Market data comes straight from ESPN's public JSON, fetched in the visitor's browser when this page
+   opens, so it is as fresh as the page load (lines move during the day; props post on game day):
+     scoreboard  -> games, tip times, TV, the DraftKings spread + total
+     summary     -> moneylines, ESPN BPI win probability, injuries, last five, season series
+     team roster -> who is on which team tonight + ESPN athlete ids (cached 12 h per browser)
+     propBets    -> DraftKings player props (NBA only, game day only)
+   DSX projections are worked out here from the current-season game logs the site already serves
+   (dsx-live Worker /games/<class>.json). No film-file requests: Tape to Watch uses the clips that ride
+   inside those game files. */
+let obReturnKey='MKT';
+const OB={lg:null, day:{}, pcls:'all', sort:'pra', dir:-1, fcls:'all', more:false, game:null, pendingGame:null, sh:{}, tok:0};
+const OB_SB={}, OB_SUM={}, OB_PROP={}, OB_ROS={};
+let OB_G=null, OB_GSTATE='idle', OB_BIX=null, obLastFocus=null, obTimer=0, obBackFor=null;
+const OB_SPORT={nba:'nba', college:'mens-college-basketball'};
+const OB_NBA2ESPN={GSW:'GS',NOP:'NO',NYK:'NY',SAS:'SA',UTA:'UTAH',WAS:'WSH',PHO:'PHX',BRK:'BKN',CHO:'CHA'};
+const OB_PT={'Total Points':'pts','Total Rebounds':'reb','Total Assists':'ast','Total 3-Point Field Goals':'tpm','Total Points, Rebounds, and Assists':'pra','Total Steals':'stl','Total Blocks':'blk'};
+/* ---- dates (ESPN keys its scoreboard by US Eastern date) ---- */
+function obToday(){ try{ return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date()); }catch(_){ return new Date().toISOString().slice(0,10); } }
+function obAdd(s,n){ const d=new Date(s+'T12:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+function obDay(s){ const d=new Date(s+'T12:00:00Z'); return isNaN(d)?s:d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'}).toUpperCase().replace(',',''); }
+function obTip(iso,withDay){ const d=new Date(iso); if(isNaN(d)) return 'TBD';
+  try{ return d.toLocaleString('en-US',Object.assign({hour:'numeric',minute:'2-digit',timeZoneName:'short'},withDay?{weekday:'short'}:{})).toUpperCase(); }catch(_){ return d.toISOString().slice(11,16)+' UTC'; } }
+/* ---- tiny fetch queue: a few requests at a time, summaries/rosters before props ---- */
+const OB_Q=[]; let OB_QN=0;
+function obQ(fn,pri){ OB_Q.push({fn,pri:pri||0}); OB_Q.sort((a,b)=>a.pri-b.pri); obQRun(); }
+function obQRun(){ while(OB_QN<4 && OB_Q.length){ const j=OB_Q.shift(); OB_QN++; Promise.resolve().then(j.fn).catch(()=>{}).then(()=>{ OB_QN--; obQRun(); }); } }
+function obJSON(u){ return fetch(u,{cache:'no-cache'}).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }); }
+function obSoon(){ clearTimeout(obTimer); obTimer=setTimeout(()=>{ if(typeof currentRouteKey!=='undefined' && currentRouteKey==='OPEN') openingBell(); obGameRefresh(); },120); }
+/* ---- board index (NBA classes 2013-2026, listed + OTC) ---- */
+function obSlug(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9 ]+/g,' ').replace(/\b(jr|sr|ii|iii|iv|v)\b/g,' ').replace(/\s+/g,''); }
+function obBoard(){
+  if(OB_BIX) return OB_BIX;
+  const byName={}, byEspn={}, col=[];
+  Object.keys(CLASSES).forEach(y=>{ const C=CLASSES[y]; if(!C || !C.top) return;
+    [['top',1],['otc',0]].forEach(([f,listed])=>{ (C[f]||[]).forEach(p=>{
+      if(!p || !p.name) return;
+      const r={y, p, k:LV.key(p), n:p.name, listed:!!(listed && p.tkr), id:y+':'+LV.key(p)};
+      if(y==='2027'){ col.push(r); return; }
+      const s=obSlug(p.name); (byName[s]||(byName[s]=[])).push(r);
+      if(p.espn) byEspn[String(p.espn)]=r;
+    }); });
+  });
+  return OB_BIX={byName, byEspn, col};
+}
+function obListed(r){ return r.listed && typeof bellListed==='function' ? bellListed(r.y,r.p.tkr) : r.listed; }
+function obName(r,cls){
+  const t=cmpEsc(r.n);
+  return obListed(r) ? `<button type="button" class="${cls||'bl-lk'}" data-obopen="${r.y}:${cmpEsc(r.p.tkr)}" title="Open the ${r.y} profile">${t}</button>` : `<span class="${cls||''}">${t}</span>`;
+}
+function obCls(y){ return y==='2027' ? '2027 &middot; COLLEGE' : (y==='2026' ? '2026 ROOKIE' : y+' CLASS'); }
+/* ---- current-season game files (already served for the Game Log cards) ---- */
+function obLoadGames(){
+  if(OB_GSTATE!=='idle' || typeof glLive!=='function') return;
+  OB_GSTATE='loading';
+  const ys=Object.keys(CLASSES); OB_G={};
+  Promise.all(ys.map(y=>glLive(y).then(G=>{ OB_G[y]=(G && G.players) || {}; }).catch(()=>{ OB_G[y]={}; })))
+    .then(()=>{ OB_GSTATE='ok'; obSoon(); });
+}
+function obEntry(r){ const G=OB_G && OB_G[r.y]; if(!G) return null; return G[r.p.tkr] || G[r.k] || null; }
+/* ---- scoreboard ---- */
+function obSbKey(lg,d){ return lg+':'+d; }
+function obFetchSB(lg,d){
+  const id=obSbKey(lg,d); if(OB_SB[id]) return;
+  OB_SB[id]={state:'loading'};
+  const u='https://site.api.espn.com/apis/site/v2/sports/basketball/'+OB_SPORT[lg]+'/scoreboard?dates='+d.replace(/-/g,'')+(lg==='college'?'&groups=50&limit=500':'');
+  obJSON(u).then(j=>{ OB_SB[id]={state:'ok', games:(j.events||[]).map(e=>obGame(e,lg)), at:Date.now()}; })
+    .catch(()=>{ OB_SB[id]={state:'err'}; })
+    .then(()=>{ obSoon(); obAfterSB(lg,d); });
+}
+function obGame(e,lg){
+  const c=(e.competitions||[])[0]||{}, cs=c.competitors||[];
+  const side=h=>{ const t=cs.find(x=>x.homeAway===h)||{}, tm=t.team||{};
+    const rec=(t.records||[]).find(r=>r.type==='total'||r.name==='overall'||r.name==='All Splits')||(t.records||[])[0]||{};
+    const rk=t.curatedRank&&t.curatedRank.current;
+    return {id:String(tm.id||''), ab:tm.abbreviation||'', nm:tm.shortDisplayName||tm.name||tm.displayName||'', full:tm.displayName||'', loc:tm.location||'', rec:rec.summary||'', sc:t.score, rank:(rk&&rk<26)?rk:null}; };
+  const st=((c.status||e.status||{}).type)||{};
+  const tv=[...new Set((c.broadcasts||[]).flatMap(b=>b.names||[]))].join(', ');
+  const g={id:String(e.id), lg, date:e.date, a:side('away'), h:side('home'), state:st.state||'pre', sd:st.shortDetail||st.detail||'', tv, neutral:!!c.neutralSite, venue:(c.venue&&c.venue.fullName)||''};
+  const o=(c.odds||[])[0]; if(o) g.line=obLine(o,g);
+  return g;
+}
+function obLine(o,g){
+  const num=v=>(v==null||v===''||isNaN(+v))?null:+v;
+  const r={prov:(o.provider&&o.provider.name)||'', pid:String((o.provider&&o.provider.id)||''), det:String(o.details||'').trim(), ou:num(o.overUnder), fav:null, sp:null};
+  const m=r.det.match(/^(.+?)\s+([+-]?\d+(?:\.\d+)?)$/);
+  if(m){ const ab=m[1].trim(), v=Math.abs(+m[2]); r.fav = ab===g.a.ab ? 'a' : (ab===g.h.ab ? 'h' : null); r.sp=v;
+    if(!r.fav){ const af=o.awayTeamOdds&&o.awayTeamOdds.favorite, hf=o.homeTeamOdds&&o.homeTeamOdds.favorite; r.fav = af?'a':(hf?'h':null); } }
+  else if(/^(even|pk|pick)/i.test(r.det)) r.sp=0;
+  if(r.sp==null && num(o.spread)!=null){ const s=num(o.spread); r.sp=Math.abs(s); r.fav = s<0?'h':(s>0?'a':null); }
+  if(r.ou!=null && r.sp!=null){ const hi=(r.ou+r.sp)/2, lo=(r.ou-r.sp)/2;
+    r.it={a: r.fav==='a'?hi:(r.fav==='h'?lo:r.ou/2), h: r.fav==='h'?hi:(r.fav==='a'?lo:r.ou/2)}; }
+  if(!r.det && r.ou==null) return null;
+  return r;
+}
+function obGLine(g){ if(g.line) return g.line; const S=OB_SUM[g.id]; return (S && S.line) || null; }
+/* what to fetch once a slate is known */
+function obAfterSB(lg,d){
+  const sb=OB_SB[obSbKey(lg,d)]; if(!sb || sb.state!=='ok') return;
+  obGamesFor(lg,sb).forEach(g=>{
+    if(g.state!=='post' && !OB_SUM[g.id]) { OB_SUM[g.id]='loading'; obQ(()=>obFetchSum(g),0); }
+    if(lg==='nba'){ [g.a.id,g.h.id].forEach(t=>{ if(t && !OB_ROS[t]){ OB_ROS[t]='loading'; obQ(()=>obFetchRos(t),1); } });
+      if(g.state==='pre' && !OB_PROP[g.id]){ OB_PROP[g.id]='loading'; obQ(()=>obFetchProps(g),2); } }
+  });
+}
+function obFetchSum(g){
+  return obJSON('https://site.web.api.espn.com/apis/site/v2/sports/basketball/'+OB_SPORT[g.lg]+'/summary?event='+encodeURIComponent(g.id))
+    .then(s=>{ OB_SUM[g.id]=obSumParse(s,g); }).catch(()=>{ OB_SUM[g.id]='err'; }).then(obSoon);
+}
+function obSumParse(s,g){
+  const num=v=>(v==null||v===''||isNaN(+v))?null:+v;
+  const pc=(s.pickcenter||[])[0]||{}, pr=s.predictor||{};
+  const ml=x=>x?num(x.moneyLine):null;
+  const out={ml:{a:ml(pc.awayTeamOdds), h:ml(pc.homeTeamOdds)},
+    wp:{a:num(pr.awayTeam&&pr.awayTeam.gameProjection), h:num(pr.homeTeam&&pr.homeTeam.gameProjection)},
+    inj:(s.injuries||[]).map(t=>({ab:(t.team&&t.team.abbreviation)||'', id:String((t.team&&t.team.id)||''),
+      l:(t.injuries||[]).map(i=>({n:(i.athlete&&(i.athlete.displayName||i.athlete.fullName))||'', aid:String((i.athlete&&i.athlete.id)||''),
+        st:String(i.status||(i.type&&i.type.description)||''), d:(i.details?[i.details.type,i.details.detail].filter(Boolean).join(' '):'')||''}))})),
+    l5:(s.lastFiveGames||[]).map(t=>({ab:(t.team&&t.team.abbreviation)||'', id:String((t.team&&t.team.id)||''),
+      ev:(t.events||[]).map(e=>({r:e.gameResult||'', sc:e.score||'', av:e.atVs||'', op:(e.opponent&&e.opponent.abbreviation)||''}))})),
+    ss:((s.seasonseries||[])[0]||{}).summary||''};
+  if(pc.details || pc.overUnder!=null){ const L=obLine(pc,g); if(L){ if(!L.prov) L.prov=(pc.provider&&pc.provider.name)||''; out.line=L; } }
+  return out;
+}
+/* rosters: [[espnId, name]], cached per browser for 12 hours */
+const OB_RCK='dsx-ob-ros-v1';
+function obRosCache(){ try{ return JSON.parse(localStorage.getItem(OB_RCK)||'{}')||{}; }catch(_){ return {}; } }
+function obFetchRos(t){
+  const C=obRosCache(), c=C[t];
+  if(c && c.l && Date.now()-c.t < 12*3600e3){ OB_ROS[t]=c.l; obSoon(); return Promise.resolve(); }
+  return obJSON('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/'+encodeURIComponent(t)+'/roster')
+    .then(d=>{ let at=d.athletes||[]; if(at.length && at[0] && at[0].items) at=at.flatMap(x=>x.items||[]);
+      const l=at.map(a=>[String(a.id||''), a.displayName||a.fullName||'']).filter(x=>x[0]&&x[1]);
+      if(!l.length) throw new Error('empty'); OB_ROS[t]=l;
+      try{ const C2=obRosCache(); C2[t]={t:Date.now(), l}; localStorage.setItem(OB_RCK, JSON.stringify(C2)); }catch(_){} })
+    .catch(()=>{ OB_ROS[t]='err'; }).then(obSoon);
+}
+/* DraftKings player props (game day): median target per athlete per market */
+function obFetchProps(g){
+  const L=g.line, prov=(L && L.pid) || '100';
+  const base='https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/'+encodeURIComponent(g.id)+'/competitions/'+encodeURIComponent(g.id)+'/odds/'+encodeURIComponent(prov)+'/propBets?limit=1000';
+  const acc={};
+  const eat=items=>(items||[]).forEach(p=>{ const k=OB_PT[p.type&&p.type.name]; if(!k) return;
+    const m=String((p.athlete&&p.athlete.$ref)||'').match(/athletes\/(\d+)/); if(!m) return;
+    const v=p.current&&p.current.target&&p.current.target.value; if(v==null || isNaN(+v)) return;
+    const a=acc[m[1]]||(acc[m[1]]={}); (a[k]||(a[k]=[])).push(+v); });
+  return obJSON(base).then(j=>{ eat(j.items); const n=Math.min(+j.pageCount||1,4), more=[];
+      for(let i=2;i<=n;i++) more.push(obJSON(base+'&page='+i).then(x=>eat(x.items)).catch(()=>{}));
+      return Promise.all(more); })
+    .then(()=>{ const out={}; Object.keys(acc).forEach(id=>{ const a=acc[id], o={}; Object.keys(a).forEach(k=>{ const v=a[k].sort((x,y)=>x-y); o[k]=v[Math.floor((v.length-1)/2)]; }); out[id]=o; });
+      OB_PROP[g.id]={n:Object.keys(out).length, a:out}; })
+    .catch(()=>{ OB_PROP[g.id]={n:0, a:{}, none:1}; }).then(obSoon);
+}
+/* ---- which board players are in a game ---- */
+function obGamesFor(lg,sb){
+  const gs=(sb && sb.games) || [];
+  if(lg==='nba') return gs;
+  return gs.filter(g=>obColPlayers(g).length);
+}
+function obColTeamMatch(r,t){
+  const e=obEntry(r);
+  if(e && e.pro) return false;
+  if(e && e.tm) return e.tm===t.ab;
+  const sc=obSlug(r.p.school||''); if(!sc) return false;
+  return sc===obSlug(t.loc) || sc===obSlug(t.full) || sc===obSlug(t.nm);
+}
+function obColPlayers(g){
+  if(g._cp && g._cpv===OB_GSTATE) return g._cp;
+  const out=[]; obBoard().col.forEach(r=>{ ['a','h'].forEach(s=>{ if(obColTeamMatch(r,g[s])) out.push({r, side:s, aid:(obEntry(r)||{}).id}); }); });
+  g._cp=out; g._cpv=OB_GSTATE; return out;
+}
+function obNbaPlayers(g){
+  const B=obBoard(), out=[], seen={};
+  ['a','h'].forEach(s=>{
+    const t=g[s], ros=OB_ROS[t.id];
+    if(Array.isArray(ros)){
+      ros.forEach(([aid,nm])=>{ let r=B.byEspn[aid];
+        if(!r){ const c=B.byName[obSlug(nm)]||[];
+          if(c.length===1) r=c[0];
+          else if(c.length>1){ const m=c.filter(x=>{ const e=obEntry(x); return e && (OB_NBA2ESPN[e.tm]||e.tm)===t.ab; }); if(m.length===1) r=m[0]; } }
+        if(r && !seen[r.id]){ seen[r.id]=1; out.push({r, side:s, aid}); } });
+    } else if(OB_G){
+      /* roster not loaded (yet): fall back to the team on each player's latest game */
+      Object.keys(OB_G).forEach(y=>{ if(y==='2027') return; const G=OB_G[y];
+        Object.keys(G).forEach(k=>{ const e=G[k]; if(!e || (OB_NBA2ESPN[e.tm]||e.tm)!==t.ab) return;
+          const C=CLASSES[y]; const p=(C.top||[]).find(x=>x.tkr===k || LV.key(x)===k) || (C.otc||[]).find(x=>LV.key(x)===k); if(!p) return;
+          const r={y, p, k:LV.key(p), n:p.name, listed:!!p.tkr && (C.top||[]).indexOf(p)>=0, id:y+':'+LV.key(p)};
+          if(!seen[r.id]){ seen[r.id]=1; out.push({r, side:s, aid:p.espn?String(p.espn):''}); } }); });
+    }
+  });
+  return out;
+}
+function obInj(g,x){
+  const S=OB_SUM[g.id]; if(!S || !S.inj) return null;
+  const sl=obSlug(x.r.n);
+  for(const t of S.inj){ for(const i of t.l){ if((x.aid && i.aid===x.aid) || obSlug(i.n)===sl) return i; } }
+  return null;
+}
+function obOut(i){ return !!i && /^out|suspend|inactive/i.test(i.st); }
+function obMin(v){ if(typeof v==='number') return v; const m=String(v||'').match(/^(\d+):(\d+)/); return m?(+m[1]+(+m[2])/60):(parseFloat(v)||0); }
+/* DSX projection: blended per-minute rates (season + last five, so the last five count double) x expected
+   minutes (half season average, half last five), with scoring nudged by tonight's projected team points */
+function obProj(e,it,lg){
+  if(!e || !e.rows) return null;
+  const rows=e.rows.filter(r=>Array.isArray(r) && r[0]!=='#' && obMin(r[3])>0);
+  if(!rows.length) return null;
+  const K=['pts','reb','ast','tpm','stl','blk','to'], IX={pts:17,reb:11,ast:12,tpm:7,stl:13,blk:14,to:15};
+  const sum=a=>{ const t={min:0}; K.forEach(k=>t[k]=0); a.forEach(r=>{ t.min+=obMin(r[3]); K.forEach(k=>t[k]+=(+r[IX[k]]||0)); }); return t; };
+  const S=sum(rows), l5=rows.slice(-5), L=sum(l5);
+  const mpg=S.min/rows.length, mp5=L.min/l5.length, min=rows.length>=5 ? (mpg+mp5)/2 : mpg;
+  const base=lg==='nba'?115:73, f=it ? 1+0.6*(it/base-1) : 1;
+  const o={min, gp:rows.length, env:f};
+  K.forEach(k=>{ let v=(S[k]+L[k])/(S.min+L.min)*min; if(k==='pts'||k==='tpm') v*=f; else if(k==='ast') v*=1+0.3*(f-1); o[k]=v; });
+  o.pra=o.pts+o.reb+o.ast;
+  return o;
+}
+/* every board player on a slate, with projection, props and injury status */
+function obSlate(lg,gs){
+  const out=[];
+  gs.forEach(g=>{
+    const ps = lg==='nba' ? obNbaPlayers(g) : obColPlayers(g);
+    const L=obGLine(g), P=OB_PROP[g.id];
+    ps.forEach(x=>{
+      const e=obEntry(x.r), it=L && L.it ? L.it[x.side] : null, inj=obInj(g,x);
+      const aid=x.aid || (e && e.id ? String(e.id) : '') || (x.r.p.espn?String(x.r.p.espn):'');
+      const opp=g[x.side==='a'?'h':'a'];
+      out.push({g, r:x.r, side:x.side, tm:g[x.side].ab, opp:(x.side==='a'?'@ ':'vs ')+opp.ab, e, inj, out:obOut(inj),
+        pj:obProj(e,it,lg), pr:(P && P.a && aid && P.a[aid]) || null, aid});
+    });
+  });
+  return out;
+}
+function obPrice(r){
+  const e=LV.entry(r.k, r.y), ipo=r.p.price;
+  if(!e || !e.gp || e.intl || e.price==null) return null;
+  return {px:e.price, ret:(ipo ? (e.price/ipo-1)*100 : null), sm:!!e.sm};
+}
+/* ---- formatting ---- */
+const ob1=v=>v==null||isNaN(v)?'&mdash;':(Math.round(v*10)/10).toFixed(1);
+function obML(v){ return v==null?'&mdash;':(v>0?'+'+v:String(v)); }
+function obSpread(L,g){ if(!L || L.sp==null) return L&&L.det?cmpEsc(L.det):'&mdash;'; if(L.sp===0) return 'PICK&rsquo;EM'; const t=L.fav?g[L.fav].ab:'FAV'; return cmpEsc(t)+' &minus;'+ob1(L.sp).replace('.0',''); }
+function obStatusTag(x){ if(x.out) return `<span class="ob-tag out" title="${cmpEsc(x.inj.st+(x.inj.d?' · '+x.inj.d:''))}">OUT</span>`;
+  if(x.inj) return `<span class="ob-tag gtd" title="${cmpEsc(x.inj.st+(x.inj.d?' · '+x.inj.d:''))}">${cmpEsc(/day/i.test(x.inj.st)?'DAY-TO-DAY':x.inj.st.toUpperCase())}</span>`; return ''; }
+function obMarket(x,k,lbl){
+  const v=x.pr && x.pr[k]; if(v==null) return '';
+  const p=x.pj && x.pj[k]; let a='';
+  if(p!=null && !x.out){ const d=p-v; a = Math.abs(d)<0.25 ? '<i class="mut">=</i>' : `<i class="${d>0?'up':'down'}">${d>0?'▲':'▼'}</i>`; }
+  return `<span class="ob-mk" title="DraftKings ${lbl} line ${v} · DSX projects ${p!=null?ob1(p):'—'}">${lbl} <b>${v}</b>${a}</span>`;
+}
+/* ---- sections ---- */
+function obTabs(){
+  const t=obToday();
+  return '<div class="bl-tabs" role="tablist">'+['nba','college'].map(k=>{
+    /* the college scoreboard is big: it loads only once its tab is picked */
+    const lazy=(k==='college' && OB.lg!=='college' && !OB.day.college && !OB_SB[obSbKey(k,t)]);
+    const d=lazy?t:obShown(k), sb=OB_SB[obSbKey(k,d)], gs=sb&&sb.state==='ok'?obGamesFor(k,sb):null;
+    const n=lazy?'2027 PROSPECT GAMES':(gs?gs.length+' GAME'+(gs.length===1?'':'S'):(sb&&sb.state==='err'?'NOT AVAILABLE':'LOADING&hellip;'));
+    return `<button type="button" class="bl-tab" role="tab" aria-selected="${k===OB.lg}" data-oblg="${k}">${k==='nba'?'NBA &middot; CLASSES 2013&ndash;2026':'COLLEGE &middot; 2027 CLASS'}<b>${d===t?'TONIGHT &middot; ':''}${obDay(d)}</b>${n}</button>`; }).join('')+'</div>';
+}
+function obBar(lg,d){
+  const t=obToday(), prev=d>t?obAdd(d,-1):null, next=d<obAdd(t,7)?obAdd(d,1):null;
+  return `<div class="bl-nights" role="group" aria-label="Pick a day">
+    <button type="button" class="bl-nb" data-obday="${prev||''}" ${prev?'':'disabled'}>&larr; PREV DAY</button>
+    <span class="ob-dd">${d===t?'TONIGHT &middot; ':''}${obDay(d)}</span>
+    <button type="button" class="bl-nb" data-obday="${next||''}" ${next?'':'disabled'}>NEXT DAY &rarr;</button>
+    ${d!==t?`<button type="button" class="bl-nb bl-nlatest" data-obday="${t}">BACK TO TODAY</button>`:''}
+    <span class="bl-ncount">LINES AS OF ${cmpEsc(new Date((OB_SB[obSbKey(lg,d)]||{}).at||Date.now()).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}))} &middot; <button type="button" class="bl-lk" id="obReload" style="color:var(--amber)">REFRESH</button></span></div>`;
+}
+function obTiles(lg,gs,P){
+  const t=(k,v,s)=>`<div class="bl-tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  const pre=gs.filter(g=>g.state==='pre').sort((a,b)=>a.date<b.date?-1:1);
+  const cs=new Set(P.map(x=>x.r.y));
+  let fav=null, hi=null;
+  gs.forEach(g=>{ const L=obGLine(g); if(!L) return; if(L.sp!=null && L.fav && (!fav || L.sp>fav.L.sp)) fav={g,L}; if(L.ou!=null && (!hi || L.ou>hi.L.ou)) hi={g,L}; });
+  const wp=fav && OB_SUM[fav.g.id] && OB_SUM[fav.g.id].wp ? OB_SUM[fav.g.id].wp[fav.L.fav] : null;
+  return `<div class="bl-tiles">
+    ${t('GAMES',gs.length,pre.length?'FIRST TIP '+obTip(pre[0].date):(gs.length?'UNDER WAY / FINAL':'&mdash;'))}
+    ${t('BOARD PLAYERS IN ACTION',P.filter(x=>!x.out).length,cs.size?'ACROSS '+cs.size+(cs.size===1?' CLASS':' CLASSES')+(P.some(x=>x.out)?' &middot; '+P.filter(x=>x.out).length+' OUT':''):'&mdash;')}
+    ${fav?t('BIGGEST FAVORITE',obSpread(fav.L,fav.g),(fav.L.fav==='a'?'@ '+cmpEsc(fav.g.h.ab):'VS '+cmpEsc(fav.g.a.ab))+(wp!=null?' &middot; '+ob1(wp)+'% TO WIN':'')):t('BIGGEST FAVORITE','&mdash;','NO LINES POSTED YET')}
+    ${hi?t('HIGHEST TOTAL','O/U '+hi.L.ou,cmpEsc(hi.g.a.ab+' @ '+hi.g.h.ab)+(hi.L.it?' &middot; '+ob1(hi.L.it.a)+'&ndash;'+ob1(hi.L.it.h):'')):t('HIGHEST TOTAL','&mdash;','NO TOTALS POSTED YET')}
+  </div>`;
+}
+function obProjLine(x){
+  if(x.out) return '<div class="ln"><span class="mut">Listed OUT on the injury report.</span></div>';
+  const p=x.pj; if(!p) return '<div class="ln"><span class="mut">NO GAMES YET THIS SEASON &middot; NO PROJECTION</span></div>';
+  const st=(v,l)=>`<span>${ob1(v)}<em>${l}</em></span>`;
+  return `<div class="ln">${st(p.pts,'PTS')}${st(p.reb,'REB')}${st(p.ast,'AST')}${st(p.tpm,'3PM')}${p.stl>=0.8?st(p.stl,'STL'):''}${p.blk>=0.8?st(p.blk,'BLK'):''}</div>
+    <div class="sh">DSX PROJECTION &middot; ${ob1(p.min)} MIN &middot; ${p.gp} GAME${p.gp===1?'':'S'} OF DATA${p.gp<5?' &middot; THIN SAMPLE':''}</div>`;
+}
+function obWatch(lg,P){
+  const f=OB.pcls;
+  const ys=[...new Set(P.map(x=>x.r.y))].sort((a,b)=>b-a);
+  const sel=ys.length>1?`<select id="obP" class="bl-sel" aria-label="Players to watch from which class"><option value="all">ALL CLASSES</option>${ys.map(v=>`<option value="${v}"${v===f?' selected':''}>${v==='2026'?'2026 ROOKIES':v+' CLASS'}</option>`).join('')}</select>`:'';
+  const ps=P.filter(x=>(f==='all'||x.r.y===f) && !x.out && x.pj && x.g.state!=='post').sort((a,b)=>b.pj.pra-a.pj.pra).slice(0,9);
+  let body;
+  if(!ps.length) body='<div class="bl-empty">'+(OB_GSTATE!=='ok'?'Loading the game logs&hellip;':'No board player with a projection is scheduled on this slate.')+'</div>';
+  else body='<div class="bl-perf">'+ps.map((x,i)=>{ const pr=obPrice(x.r);
+    const mk=[obMarket(x,'pts','PTS'),obMarket(x,'reb','REB'),obMarket(x,'ast','AST'),obMarket(x,'tpm','3PM'),obMarket(x,'pra','PRA')].join('');
+    return `<div class="bl-pc">
+    <div class="top"><div style="min-width:0;display:flex;align-items:baseline"><span class="rk">${i+1}</span>${obName(x.r,'nm')}</div><div class="gs" title="DSX projected points + rebounds + assists">PROJ PRA<b>${ob1(x.pj.pra)}</b></div></div>
+    <div class="mt">${cmpEsc(x.tm)} ${cmpEsc(x.opp)} &middot; ${x.g.state==='pre'?obTip(x.g.date):cmpEsc(x.g.sd.toUpperCase())} &middot; ${obCls(x.r.y)} ${obStatusTag(x)}</div>
+    ${obProjLine(x)}
+    ${mk?`<div class="ob-mks"><span class="ob-mkl">DK LINES</span>${mk}</div>`:(lg==='nba'&&x.g.state==='pre'?`<div class="ob-mks"><span class="ob-mkl">${OB_PROP[x.g.id]==='loading'?'LOADING LINES&hellip;':'NO PLAYER PROPS POSTED'}</span></div>`:'')}
+    <div class="px">${pr?`<span class="mut">LIVE</span><b>$${f2(pr.px)}</b>${pr.ret!=null?`<span class="mut fr">IPO $${f2(x.r.p.price)}</span><span style="margin-left:auto" class="${pr.ret>=0?'up':'down'}">${pr.ret>=0?'▲':'▼'} ${pct(pr.ret)}</span>`:''}`:`<span class="mut">${x.r.y==='2027'?'NO LIVE PRICE YET':'NOT LIVE-PRICED'}</span>`}</div>
+  </div>`; }).join('')+'</div>';
+  return `<div class="card"><h3><span>PLAYERS TO WATCH <em>BOARD PLAYERS &middot; RANKED BY DSX PROJECTED PTS+REB+AST</em></span>${sel}</h3>${body}</div>`;
+}
+function obBoardSec(lg,gs,P){
+  if(!gs.length) return '';
+  const by={}; P.forEach(x=>{ (by[x.g.id]||(by[x.g.id]=[])).push(x); });
+  const cards=gs.map(g=>{
+    const L=obGLine(g), S=OB_SUM[g.id], sv=S&&typeof S==='object'?S:null;
+    const tm=s=>{ const t=g[s], live=g.state!=='pre';
+      const right = live ? (t.sc!=null?t.sc:'') : (L&&L.it?`<small>PROJ</small>${ob1(L.it[s])}`:'');
+      return `<div class="tm"><span class="nm">${t.rank?'<small>#'+t.rank+'</small> ':''}${cmpEsc(lg==='nba'?t.ab+' '+t.nm:(t.nm||t.ab))}${t.rec?' <small>'+cmpEsc(t.rec)+'</small>':''}</span><span class="sc">${right}</span></div>`; };
+    const wp=sv&&sv.wp&&sv.wp.a!=null&&sv.wp.h!=null?sv.wp:null;
+    const lines=g.state==='pre' ? `<div class="ob-gl">${L?`<span>${obSpread(L,g)}</span><span>O/U ${L.ou!=null?L.ou:'&mdash;'}</span>`:'<span class="mut">NO LINE POSTED YET</span>'}${sv&&sv.ml&&(sv.ml.a!=null||sv.ml.h!=null)?`<span>ML ${obML(sv.ml.a)} / ${obML(sv.ml.h)}</span>`:''}</div>`+
+      (wp?`<div class="ob-wp" title="ESPN BPI win probability"><i style="width:${Math.max(2,Math.min(98,wp.a))}%"></i><span>${cmpEsc(g.a.ab)} ${ob1(wp.a)}%</span><span>${cmpEsc(g.h.ab)} ${ob1(wp.h)}%</span></div>`:'') : '';
+    const bp=(by[g.id]||[]).slice().sort((a,b)=>(b.r.y-a.r.y)||((b.pj?b.pj.pra:0)-(a.pj?a.pj.pra:0))).map(x=>obListed(x.r)
+      ? `<button type="button" class="bl-lk${x.r.y===(lg==='nba'?'2026':'2027')?' rk1':''}${x.out?' ob-o':''}" data-obopen="${x.r.y}:${cmpEsc(x.r.p.tkr)}" title="${cmpEsc(x.r.n)}, ${x.r.y} class${x.out?' (OUT)':''}">${cmpEsc(x.r.p.tkr)}</button>` : `<span class="${x.out?'ob-o':''}">${cmpEsc(x.r.n)}</span>`).join('');
+    const st=g.state==='pre' ? obTip(g.date)+(g.tv?' &middot; '+cmpEsc(g.tv):'') : (g.state==='in'?'<span class="up">LIVE</span> &middot; '+cmpEsc(g.sd.toUpperCase()):cmpEsc(g.sd.toUpperCase()));
+    return `<div class="bl-g" data-obgame="${cmpEsc(g.id)}" role="button" tabindex="0" aria-label="Preview: ${cmpEsc(g.a.full||g.a.ab)} at ${cmpEsc(g.h.full||g.h.ab)}">${tm('a')}${tm('h')}${lines}<div class="st"><span>${st}</span><span class="bx">PREVIEW &rsaquo;</span></div>${bp?'<div class="bp">'+bp+'</div>':''}</div>`;
+  }).join('');
+  return `<div class="card"><h3><span>TONIGHT&rsquo;S BOARD <em>${lg==='nba'?'EVERY NBA GAME':'EVERY GAME WITH A 2027 PROSPECT'} &middot; LINE &middot; PROJECTED POINTS &middot; WIN % &middot; CLICK A GAME FOR THE FULL PREVIEW</em></span></h3><div class="bl-games ob-games">${cards}</div></div>`;
+}
+function obClip(c,n){
+  const v=String(c[0]).replace(/[^A-Za-z0-9_-]/g,'');
+  return `<div class="bl-v"><button type="button" class="th" data-obv="${v}" aria-label="Play: ${cmpEsc(c[6]||c[2]||'clip')}" style="background-image:url('https://i.ytimg.com/vi/${v}/mqdefault.jpg')"></button>
+      <div class="vt">${cmpEsc(c[6]||c[2]||'')}</div><div class="vc">${cmpEsc(c[1]||'')} &middot; ${cmpEsc(n)}${c[4]?' &middot; '+cmpEsc(obDay(String(c[4]).slice(0,10))):''}</div></div>`;
+}
+function obTapeList(P){
+  const out=[];
+  P.forEach(x=>{ const f=x.e && Array.isArray(x.e.film) ? x.e.film.filter(c=>Array.isArray(c)&&c[0]) : []; if(!f.length) return;
+    const c=f.slice().sort((a,b)=>String(b[4]||'')<String(a[4]||'')?-1:1)[0]; out.push({x,c}); });
+  return out.sort((a,b)=>(b.x.r.y-a.x.r.y)||(String(b.c[4]||'')<String(a.c[4]||'')?-1:1));
+}
+function obTape(P){
+  const T=obTapeList(P); if(!T.length) return '';
+  return `<div class="card"><h3>TAPE TO WATCH <em>THE MOST RECENT CLIP OF EACH BOARD PLAYER IN ACTION &middot; ${T.length}</em></h3><div class="bl-film">`+
+    T.slice(0,8).map(t=>obClip(t.c,t.x.r.n)).join('')+'</div></div>';
+}
+function obSheet(lg,P){
+  if(!P.length) return '';
+  const ys=[...new Set(P.map(x=>x.r.y))].sort((a,b)=>b-a);
+  if(OB.fcls!=='all' && ys.indexOf(OB.fcls)<0) OB.fcls='all';
+  const rows=P.filter(x=>OB.fcls==='all'||x.r.y===OB.fcls);
+  const pv=k=>x=>x.out||!x.pj?-1:x.pj[k];
+  const get={n:x=>x.r.n, y:x=>+x.r.y, tip:x=>Date.parse(x.g.date)||0, min:pv('min'), pts:pv('pts'), reb:pv('reb'), ast:pv('ast'), tpm:pv('tpm'), stl:pv('stl'), blk:pv('blk'), pra:pv('pra'),
+    lpts:x=>x.pr&&x.pr.pts!=null?x.pr.pts:-1, lpra:x=>x.pr&&x.pr.pra!=null?x.pr.pra:-1, live:x=>{ const p=obPrice(x.r); return p?p.px:-1; }};
+  const g=get[OB.sort]||get.pra;
+  rows.sort((a,b)=>{ const u=g(a),v=g(b); return (typeof u==='string'?String(u).localeCompare(v):(u-v))*OB.dir; });
+  const show=OB.more?rows:rows.slice(0,25);
+  const th=(k,l,c)=>`<th class="${c||''} ${OB.sort===k?'on':''}" data-obs="${k}">${l}${OB.sort===k?(OB.dir<0?' ▾':' ▴'):''}</th>`;
+  const sel=`<select id="obF" class="bl-sel" aria-label="Filter by class"><option value="all">ALL CLASSES</option>${ys.map(v=>`<option value="${v}"${v===OB.fcls?' selected':''}>${v}</option>`).join('')}</select>`;
+  const nba=lg==='nba';
+  const tr=x=>{ const p=x.pj, o=x.out||!p, pr=obPrice(x.r), c=v=>o?'<span class="mut">&mdash;</span>':ob1(v);
+    return `<tr><td class="l">${obName(x.r,'bl-lk')}<small>${x.r.y}</small> ${obStatusTag(x)}</td><td class="l">${cmpEsc(x.tm)} ${cmpEsc(x.opp)}</td><td class="l">${x.g.state==='pre'?obTip(x.g.date):cmpEsc(x.g.sd.toUpperCase())}</td>
+      <td>${c(p&&p.min)}</td><td>${c(p&&p.pts)}</td><td>${c(p&&p.reb)}</td><td>${c(p&&p.ast)}</td><td>${c(p&&p.tpm)}</td><td>${c(p&&p.stl)}</td><td>${c(p&&p.blk)}</td><td><b>${c(p&&p.pra)}</b></td>
+      ${nba?`<td>${x.pr&&x.pr.pts!=null?x.pr.pts:'<span class="mut">&mdash;</span>'}</td><td>${x.pr&&x.pr.pra!=null?x.pr.pra:'<span class="mut">&mdash;</span>'}</td>`:''}
+      <td>${pr?'$'+f2(pr.px):'<span class="mut">&mdash;</span>'}</td></tr>`; };
+  return `<div class="card"><h3><span>THE FULL PROJECTION SHEET <em>EVERY BOARD PLAYER ON THE SLATE &middot; ${rows.length}</em></span>${sel}</h3>
+  <div class="ob-tw"><table class="bl-tbl"><thead><tr>${th('n','PLAYER','l')}<th class="l">GAME</th>${th('tip','TIP','l')}${th('min','MIN')}${th('pts','PTS')}${th('reb','REB')}${th('ast','AST')}${th('tpm','3PM')}${th('stl','STL')}${th('blk','BLK')}${th('pra','PRA')}${nba?th('lpts','DK PTS')+th('lpra','DK PRA'):''}${th('live','LIVE $')}</tr></thead>
+  <tbody>${show.map(tr).join('')}</tbody></table></div>`+
+  (rows.length>25&&!OB.more?`<div style="padding:10px 12px"><button type="button" class="cmp-back" id="obMore" style="margin:0">SHOW ALL ${rows.length}</button></div>`:'')+`</div>`;
+}
+/* the day shown for a league: picked, or today; if today's games are all final (or there are none) move to the next slate */
+function obShown(lg){
+  if(OB.day[lg]){ if(!OB_SB[obSbKey(lg,OB.day[lg])]) obFetchSB(lg,OB.day[lg]); return OB.day[lg]; }
+  let d=obToday();
+  for(let i=0;i<5;i++){
+    const sb=OB_SB[obSbKey(lg,d)];
+    if(!sb){ obFetchSB(lg,d); return d; }
+    if(sb.state!=='ok') return d;
+    const gs=obGamesFor(lg,sb);
+    if(gs.length && gs.some(g=>g.state!=='post')) return d;
+    if(lg==='college' && OB_GSTATE!=='ok' && !gs.length) return d;
+    d=obAdd(d,1);
+  }
+  return obToday();
+}
+function obPickLg(){
+  if(OB.lg) return OB.lg;
+  const d=obShown('nba'), sb=OB_SB[obSbKey('nba',d)];
+  if(sb && sb.state==='ok' && !obGamesFor('nba',sb).length){ const c=OB_SB[obSbKey('college',obShown('college'))]; if(c && c.state==='ok' && obGamesFor('college',c).length) return 'college'; }
+  return 'nba';
+}
+function openingBell(){
+  obLoadGames();
+  obShown('nba');
+  const lg=obPickLg(); OB.lg=lg;
+  const d=obShown(lg), sb=OB_SB[obSbKey(lg,d)];
+  if(sb && sb.state==='ok') obAfterSB(lg,d);
+  const head=`<div class="cmp-title"><button type="button" id="obBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>OPENING BELL PREVIEW</h1>
+    <p>The pre-game preview of tonight&rsquo;s slate, the morning mirror of the Closing Bell. Every board player scheduled to play with his DSX projected line next to the sportsbook&rsquo;s player props, the line on every game (spread, total, moneyline and projected team points), ESPN&rsquo;s win probability, the injury report and the latest tape. Lines are pulled live when you open this page. Click any game for the full preview.</p></div>`;
+  const S={tabs:obTabs(), bar:'', note:'', tiles:'', watch:'', board:'', tape:'', sheet:'', foot:''};
+  if(!sb || sb.state==='loading'){ S.bar=obBar(lg,d); S.watch='<div class="card"><div class="bl-load">LOADING THE SLATE&hellip;</div></div>'; }
+  else if(sb.state==='err'){ S.bar=obBar(lg,d); S.watch=`<div class="card"><div class="bl-empty" style="padding:22px 14px">The ${lg==='nba'?'NBA':'college'} schedule could not be loaded right now. <button type="button" class="bl-lk" id="obRetry" style="color:var(--amber);text-decoration:underline">Try again</button>.</div></div>`; }
+  else {
+    const gs=obGamesFor(lg,sb), P=obSlate(lg,gs), t=obToday();
+    S.bar=obBar(lg,d);
+    if(!OB.day[lg] && d!==t) S.note=`<div class="bl-note">${lg==='nba'?'No NBA games left today':'No 2027 prospect games left today'}. This is the next slate, ${obDay(d)}. Last night&rsquo;s results are in <button type="button" class="bl-lk" id="obToBell" style="color:var(--amber);text-decoration:underline">the Closing Bell</button>.</div>`;
+    else if(gs.length && gs.every(g=>g.state!=='pre')) S.note=`<div class="bl-note">Every game on this slate has tipped. Scores update when you refresh; the full recap posts in the Closing Bell tomorrow morning.</div>`;
+    else if(lg==='nba' && d!==t) S.note='<div class="bl-note bl-past">LOOKING AHEAD &middot; Lines may not be posted yet and player props post on game day.</div>';
+    if(!gs.length){ S.watch=`<div class="card"><div class="bl-empty" style="padding:22px 14px">${lg==='nba'?'No NBA games on '+obDay(d)+'.':(OB_GSTATE!=='ok'?'Loading the 2027 class&hellip;':'No 2027 prospect is scheduled to play on '+obDay(d)+'.')}</div></div>`; }
+    else {
+      S.tiles=obTiles(lg,gs,P); S.watch=obWatch(lg,P); S.board=obBoardSec(lg,gs,P); S.tape=obTape(P); S.sheet=obSheet(lg,P);
+    }
+    const np=Object.keys(OB_PROP).filter(id=>gs.some(g=>g.id===id)).map(id=>OB_PROP[id]);
+    const ld=np.filter(v=>v==='loading').length;
+    S.foot=`<p class="bl-foot">${ld?'<b>Loading player props for '+ld+' game'+(ld===1?'':'s')+'&hellip;</b> ':''}Lines (spread, total, moneyline, player props) are DraftKings as published by ESPN, pulled when this page opened. Projected team points come from the spread and total (favorite = (total + spread) &divide; 2). Win probability is ESPN&rsquo;s Basketball Power Index. Injury report from ESPN. DSX projections are this site&rsquo;s own: each player&rsquo;s per-minute production this season with his last five games counted double, times his expected minutes (half his season average, half his last five), with scoring nudged up or down by tonight&rsquo;s projected team points against a ${lg==='nba'?'115':'73'}-point baseline. Projections need at least one game this season; fewer than five games is a thin sample. &#9650;/&#9660; next to a line shows whether the DSX projection is above or below it. These are market expectations shown for scouting context, not betting advice. Player props are NBA only and post on game day.</p>`;
+  }
+  const main=document.getElementById('main');
+  let root=document.getElementById('obRoot');
+  if(!root || !main.contains(root)){
+    main.innerHTML=`<div class="cmp bell ob" id="obRoot">${head}${Object.keys(S).map(k=>`<div id="ob-${k}">${S[k]}</div>`).join('')}</div>`;
+    OB.sh=Object.assign({},S);
+  } else Object.keys(S).forEach(k=>{ if(OB.sh[k]!==S[k]){ const el=document.getElementById('ob-'+k); if(el) el.innerHTML=S[k]; OB.sh[k]=S[k]; } });
+  obSetHash();
+  if(OB.pendingGame && sb && sb.state==='ok'){ const g=OB.pendingGame; OB.pendingGame=null; obGameOpen(g); }
+}
+/* ---- game preview popup ---- */
+function obFindGame(id){
+  for(const k of Object.keys(OB_SB)){ const sb=OB_SB[k]; if(sb.state!=='ok') continue; const g=sb.games.find(x=>x.id===id); if(g) return {g, lg:k.split(':')[0], d:k.slice(k.indexOf(':')+1)}; }
+  return null;
+}
+function obGameHtml(){
+  const close='<button type="button" class="bl-mx" data-obclose aria-label="Close">&times;</button>';
+  const F=obFindGame(OB.game); if(!F) return `${close}<div class="bl-load">LOADING THE GAME&hellip;</div>`;
+  const {g,lg,d}=F, sb=OB_SB[obSbKey(lg,d)], games=obGamesFor(lg,sb), i=games.findIndex(x=>x.id===g.id), prev=games[i-1], next=games[i+1];
+  const L=obGLine(g), S=OB_SUM[g.id], sv=S&&typeof S==='object'?S:null, P=obSlate(lg,[g]);
+  const pre=g.state==='pre';
+  const tm=s=>{ const t=g[s]; return `<div class="bl-mt"><span class="ab">${cmpEsc(lg==='nba'?t.ab:(t.nm||t.ab))}</span>${lg==='nba'?`<span class="nm">${cmpEsc(t.nm)}</span>`:''}<span class="nm">${cmpEsc(t.rec)}</span>${pre?(L&&L.it?`<span class="sc ob-pj">${ob1(L.it[s])}</span>`:''):`<span class="sc">${t.sc!=null?t.sc:''}</span>`}</div>`; };
+  const row=(l,a,h,sub)=>`<div class="bl-tsr"><div class="v">${a}</div><div class="m"><div class="l">${l}</div>${sub||''}</div><div class="v r">${h}</div></div>`;
+  let line='';
+  if(L || (sv && (sv.ml.a!=null || sv.wp.a!=null))){
+    const fs=s=>L&&L.sp!=null&&L.fav ? (L.fav===s?'&minus;'+L.sp:'+'+L.sp) : (L&&L.sp===0?'PK':'&mdash;');
+    const wp=sv&&sv.wp&&sv.wp.a!=null&&sv.wp.h!=null?sv.wp:null;
+    line=`<div class="bl-ts"><div class="bl-tsh"><span>${cmpEsc(g.a.ab)}</span><span>THE LINE</span><span>${cmpEsc(g.h.ab)}</span></div>`+
+      row('SPREAD',fs('a'),fs('h'))+
+      row('TOTAL',L&&L.ou!=null?'O/U '+L.ou:'&mdash;',L&&L.ou!=null?'O/U '+L.ou:'&mdash;')+
+      row('PROJECTED POINTS',L&&L.it?ob1(L.it.a):'&mdash;',L&&L.it?ob1(L.it.h):'&mdash;')+
+      row('MONEYLINE',obML(sv&&sv.ml.a),obML(sv&&sv.ml.h))+
+      (wp?row('WIN PROBABILITY &middot; ESPN BPI',ob1(wp.a)+'%',ob1(wp.h)+'%',`<div class="bar"><i class="${wp.a>=wp.h?'w':''}" style="width:${wp.a}%"></i><i class="${wp.h>wp.a?'w':''}" style="width:${wp.h}%"></i></div>`):'')+
+      `<div class="bl-tsx">${cmpEsc((L&&L.prov)||'DRAFTKINGS').toUpperCase()} VIA ESPN &middot; AS OF ${cmpEsc(new Date(sb.at||Date.now()).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}))}</div></div>`;
+  } else line=`<div class="bl-empty">${pre?'No line posted for this game yet.':'This game is under way or final.'}</div>`;
+  const sideRows=s=>P.filter(x=>x.side===s).sort((a,b)=>(b.pj?b.pj.pra:-1)-(a.pj?a.pj.pra:-1));
+  const nba=lg==='nba';
+  const bt=s=>{ const ps=sideRows(s); if(!ps.length) return '';
+    const c=(x,v)=>x.out||!x.pj?'<span class="mut">&mdash;</span>':ob1(v), ln=(x,k)=>x.pr&&x.pr[k]!=null?x.pr[k]:'<span class="mut">&mdash;</span>';
+    return `<div class="bl-bxh"><b>${cmpEsc(g[s].full||g[s].ab)}</b><span>${ps.length} ON THE BOARD</span></div><div class="bl-bxw"><table class="bl-tbl bl-bx"><thead><tr><th class="l">PLAYER</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>PRA</th>${nba?'<th>DK PTS</th><th>DK REB</th><th>DK AST</th><th>DK 3PM</th><th>DK PRA</th>':''}<th>LIVE $</th></tr></thead><tbody>`+
+      ps.map(x=>{ const pr=obPrice(x.r); return `<tr class="brd"><td class="l">${obName(x.r,'bl-bn')}<small>${x.r.y}</small> ${obStatusTag(x)}</td><td>${c(x,x.pj&&x.pj.min)}</td><td>${c(x,x.pj&&x.pj.pts)}</td><td>${c(x,x.pj&&x.pj.reb)}</td><td>${c(x,x.pj&&x.pj.ast)}</td><td>${c(x,x.pj&&x.pj.tpm)}</td><td>${c(x,x.pj&&x.pj.stl)}</td><td>${c(x,x.pj&&x.pj.blk)}</td><td class="b">${c(x,x.pj&&x.pj.pra)}</td>${nba?`<td>${ln(x,'pts')}</td><td>${ln(x,'reb')}</td><td>${ln(x,'ast')}</td><td>${ln(x,'tpm')}</td><td>${ln(x,'pra')}</td>`:''}<td>${pr?'$'+f2(pr.px):'<span class="mut">&mdash;</span>'}</td></tr>`; }).join('')+'</tbody></table></div>'; };
+  const board=P.length?`<div class="bl-msec"><h4>ON THE BOARD &middot; DSX PROJECTIONS${nba?' VS DRAFTKINGS PROPS':''}</h4>${bt('a')}${bt('h')}<div class="bl-mfoot">DSX projection = per-minute production this season (last five counted double) &times; expected minutes, scoring scaled to tonight&rsquo;s projected team points. ${nba?(OB_PROP[g.id]==='loading'?'Player props loading&hellip;':((OB_PROP[g.id]&&OB_PROP[g.id].n)?'DK = DraftKings player prop line.':'No DraftKings player props posted for this game yet (they post on game day).')):''}</div></div>`:'';
+  const inj=sv&&sv.inj&&sv.inj.length?`<div class="bl-msec"><h4>INJURY REPORT</h4><div class="ob-two">${['a','h'].map(s=>{ const t=sv.inj.find(x=>x.id===g[s].id||x.ab===g[s].ab); const l=t?t.l:[];
+      return `<div><div class="ob-th">${cmpEsc(g[s].ab)}</div>${l.length?l.map(i=>`<div class="ob-ir"><span class="n">${cmpEsc(i.n)}</span><span class="${obOut(i)?'down':'gold'}">${cmpEsc(i.st.toUpperCase())}</span>${i.d?`<small>${cmpEsc(i.d)}</small>`:''}</div>`).join(''):'<div class="bl-empty" style="padding:6px 0">Nothing reported.</div>'}</div>`; }).join('')}</div></div>`
+    : (S==='loading'?'<div class="bl-msec"><h4>INJURY REPORT</h4><div class="bl-load">LOADING&hellip;</div></div>':'');
+  const l5=sv&&sv.l5&&sv.l5.length?`<div class="bl-msec"><h4>LAST FIVE${sv.ss?' &middot; '+cmpEsc(sv.ss.toUpperCase()):''}</h4><div class="ob-two">${['a','h'].map(s=>{ const t=sv.l5.find(x=>x.id===g[s].id||x.ab===g[s].ab); const ev=t?t.ev:[];
+      return `<div><div class="ob-th">${cmpEsc(g[s].ab)} ${ev.length?'<small>'+ev.filter(e=>e.r==='W').length+'&ndash;'+ev.filter(e=>e.r==='L').length+'</small>':''}</div>${ev.length?ev.map(e=>`<div class="ob-ir"><span class="${e.r==='W'?'up':(e.r==='L'?'down':'mut')}">${cmpEsc(e.r)}</span><span class="n">${cmpEsc(e.sc)}</span><small>${cmpEsc(e.av)} ${cmpEsc(e.op)}</small></div>`).join(''):'<div class="bl-empty" style="padding:6px 0">No games yet.</div>'}</div>`; }).join('')}</div></div>`:'';
+  const T=obTapeList(P), tape=T.length?`<div class="bl-msec"><h4>TAPE TO WATCH &middot; ${T.length}</h4><div class="bl-film">${T.slice(0,6).map(t=>obClip(t.c,t.x.r.n)).join('')}</div></div>`:'';
+  const st=pre?obTip(g.date)+(g.tv?' &middot; '+cmpEsc(g.tv):''):cmpEsc(g.sd.toUpperCase());
+  return `${close}<div class="bl-mhd"><div class="k">${nba?'NBA':'COLLEGE'} &middot; PREVIEW &middot; ${obDay(d)} &middot; ${st}${g.venue?' &middot; '+cmpEsc(g.venue.toUpperCase()):''}</div>
+    <div class="bl-mts">${tm('a')}<span class="at">@</span>${tm('h')}</div>
+    <div class="bl-mnav"><button type="button" class="bl-nb" data-obgame="${prev?cmpEsc(prev.id):''}" ${prev?'':'disabled'}>&larr; PREV GAME</button><span>GAME ${i+1} OF ${games.length}</span><button type="button" class="bl-nb" data-obgame="${next?cmpEsc(next.id):''}" ${next?'':'disabled'}>NEXT GAME &rarr;</button><button type="button" class="bl-nb" id="obCopy">COPY LINK</button></div></div>
+    <div class="bl-msec"><h4>THE LINE</h4>${line}</div>${board}${inj}${l5}${tape}`;
+}
+function obGameOpen(id){
+  if(!id) return;
+  OB.game=String(id);
+  let m=document.getElementById('obModal');
+  if(!m){
+    obLastFocus=document.activeElement;
+    m=document.createElement('div'); m.id='obModal'; m.className='bell bl-modal ob';
+    m.innerHTML='<div class="bl-mbg" data-obclose></div><div class="bl-mbox" role="dialog" aria-modal="true" aria-label="Game preview" tabindex="-1"></div>';
+    document.body.appendChild(m); document.documentElement.classList.add('bl-lock');
+  }
+  const F=obFindGame(OB.game); if(F && F.g.state!=='post' && !OB_SUM[F.g.id]){ OB_SUM[F.g.id]='loading'; obQ(()=>obFetchSum(F.g),0); }
+  obGameRefresh(true);
+  obSetHash();
+}
+function obGameRefresh(focus){
+  const m=document.getElementById('obModal'); if(!m) return;
+  const box=m.querySelector('.bl-mbox'), st=box.scrollTop, h=obGameHtml();
+  if(!focus && box._h===h) return;
+  /* keep a clip that is already playing */
+  if(!focus && box.querySelector('iframe')) return;
+  box.innerHTML=h; box._h=h;
+  if(focus){ box.scrollTop=0; const x=box.querySelector('[data-obclose]'); if(x) x.focus(); } else box.scrollTop=st;
+}
+function obGameClose(){
+  const m=document.getElementById('obModal'); OB.game=null;
+  if(m){ m.remove(); document.documentElement.classList.remove('bl-lock'); }
+  if(currentRouteKey==='OPEN') obSetHash();
+  try{ if(obLastFocus && document.contains(obLastFocus)) obLastFocus.focus(); }catch(_){}
+  obLastFocus=null;
+}
+function obOpen(id){
+  const i=id.indexOf(':'), y=id.slice(0,i), k=id.slice(i+1);
+  if(!CLASSES[y] || !(CLASSES[y].top||[]).some(p=>p.tkr===k)) return;
+  if(document.getElementById('obModal')) obGameClose();
+  if(CURCLASS!==y && !setClass(y)) return;
+  route(k);
+  obBackFor=y+'/'+k; obBackFix(k);
+}
+/* keep the back button when a prospectus redraws itself (its class film file landing, a live-price refresh) */
+function obBackFix(k){
+  if(!obBackFor) return;
+  if(obBackFor!==CURCLASS+'/'+k){ obBackFor=null; return; }
+  const m=document.getElementById('main');
+  if(m && !document.getElementById('obToOb')) m.insertAdjacentHTML('afterbegin','<button type="button" id="obToOb" class="cmp-back">&larr; BACK TO THE OPENING BELL PREVIEW</button>');
+}
+/* hash: #openingbell | #openingbell/<lg>/<date> | #openingbell/<lg>/<date>/<gameId> */
+function obSetHash(){
+  if(typeof currentRouteKey==='undefined' || currentRouteKey!=='OPEN') return;
+  let h='#openingbell';
+  if(OB.lg){ const d=OB.day[OB.lg]; if(d || OB.game || OB.lg!=='nba') h+='/'+OB.lg+'/'+(d||obShown(OB.lg)); if(OB.game) h+='/'+OB.game; }
+  try{ if(location.hash!==h) history.replaceState(history.state,'',location.pathname+location.search+h); }catch(_){}
+}
+function obParseHash(){
+  const m=String(location.hash).match(/^#openingbell(?:\/(nba|college)\/(\d{4}-\d\d-\d\d)(?:\/([A-Za-z0-9_-]+))?)?$/);
+  if(!m) return;
+  if(m[1]){ OB.lg=m[1]; const t=obToday(); OB.day[m[1]] = (m[2]>=t && m[2]<=obAdd(t,7)) ? (m[2]===t?null:m[2]) : null; OB.pendingGame=m[3]||null; }
+}
+function obClearHash(){ try{ if(/^#openingbell/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
+function obGoDay(d){ if(!d || !OB.lg) return; OB.day[OB.lg] = d===obToday() ? null : d; OB.more=false; openingBell(); }
+function obReload(){
+  Object.keys(OB_SB).forEach(k=>delete OB_SB[k]); Object.keys(OB_SUM).forEach(k=>delete OB_SUM[k]); Object.keys(OB_PROP).forEach(k=>delete OB_PROP[k]);
+  Object.keys(OB_ROS).forEach(k=>{ if(OB_ROS[k]==='err') delete OB_ROS[k]; });
+  openingBell();
+}
+document.addEventListener('click',function(ev){
+  const t=ev.target; if(!t.closest) return;
+  if(t.closest('#openBtn')){ obReturnKey=(currentRouteKey==='ABOUT'||currentRouteKey==='OPEN')?'MKT':currentRouteKey; route('OPEN'); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(t.closest('#obToOb')){ route('OPEN'); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(t.closest('#obBack')){ route((obReturnKey==='MKT'||byT[obReturnKey]||obReturnKey==='BELL'||obReturnKey==='UNI'||obReturnKey==='CMP'||obReturnKey==='FIND'||obReturnKey==='NEW')?obReturnKey:'MKT'); return; }
+  const inModal=!!t.closest('#obModal');
+  if(currentRouteKey!=='OPEN' && !inModal) return;
+  const o=t.closest('[data-obopen]'); if(o){ obOpen(o.dataset.obopen); window.scrollTo({top:0,behavior:'instant'}); return; }
+  const v=t.closest('[data-obv]'); if(v){ const id=v.dataset.obv; v.outerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1&autoplay=1" title="Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`; return; }
+  if(inModal){
+    if(t.closest('[data-obclose]')){ obGameClose(); return; }
+    if(t.closest('#obCopy')){ const b=t.closest('#obCopy'), u=location.href; const done=()=>{ b.textContent='LINK COPIED'; };
+      try{ navigator.clipboard.writeText(u).then(done,()=>{ b.textContent=u; }); }catch(_){ b.textContent=u; } return; }
+    const gg=t.closest('[data-obgame]'); if(gg){ if(gg.dataset.obgame) obGameOpen(gg.dataset.obgame); return; }
+    return;
+  }
+  if(t.closest('#obToBell')){ route('BELL'); window.scrollTo({top:0,behavior:'instant'}); return; }
+  const gm=t.closest('[data-obgame]'); if(gm){ obGameOpen(gm.dataset.obgame); return; }
+  const dd=t.closest('[data-obday]'); if(dd){ obGoDay(dd.dataset.obday); return; }
+  if(t.closest('#obReload')){ obReload(); return; }
+  if(t.closest('#obRetry')){ const d=obShown(OB.lg); delete OB_SB[obSbKey(OB.lg,d)]; openingBell(); return; }
+  const l=t.closest('[data-oblg]'); if(l){ OB.lg=l.dataset.oblg; OB.more=false; OB.pcls='all'; OB.fcls='all'; openingBell(); return; }
+  if(t.closest('#obMore')){ OB.more=true; openingBell(); return; }
+  const s=t.closest('th[data-obs]'); if(s){ const k=s.dataset.obs; if(OB.sort===k) OB.dir=-OB.dir; else { OB.sort=k; OB.dir=(k==='n'||k==='tip')?1:-1; } openingBell(); }
+});
+document.addEventListener('keydown',function(ev){
+  if(document.getElementById('obModal')){
+    if(ev.key==='Escape'){ obGameClose(); return; }
+    if(ev.key==='Tab'){ const box=document.querySelector('#obModal .bl-mbox'), f=[...box.querySelectorAll('button:not([disabled]),select,iframe,[tabindex="0"]')]; if(!f.length) return;
+      const a=f[0], z=f[f.length-1]; if(ev.shiftKey&&document.activeElement===a){ z.focus(); ev.preventDefault(); } else if(!ev.shiftKey&&document.activeElement===z){ a.focus(); ev.preventDefault(); } }
+    return;
+  }
+  if(currentRouteKey!=='OPEN') return;
+  if((ev.key==='Enter'||ev.key===' ') && ev.target.matches && ev.target.matches('.bl-g[data-obgame]')){ ev.preventDefault(); obGameOpen(ev.target.dataset.obgame); }
+});
+document.addEventListener('change',function(ev){
+  if(currentRouteKey!=='OPEN') return;
+  if(ev.target.id==='obP'){ OB.pcls=ev.target.value; openingBell(); }
+  else if(ev.target.id==='obF'){ OB.fcls=ev.target.value; OB.more=false; openingBell(); }
+});
+function obLoadHash(){
+  if(!/^#openingbell/.test(location.hash)){ if(document.getElementById('obModal')) obGameClose(); return; }
+  obParseHash();
+  if(currentRouteKey!=='OPEN'){ obReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('OPEN'); }
+  else openingBell();
+}
+window.addEventListener('hashchange',obLoadHash);
+obLoadHash();
+/*OB-JS-END*/
 /*WN-JS-START*/
 /* ================= WHAT'S NEW =================================================
    The public changelog. Newest first. To add an upgrade: put a new object at the TOP of WN_LOG
    (d = 'YYYY-MM-DD', tag, t = title, b = body HTML, go = optional [label, action]).
-   Actions: 'BELL' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
+   Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-05',tag:'NEW FEATURE',t:'Opening Bell Preview',go:['OPEN THE OPENING BELL PREVIEW','OPEN'],
+  b:'The pre-game mirror of the Closing Bell. Tonight&rsquo;s slate before tip-off: the spread, total, moneyline and projected team points for every game, ESPN&rsquo;s win probability, the injury report, and a projected stat line for every board player in action, shown next to the sportsbook&rsquo;s player props. The NBA classes and the 2027 college class each get their own slate, and the lines are pulled fresh every time you open it.'},
  {d:'2026-11-04',tag:'NEW FEATURE',t:'The Closing Bell',go:['OPEN THE CLOSING BELL','BELL'],
   b:'A morning recap of the most recent slate. Every board player who played and how he did, the top performances ranked by Game Score, the biggest live-price risers and fallers in each class, every final with the board players in it, and the film. NBA classes and the 2027 college class each get their own night. Posted every morning after the price update.'},
  {d:'2026-11-04',tag:'2027 CLASS',t:'Overseas pros get their pro stat lines',
@@ -5718,7 +6356,7 @@ function whatsNew(){
   try{ if(location.hash!=='#whatsnew') history.replaceState(history.state,'',location.pathname+location.search+'#whatsnew'); }catch(_){}
 }
 function wnClearHash(){ try{ if(/^#whatsnew/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
-function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
+function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
 function wnAct(a){
   if(a.indexOf('CLASS:')===0){ const y=a.slice(6); if(CURCLASS!==y){ if(!setClass(y)) return; } else route('MKT'); }
   else if(a==='TOUR'){ route('MKT'); const t=document.getElementById('tourBtn'); if(t) t.click(); }
@@ -5758,8 +6396,8 @@ wnDot(); wnLoadHash();
    Every replaceState in the page now passes history.state, so the views that
    write their own hash never wipe the entry's state. */
 var NAV={pop:false, tick:false, boot:true, home:'2026'};
-var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,NEW:1};
-var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,NEW:/^#whatsnew/};
+var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1};
+var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/};
 function navKey(k){ return (k==='MKT') ? CURCLASS+'/MKT' : (NAV_VIEWS[k] ? k : CURCLASS+'/'+k); }
 function navUrl(k){
   const base=location.pathname+location.search;
