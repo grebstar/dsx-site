@@ -5904,7 +5904,8 @@ function obInj(g,x){
 function obOut(i){ return !!i && /^out|suspend|inactive/i.test(i.st); }
 function obMin(v){ if(typeof v==='number') return v; const m=String(v||'').match(/^(\d+):(\d+)/); return m?(+m[1]+(+m[2])/60):(parseFloat(v)||0); }
 /* DSX projection: blended per-minute rates (season + last five, so the last five count double) x expected
-   minutes (half season average, half last five), with scoring nudged by tonight's projected team points */
+   minutes (half season average, half last five), with scoring nudged by tonight's projected team points
+   (capped at +/-8%: college spreads of 30-40 points would otherwise inflate a favorite's starters) */
 function obProj(e,it,lg){
   if(!e || !e.rows) return null;
   const rows=e.rows.filter(r=>Array.isArray(r) && r[0]!=='#' && obMin(r[3])>0);
@@ -5913,7 +5914,7 @@ function obProj(e,it,lg){
   const sum=a=>{ const t={min:0}; K.forEach(k=>t[k]=0); a.forEach(r=>{ t.min+=obMin(r[3]); K.forEach(k=>t[k]+=(+r[IX[k]]||0)); }); return t; };
   const S=sum(rows), l5=rows.slice(-5), L=sum(l5);
   const mpg=S.min/rows.length, mp5=L.min/l5.length, min=rows.length>=5 ? (mpg+mp5)/2 : mpg;
-  const base=lg==='nba'?115:73, f=it ? 1+0.6*(it/base-1) : 1;
+  const base=lg==='nba'?115:73, f=it ? Math.max(0.92,Math.min(1.08,1+0.6*(it/base-1))) : 1;
   const o={min, gp:rows.length, env:f};
   K.forEach(k=>{ let v=(S[k]+L[k])/(S.min+L.min)*min; if(k==='pts'||k==='tpm') v*=f; else if(k==='ast') v*=1+0.3*(f-1); o[k]=v; });
   o.pra=o.pts+o.reb+o.ast;
@@ -6112,7 +6113,7 @@ function openingBell(){
     }
     const np=Object.keys(OB_PROP).filter(id=>gs.some(g=>g.id===id)).map(id=>OB_PROP[id]);
     const ld=np.filter(v=>v==='loading').length;
-    S.foot=`<p class="bl-foot">${ld?'<b>Loading player props for '+ld+' game'+(ld===1?'':'s')+'&hellip;</b> ':''}Lines (spread, total, moneyline, player props) are DraftKings as published by ESPN, pulled when this page opened. Projected team points come from the spread and total (favorite = (total + spread) &divide; 2). Win probability is ESPN&rsquo;s Basketball Power Index. Injury report from ESPN. DSX projections are this site&rsquo;s own: each player&rsquo;s per-minute production this season with his last five games counted double, times his expected minutes (half his season average, half his last five), with scoring nudged up or down by tonight&rsquo;s projected team points against a ${lg==='nba'?'115':'73'}-point baseline. Projections need at least one game this season; fewer than five games is a thin sample. &#9650;/&#9660; next to a line shows whether the DSX projection is above or below it. These are market expectations shown for scouting context, not betting advice. Player props are NBA only and post on game day.</p>`;
+    S.foot=`<p class="bl-foot">${ld?'<b>Loading player props for '+ld+' game'+(ld===1?'':'s')+'&hellip;</b> ':''}Lines (spread, total, moneyline, player props) are DraftKings as published by ESPN, pulled when this page opened. Projected team points come from the spread and total (favorite = (total + spread) &divide; 2). Win probability is ESPN&rsquo;s Basketball Power Index. Injury report from ESPN. DSX projections are this site&rsquo;s own: each player&rsquo;s per-minute production this season with his last five games counted double, times his expected minutes (half his season average, half his last five), with scoring nudged up or down by tonight&rsquo;s projected team points against a ${lg==='nba'?'115':'73'}-point baseline (never more than 8% either way). Projections need at least one game this season; fewer than five games is a thin sample. &#9650;/&#9660; next to a line shows whether the DSX projection is above or below it. These are market expectations shown for scouting context, not betting advice. Player props are NBA only and post on game day.</p>`;
   }
   const main=document.getElementById('main');
   let root=document.getElementById('obRoot');
