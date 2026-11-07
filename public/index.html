@@ -1108,6 +1108,35 @@ html.bl-lock,html.bl-lock body{overflow:hidden}
   .tour.mini{left:auto!important;right:8px!important;bottom:8px!important;width:200px;border:1px solid var(--amber-d)}
 }
 @media print{.tour{display:none!important}}
+/* TOUR-INTRO: first-visit welcome screen (big banner + centred video) */
+.tintro{position:fixed;inset:0;z-index:59;background:rgba(5,6,9,.8);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);display:flex;flex-direction:column;align-items:center;padding:0 16px}
+.tintro .tib{margin-top:clamp(10px,4vh,36px);width:min(860px,100%);box-sizing:border-box;text-align:center;font-family:var(--mono);background:linear-gradient(180deg,#1C170B,#12141B);border:1px solid var(--amber);box-shadow:0 10px 40px rgba(0,0,0,.6);padding:16px 18px 14px}
+.tintro .tik{font-size:10.5px;letter-spacing:.24em;color:var(--mute)}
+.tintro .tih{font-family:var(--cond);font-weight:700;font-size:clamp(24px,4.6vw,46px);letter-spacing:.05em;color:var(--amber);line-height:1.05;margin:6px 0}
+.tintro .tis{font-size:12.5px;color:var(--ink);line-height:1.5;max-width:660px;margin:0 auto}
+.tintro .tia{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.tintro .tia button{height:34px;padding:0 16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;cursor:pointer;border:1px solid var(--amber)}
+.tintro .tia .tgo{background:var(--amber);color:#0A0C11;font-weight:700}
+.tintro .tia .tgo:hover{filter:brightness(1.1)}
+.tintro .tia .tno{background:none;color:var(--ink);border-color:var(--line2)}
+.tintro .tia .tno:hover{border-color:var(--amber);color:var(--amber)}
+.tintro.playing .tgo{display:none}
+.tour.intro{left:50%!important;right:auto!important;bottom:auto!important;top:var(--ti-top,190px)!important;width:var(--ti-w,min(860px,calc(100vw - 32px)))!important;transform:translateX(-50%);border:1px solid var(--amber)!important;box-shadow:0 18px 70px rgba(0,0,0,.8)}
+.tour.intro .th{cursor:default}
+.tposter{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#000;cursor:pointer;display:block}
+.tposter img{width:100%;height:100%;object-fit:cover;opacity:.8;display:block}
+.tposter .tpl{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--amber);color:#0A0C11;font-size:34px;line-height:84px;text-align:center;text-indent:6px;box-shadow:0 6px 28px rgba(0,0,0,.6);transition:transform .12s}
+.tposter:hover .tpl,.tposter:focus-visible .tpl{transform:scale(1.07)}
+.tposter .tpd{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.78);color:#fff;font-family:var(--mono);font-size:11px;padding:2px 6px}
+@media (max-width:640px){
+  .tintro{padding:0 8px}
+  .tintro .tib{padding:12px 12px 10px}
+  .tintro .tik{font-size:9.5px;letter-spacing:.18em}
+  .tintro .tis{font-size:11.5px}
+  .tintro .tia button{padding:0 12px;font-size:10.5px}
+  .tposter .tpl{width:64px;height:64px;margin:-32px 0 0 -32px;line-height:64px;font-size:26px;text-indent:4px}
+}
+@media print{.tintro{display:none!important}}
 /*TOUR-CSS-END*/
 /*LIVE-CSS-START*/
 /* LIVE price: header box, board column, explanation bubble, phone board */
@@ -4553,7 +4582,8 @@ function place(x,y){
 }
 function replace(){ if(el && el.style.left){ var r=el.getBoundingClientRect(); place(r.left,r.top); } }
 function seek(s,b){
-  if(loaded){ cmd('seekTo',[s,true]); cmd('playVideo'); } else { fr.src=src(s); }
+  if(el.querySelector('.tposter')){ introPlay(s); }
+  else if(loaded){ cmd('seekTo',[s,true]); cmd('playVideo'); } else { fr.src=src(s); }
   var all=el.querySelectorAll('.tc button'); for(var i=0;i<all.length;i++) all[i].classList.toggle('on',all[i]===b);
 }
 function build(){
@@ -4579,11 +4609,11 @@ function build(){
   hd.addEventListener('click',function(e){
     var a=e.target.closest('button'); if(!a) return; var k=a.getAttribute('data-a');
     if(k==='x') close();
-    else if(k==='chap'){ el.classList.toggle('chap'); a.classList.toggle('on',el.classList.contains('chap')); }
-    else if(k==='mini'){ el.classList.toggle('mini'); a.innerHTML=el.classList.contains('mini')?'+':'&#8211;'; replace(); }
+    else if(k==='chap'){ el.classList.toggle('chap'); a.classList.toggle('on',el.classList.contains('chap')); layoutIntro(); }
+    else if(k==='mini'){ if(introOn()){ introEnd(); if(!isOpen()) return; } el.classList.toggle('mini'); a.innerHTML=el.classList.contains('mini')?'+':'&#8211;'; replace(); }
   });
   hd.addEventListener('pointerdown',function(e){
-    if(e.target.closest('button')||small()) return;
+    if(e.target.closest('button')||small()||el.classList.contains('intro')) return;
     var r=el.getBoundingClientRect(); dx=e.clientX-r.left; dy=e.clientY-r.top; drag=true; el.classList.add('drag');
     try{ hd.setPointerCapture(e.pointerId); }catch(x){}
   });
@@ -4597,10 +4627,12 @@ function open(){
   if(!el) build();
   el.classList.add('on'); btn.classList.add('on'); btn.setAttribute('aria-pressed','true');
   loaded=false; fr.src=src(0);
-  btn.classList.remove('new'); try{ localStorage.setItem('dse_tour_seen','1'); }catch(e){}
+  markSeen();
 }
 function close(){
   if(!el) return;
+  if(intro){ intro.parentNode.removeChild(intro); intro=null; }
+  el.classList.remove('intro'); var _p=el.querySelector('.tposter'); if(_p) _p.parentNode.removeChild(_p);
   el.classList.remove('on'); btn.classList.remove('on'); btn.setAttribute('aria-pressed','false');
   loaded=false; fr.removeAttribute('src'); fr.src='about:blank';
 }
@@ -4609,6 +4641,76 @@ btn.addEventListener('click',function(){ if(isOpen()) close(); else open(); });
 try{ if(!localStorage.getItem('dse_tour_seen')) btn.classList.add('new'); }catch(e){}
 /* the Film Lab covers the whole screen, so pause the tour when it opens */
 if(typeof openFilm==='function'){ var _of=openFilm; openFilm=function(){ pause(); return _of.apply(this,arguments); }; }
+/* TOUR-INTRO: first visit -> centred Welcome Tour with a banner. Shown once per browser
+   (localStorage dse_tour_intro), only when landing on the board, never to bots.
+   Force it with ?tour=1. Nothing loads from YouTube until the visitor presses play. */
+var intro=null, H0=location.hash||'', FORCE=/[?&]tour=1(&|$)/.test(location.search);
+function introOn(){ return !!(el && el.classList.contains('intro')); }
+function markSeen(){ btn.classList.remove('new'); try{ localStorage.setItem('dse_tour_seen','1'); }catch(e){} }
+function layoutIntro(){
+  if(!intro || !introOn()) return;
+  var b=intro.querySelector('.tib').getBoundingClientRect();
+  var vw=window.innerWidth, vh=window.innerHeight, top=Math.round(b.bottom+12);
+  var extra=34+(el.classList.contains('chap')?190:0);
+  var w=Math.min(860, vw-(small()?16:32), Math.max(260,(vh-top-14-extra)*16/9));
+  el.style.setProperty('--ti-top',top+'px'); el.style.setProperty('--ti-w',Math.floor(w)+'px');
+}
+function introShow(){
+  if(isOpen()) return;
+  if(!el) build();
+  intro=document.createElement('div'); intro.className='tintro'; intro.id='tourIntro';
+  intro.innerHTML='<div class="tib" role="dialog" aria-modal="true" aria-labelledby="tiH">'
+    +'<div class="tik">NEW TO THE EXCHANGE? START HERE</div>'
+    +'<div class="tih" id="tiH">&#9654; WATCH THE WELCOME TOUR</div>'
+    +'<div class="tis">A guided walkthrough of The Draft Stock Exchange: how every prospect gets priced like a stock, how to read a prospectus page, the Film Lab and more. About 15 minutes &middot; jump to any chapter.</div>'
+    +'<div class="tia"><button type="button" class="tgo" data-ti="go">&#9654; PLAY THE TOUR</button>'
+    +'<button type="button" class="tno" data-ti="no">SKIP FOR NOW</button></div></div>';
+  document.body.appendChild(intro);
+  intro.addEventListener('click',function(e){
+    var b=e.target.closest('[data-ti]');
+    if(b){ if(b.getAttribute('data-ti')==='go') introPlay(0); else introEnd(); return; }
+    if(!e.target.closest('.tib')) introEnd();
+  });
+  el.classList.add('on'); el.classList.add('intro'); btn.classList.add('on'); btn.setAttribute('aria-pressed','true');
+  loaded=false; fr.removeAttribute('src');
+  var tv=el.querySelector('.tv'), p=document.createElement('button');
+  p.type='button'; p.className='tposter'; p.setAttribute('aria-label','Play the welcome tour video');
+  p.innerHTML='<img alt="" src="https://i.ytimg.com/vi/'+VID+'/hqdefault.jpg" decoding="async" onerror="this.style.visibility=\'hidden\'"><span class="tpl">&#9654;</span><span class="tpd">15:11</span>';
+  p.addEventListener('click',function(){ introPlay(0); });
+  tv.appendChild(p);
+  layoutIntro();
+  try{ localStorage.setItem('dse_tour_intro','1'); }catch(e){}
+  setTimeout(function(){ var g=intro && intro.querySelector('.tgo'); if(g){ try{ g.focus({preventScroll:true}); }catch(e){} } },30);
+}
+function introPlay(s){
+  var p=el.querySelector('.tposter'); if(p) p.parentNode.removeChild(p);
+  loaded=false; fr.src=src(s||0); markSeen();
+  if(intro){ intro.classList.add('playing'); var n=intro.querySelector('.tno'); if(n) n.innerHTML='DOCK THE VIDEO &amp; EXPLORE THE SITE &#8600;'; }
+}
+/* leave the welcome screen: if the video is playing it docks to the corner and keeps playing */
+function introEnd(){
+  if(!el) return;
+  var started=!el.querySelector('.tposter');
+  if(intro){ intro.parentNode.removeChild(intro); intro=null; }
+  el.classList.remove('intro'); el.style.removeProperty('--ti-top'); el.style.removeProperty('--ti-w');
+  if(!started) close();
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape' && introOn()){ e.preventDefault(); e.stopPropagation(); introEnd(); } },true);
+window.addEventListener('resize',layoutIntro);
+(function(){
+  if(!FORCE){
+    if(/bot|crawl|spider|slurp|lighthouse|headless|facebookexternalhit|embedly|preview/i.test(navigator.userAgent||'')) return;
+    if(H0 && !/^#(20\d\d)?$/.test(H0)) return;
+    try{ if(localStorage.getItem('dse_tour_seen') || localStorage.getItem('dse_tour_intro')) return; }catch(e){ return; }
+  }
+  function go(){ setTimeout(function(){
+    if(isOpen()) return;
+    if(!FORCE && typeof currentRouteKey!=='undefined' && currentRouteKey!=='MKT') return;
+    introShow();
+  },900); }
+  if(document.readyState==='complete') go(); else window.addEventListener('load',go,{once:true});
+})();
+window.tourIntro=introShow;
 window.tourOpen=open; window.tourClose=close;
 })();
 /*TOUR-JS-END*/</script>
@@ -6702,6 +6804,8 @@ obLoadHash();
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-06',tag:'WELCOME',t:'First visit? The Welcome Tour opens for you',go:['WATCH THE WELCOME TOUR','TOUR'],
+  b:'New visitors now land on the Welcome Tour video front and center, with a chapter list so you can jump straight to the part you want. Skip it and it won&rsquo;t come back; press play and you can dock it to the corner and keep clicking around the site while it runs. The WELCOME TOUR button at the top still opens it any time.'},
  {d:'2026-11-06',tag:'ANALYST DESK',t:'Quote Board view on the Analyst Desk',go:['OPEN THE ANALYST DESK','DESK'],
   b:'Switch any board to QUOTE BOARD to see every player in the 2027 class in one table with his stats: games, minutes, points, rebounds, assists, steals, blocks, turnovers, threes, FG%, 3P%, FT%, true shooting, eFG%, assist-to-turnover, Game Score and per-40 numbers, plus his live and IPO prices. Click any column to sort by it, and flip between this season and the pre-draft line. It works on other analysts&rsquo; boards on The Floor too.'},
  {d:'2026-11-06',tag:'ANALYST DESK',t:'The Floor, player notes and player cards on the Analyst Desk',go:['OPEN THE ANALYST DESK','DESK'],
