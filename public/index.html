@@ -1493,6 +1493,111 @@ td.lv .lvtags .lvt{margin-left:0}
   .dk .dk-bhead .sp{display:none}
   .dk .dk-newb input[type=text],.dk .dk-bren input[type=text],.dk .dk-newb select{width:100%}
 }
+/* floor Nov 6: notes, stat lines, player card, The Floor */
+.dk .dk-nav{display:flex;gap:0;margin:0 0 16px;border:1px solid var(--line2);width:max-content;max-width:100%}
+.dk .dk-nav button{background:transparent;border:0;border-right:1px solid var(--line2);color:var(--mute);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;padding:9px 16px;cursor:pointer}
+.dk .dk-nav button:last-child{border-right:0}
+.dk .dk-nav button em{font-style:normal;font-weight:500;font-size:9.5px;letter-spacing:.1em;margin-left:6px;opacity:.8}
+.dk .dk-nav button.on{background:var(--amber-g);color:var(--amber);box-shadow:inset 0 -2px 0 var(--amber)}
+.dk .dk-nav button:hover{color:var(--amber)}
+.dk .dk-st{display:block;font-size:10.5px;color:var(--ink);letter-spacing:.03em;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.92}
+.dk .dk-st b{font-weight:700;color:var(--ink)}
+.dk .dk-st i{font-style:normal;color:var(--up);font-size:9.5px;letter-spacing:.1em;margin-right:4px}
+.dk .dk-st i.pre{color:var(--mute)}
+.dk .dk-nt{display:block;font-size:11px;color:var(--mute);font-style:italic;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dk .dk-ic.nt{font-size:13px}
+.dk .dk-ic.nt.has{border-color:var(--gold);color:var(--gold)}
+.dk .dk-ic.nt.on{background:var(--gold);color:#14100A;border-color:var(--gold)}
+.dk .dk-noteli{border-bottom:1px solid var(--line);background:var(--panel2,var(--panel));padding:10px 12px}
+.dk .dk-noteed label{display:block;font-size:10px;letter-spacing:.14em;color:var(--gold);font-weight:700;margin-bottom:6px}
+.dk .dk-noteed label em{font-style:normal;color:var(--mute);font-weight:500;margin-left:6px;letter-spacing:.1em}
+.dk .dk-noteed textarea{width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--line2);color:var(--ink);font-family:var(--mono);font-size:12.5px;line-height:1.55;padding:8px 10px;resize:vertical;min-height:70px}
+.dk .dk-noteed textarea:focus{border-color:var(--amber);outline:none}
+.dk .dk-notebar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+.dk .dk-notebar .sp{flex:1}.dk .dk-notebar .dk-err{margin:0}
+.dk .dk-cnt{font-size:10px;color:var(--mute);letter-spacing:.08em}
+.dk .dk-btn.vis{border-color:var(--line2);color:var(--mute)}
+.dk .dk-btn.vis.pub{border-color:var(--up);color:var(--up)}
+.dk .dk-vis{font-size:10px;letter-spacing:.14em;padding:3px 8px;border:1px solid var(--line2);color:var(--mute)}
+.dk .dk-hint{font-size:11.5px;color:var(--mute);margin:-4px 0 12px;line-height:1.55;opacity:.85}
+.dk .dk-fback{margin:0 0 12px}
+.dk .dk-fintro p{margin:0}
+.dk ol.dk-flist{list-style:none;margin:0;padding:0}
+.dk .dk-fl{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,2.2fr) auto;gap:6px 14px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.dk .dk-flist li:last-child .dk-fl{border-bottom:0}
+.dk .dk-fl:hover{background:var(--amber-g)}
+.dk .dk-fl .who{font-family:var(--cond);font-size:18px;font-weight:700;letter-spacing:.04em;color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dk .dk-fl em,.dk .off{font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.14em;padding:2px 5px;border:1px solid var(--amber);color:var(--amber);vertical-align:middle;font-weight:600}
+.dk .dk-fl em.you{border-color:var(--up);color:var(--up)}
+.dk .dk-fl .bn{font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dk .dk-fl .bn i{font-style:normal;color:var(--gold)}
+.dk .dk-fl .bn small{display:block;font-weight:500;color:var(--mute);font-size:10px;letter-spacing:.08em;margin-top:2px}
+.dk .dk-fl .top{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:var(--ink);min-width:0}
+.dk .dk-fl .top span{white-space:nowrap}
+.dk .dk-fl .top i{font-style:normal;color:var(--amber);font-weight:700;margin-right:4px}
+.dk .dk-fl .go{color:var(--amber);font-size:10.5px;letter-spacing:.12em}
+.dk .dk-fhead .who .off{margin-left:0}
+.dk .dk-bhead.solo{border-top:1px solid var(--line2)}
+.dk .dk-fboard .dk-row{grid-template-columns:34px minmax(0,1fr) auto}
+.dk .dk-fboard.cmp .dk-row{grid-template-columns:34px minmax(0,1fr) auto auto}
+.dk .dk-you{font-size:10.5px;color:var(--lbl);letter-spacing:.06em;white-space:nowrap}
+.dk .dk-you.mut{color:var(--mute)}
+.dk .dk-fnote{display:block;white-space:normal;font-size:12px;line-height:1.55;color:var(--ink);border-left:2px solid var(--gold);padding:4px 0 4px 10px;margin:7px 0 2px;overflow-wrap:anywhere}
+/* player card */
+.dk-pop{position:fixed;z-index:9000;display:none;max-height:min(80vh,640px);overflow:auto;background:var(--panel);border:1px solid var(--amber-d);box-shadow:0 18px 50px rgba(0,0,0,.6);padding:14px 16px 12px;font-family:var(--mono);color:var(--ink);--mute:#B8AEE6}
+.dk-pop.on{display:block}
+.dk-pop.sheet{left:0!important;right:0;bottom:0;top:auto!important;width:auto!important;max-height:82vh;border-width:1px 0 0;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+.dk-pop .dk-px{position:absolute;top:6px;right:8px;background:transparent;border:0;color:var(--mute);font-size:22px;line-height:1;cursor:pointer;padding:4px 6px}
+.dk-pop .dk-px:hover{color:var(--amber)}
+.dk-pop .dk-phead{display:flex;gap:12px;align-items:flex-start;padding-right:26px}
+.dk-pop .dk-phead img{width:58px;height:58px;object-fit:cover;object-position:top;border:1px solid var(--line2);background:var(--bg);flex:none}
+.dk-pop .dk-ptk{font-size:11px;letter-spacing:.14em;color:var(--amber);font-weight:700}
+.dk-pop .dk-ptk em{font-style:normal;font-size:9px;border:1px solid var(--line2);color:var(--mute);padding:1px 4px;margin-left:4px}
+.dk-pop .dk-pnm{font-family:var(--cond);font-size:22px;font-weight:700;letter-spacing:.04em;color:var(--gold);line-height:1.15}
+.dk-pop .dk-pmeta{font-size:11px;color:var(--mute);margin-top:2px}
+.dk-pop .dk-psec{font-size:9.5px;letter-spacing:.12em;color:var(--lbl);margin-top:3px}
+.dk-pop .dk-pmkt{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;letter-spacing:.06em;color:var(--mute);margin:10px 0 0;padding:8px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dk-pop .dk-pmkt b{color:var(--ink)}
+.dk-pop .dk-ptag{font-size:11.5px;line-height:1.55;color:var(--ink);margin:9px 0 0}
+.dk-pop h5{margin:12px 0 6px;font-size:10px;letter-spacing:.14em;color:var(--amber);font-weight:700}
+.dk-pop h5 em{font-style:normal;color:var(--mute);font-weight:500;margin-left:4px;letter-spacing:.08em}
+.dk-pop h5.up{color:var(--up)}.dk-pop h5.dn{color:var(--down)}
+.dk-pop .dk-pgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.dk-pop .dk-pgrid div{border:1px solid var(--line);text-align:center;padding:5px 0}
+.dk-pop .dk-pgrid b{display:block;font-size:14px}
+.dk-pop .dk-pgrid span{font-size:9px;letter-spacing:.12em;color:var(--mute)}
+.dk-pop .dk-pshoot{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11px;color:var(--mute);margin-top:6px}
+.dk-pop .dk-pshoot b{color:var(--ink)}.dk-pop .dk-pshoot i{font-style:normal;font-size:10px}
+.dk-pop .dk-padv{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.dk-pop .dk-padv div{border:1px solid var(--line);padding:4px 6px;cursor:help}
+.dk-pop .dk-padv span{display:block;font-size:8.5px;letter-spacing:.1em;color:var(--mute);white-space:nowrap}
+.dk-pop .dk-padv b{font-size:12.5px}
+.dk-pop .dk-pline{font-size:11.5px;margin:0;color:var(--ink)}
+.dk-pop .dk-pmut{font-size:11px;color:var(--mute);margin:0}
+.dk-pop .dk-pbb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dk-pop .dk-pbb ul{margin:0;padding-left:16px}
+.dk-pop .dk-pbb li{font-size:11px;line-height:1.5;color:var(--ink);margin-bottom:3px}
+.dk-pop .dk-pnote{margin-top:10px;border-left:2px solid var(--gold);padding:2px 0 2px 10px}
+.dk-pop .dk-pnote h5{margin:0 0 4px;color:var(--gold)}
+.dk-pop .dk-pnote p{margin:0;font-size:12px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.dk-pop .dk-pbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
+.dk-pop .dk-btn{background:transparent;border:1px solid var(--line2);color:var(--lbl);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;padding:8px 12px;cursor:pointer}
+.dk-pop .dk-btn.prim{border-color:var(--amber);color:var(--amber);background:var(--amber-g)}
+.dk-pop .dk-btn.prim:hover{background:var(--amber);color:#14100A}
+.dk-pop .dk-btn.film{border-color:var(--gold);color:var(--gold)}
+.dk-pop .dk-btn.film:hover{background:var(--gold);color:#14100A}
+@media (max-width:900px){.dk .dk-fl{grid-template-columns:minmax(0,1fr) auto;}.dk .dk-fl .top{grid-column:1 / -1}.dk .dk-fl .bn{grid-column:1}.dk .dk-fl .go{grid-row:1;grid-column:2}}
+@media (max-width:560px){
+  .dk .dk-nav{width:100%}.dk .dk-nav button{flex:1;padding:9px 8px}.dk .dk-nav button em{display:none}
+  .dk .dk-board .dk-st{white-space:normal;line-height:1.45}
+  .dk .dk-board .dk-nt{display:none}
+  .dk .dk-fboard .dk-row,.dk .dk-fboard.cmp .dk-row{grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"rk pl d" "rk pl you";padding:8px 10px}
+  .dk .dk-fboard .dk-you{grid-area:you;text-align:right}
+  .dk .dk-fboard .dk-pl small{display:block}
+  .dk-pop .dk-pgrid{grid-template-columns:repeat(3,1fr)}
+  .dk-pop .dk-padv{grid-template-columns:repeat(2,1fr)}
+  .dk-pop .dk-pbb{grid-template-columns:1fr}
+}
 /*DESK-CSS-END*/
 </style>
 </head>
@@ -6563,6 +6668,8 @@ obLoadHash();
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-06',tag:'ANALYST DESK',t:'The Floor, player notes and player cards on the Analyst Desk',go:['OPEN THE ANALYST DESK','DESK'],
+  b:'The Floor shows other analysts&rsquo; public boards for the 2027 class: their order, where they break from the market, and their notes on each player. Your &#9733; MAIN board is public by default; you can make it private, share your other boards, or hide your account. Add a note on any player with the pencil button, every row now carries his current-season stat line, and hovering a name (tapping it on a phone) opens a player card with his basic and advanced stats, the bull and bear case, and links to his full page and Film Lab.'},
  {d:'2026-11-06',tag:'ANALYST DESK',t:'Keep up to three boards for a class',go:['OPEN THE ANALYST DESK','DESK'],
   b:'Market analysts can now keep up to three named boards for the 2027 class: your real board, a ceiling board, a contrarian board, whatever you like. Start a new one from a copy of your board, the market order or a blank slate, and switch between them with the tabs. Star one as your MAIN board; that is the one graded on the leaderboard once the draft locks, and your other boards get their own report card.'},
  {d:'2026-11-06',tag:'NEW FEATURE',t:'The Analyst Desk: file your own big board',go:['OPEN THE ANALYST DESK','DESK'],
@@ -6674,11 +6781,14 @@ wnDot(); wnLoadHash();
    Fan boards never feed the DHJ Price, the composite or any ranking.
    #desk opens it; #desk?err=<why> is where a failed sign-in comes back to.
    Nov 6 (boards3): up to DESK_MAX named boards per class; one is the MAIN (starred) board,
-   the only one that counts on the scorecard / leaderboard after the lock. */
+   the only one that counts on the scorecard / leaderboard after the lock.
+   Nov 6 (floor): per-player notes, a live stat line on every row, a player card on hover (tap on phones),
+   and THE FLOOR (#desk/floor, #desk/floor/<analyst>/<slot>): other analysts' public boards. */
 var DESK_API='https://api.thedraftstockexchange.com', DESK_YEAR='2027', DESK_MIN=10, DESK_MAX=3;
 var DESK={me:undefined, err:null, loading:null, board:null, boards:null, slot:1, picks:null, saved:null, saveState:'', saveT:0, inflight:false,
   again:false, dirty:{}, sending:null, q:'', arm:null, armT:0, nameErr:'', renaming:false, flash:'',
-  newOpen:false, newErr:'', bRen:false, bErr:'', busy:false};
+  newOpen:false, newErr:'', bRen:false, bErr:'', busy:false,
+  notes:{}, noteOpen:null, noteDraft:'', noteErr:'', noteBusy:false, floor:null, fb:null, dragging:false};
 var deskReturnKey='MKT';
 function deskFetch(path, opt){
   opt=opt||{};
@@ -6710,6 +6820,7 @@ function deskLoadMe(force){
   return DESK.loading;
 }
 function deskLoadBoard(){
+  deskFetch('/notes/'+DESK_YEAR).then(function(n){ DESK.notes=n.notes||{}; if(currentRouteKey==='DESK' && deskView().v==='mine' && !DESK.noteOpen) deskKeep(); }).catch(function(){});
   return deskFetch('/boards/'+DESK_YEAR).then(function(b){
     DESK.board=b; DESK.dirty={};
     deskSetBoards(b.boards, true);
@@ -6723,7 +6834,7 @@ function deskSetBoards(list, fresh){
   const old={}; (DESK.boards||[]).forEach(function(x){ old[x.slot]=x; });
   let bs=(list||[]).map(function(x){
     const o=old[x.slot], keep=!fresh && o && (DESK.dirty[x.slot] || DESK.sending===x.slot);
-    return {slot:x.slot, name:x.name, main:!!x.main, updated:x.updated,
+    return {slot:x.slot, name:x.name, main:!!x.main, updated:x.updated, share:x.share, public:!!x.public,
       picks: keep ? o.picks : (x.picks||[]).filter(function(t){ return !!deskP(t); })};
   });
   // no board yet: a not-yet-saved "My Board" in slot 1 (the first save creates it on the server)
@@ -6753,18 +6864,23 @@ const DESK_D='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentCol
 function desk(){
   const main=document.getElementById('main'); if(!main) return;
   const hm=/^#desk\?err=(\w+)/.exec(location.hash); if(hm){ DESK.flash=DESK_ERR[hm[1]]||DESK_ERR.provider; }
-  try{ if(location.hash!=='#desk') history.replaceState(history.state,'',location.pathname+location.search+'#desk'); }catch(_){}
+  try{ if(!/^#desk/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search+'#desk'); }catch(_){}
   if(DESK.me===undefined && !DESK.err){ deskLoadMe(); }
+  deskGames(); deskPopHide(true);
+  const V=deskView();
   const head=`<div class="cmp-title"><button type="button" id="deskBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>ANALYST DESK</h1>
     <p>File your own big board. Rank the ${DESK_YEAR} class your way; it locks when the draft starts, then gets graded against the market every season after.</p></div>`;
   const flash=DESK.flash?`<div class="dk-note bad">${DESK.flash}</div>`:'';
   let body;
-  if(DESK.me===undefined || (DESK.loading && !DESK.me)) body=`<div class="dk-card"><p class="dk-mute">CONNECTING TO THE DESK&hellip;</p></div>`;
+  const nav=`<div class="dk-nav" role="tablist"><button type="button" role="tab" aria-selected="${V.v==='mine'}" class="${V.v==='mine'?'on':''}" data-dkgo="#desk">MY DESK</button><button type="button" role="tab" aria-selected="${V.v!=='mine'}" class="${V.v!=='mine'?'on':''}" data-dkgo="#desk/floor">THE FLOOR <em>OTHER ANALYSTS&rsquo; BOARDS</em></button></div>`;
+  if(V.v==='floor') body=deskFloorView();
+  else if(V.v==='fboard') body=deskFloorBoard(V.key,V.slot);
+  else if(DESK.me===undefined || (DESK.loading && !DESK.me)) body=`<div class="dk-card"><p class="dk-mute">CONNECTING TO THE DESK&hellip;</p></div>`;
   else if(DESK.err && !(DESK.me && DESK.me.user)) body=`<div class="dk-card"><h3>THE DESK IS OFFLINE</h3><p>The Analyst Desk can&rsquo;t be reached right now. The rest of the exchange works as usual.</p><button type="button" class="dk-btn prim" data-dk="retry">TRY AGAIN</button></div>`;
   else if(!DESK.me.user) body=deskSignedOut();
   else if(!DESK.me.user.name || DESK.renaming) body=deskNameCard();
   else body=deskBoardView();
-  main.innerHTML=`<div class="cmp dk">${head}${flash}${body}
+  main.innerHTML=`<div class="cmp dk">${head}${nav}${flash}${body}
     <p class="dk-foot">Fan boards are display-only: they never feed the DHJ Price, the consensus composite or any DSX ranking. Market rank = the DSX consensus rank, the same rank the IPO price is built from.</p></div>`;
   deskBadge();
 }
@@ -6773,7 +6889,7 @@ function deskSignedOut(){
     <div class="dk-pitch">
       <div><b>FILE YOUR BOARD</b><span>Rank the ${DESK_YEAR} class from the DSX market list. Drag players on a computer, tap the arrows on a phone. It saves as you go.</span></div>
       <div><b>LOCK ON DRAFT NIGHT</b><span>Boards freeze when the draft starts, the same way the IPO price does. No editing after the fact.</span></div>
-      <div><b>BEAT THE MARKET</b><span>Every season after, your board is graded against the DSX consensus and what actually happened: where you were right, and where the market beat you.</span></div>
+      <div><b>BEAT THE MARKET</b><span>Keep up to ${DESK_MAX} boards, write a note on any player, and browse other analysts&rsquo; boards on The Floor. Every season after, your board is graded against the DSX consensus and what actually happened: where you were right, and where the market beat you.</span></div>
     </div>
     <div class="dk-signin"><a class="dk-sbtn" data-dksign="google" href="${deskSignUrl('google')}">${DESK_G}SIGN IN WITH GOOGLE</a>
       <a class="dk-sbtn" data-dksign="discord" href="${deskSignUrl('discord')}">${DESK_D}SIGN IN WITH DISCORD</a></div>
@@ -6783,7 +6899,7 @@ function deskPrivacy(){
   return `<details><summary>WHAT THE DSX STORES (PRIVACY)</summary>
     <ul><li>Only the account number Google or Discord gives the DSX for you, the analyst name you pick, your boards and their names, and when you made them. No email, no password, no real name, no profile picture.</li>
     <li>Your session is a cookie that page scripts can&rsquo;t read. The DSX keeps only a scrambled (hashed) copy of it.</li>
-    <li>Your analyst name and boards may be shown publicly on the DSX in later updates (profiles and a leaderboard). You can make a board private when that ships.</li>
+    <li>Your analyst name, your &#9733; MAIN board and your notes on its players are public on The Floor by default. Make any board private, share your other boards, or hide your whole account from The Floor at any time.</li>
     <li>Delete your account any time from this page. It removes the account, your sign-in link and every board right away.</li>
     <li>Nothing is sold, shared or used for ads. There are no ads.</li>
     <li>Questions: demasthehoopjunkie@gmail.com</li></ul></details>`;
@@ -6800,15 +6916,25 @@ function deskNameCard(){
 function deskRowBoard(p,i,n){
   const y=i+1, m=p.crank, d=m-y, cls=d>0?'up':(d<0?'dn':'eq');
   const dl=d>0?('+'+d):(d<0?String(d):'EVEN');
-  return `<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-grip" title="Drag to move" aria-hidden="true">&#8942;&#8942;</span><span class="dk-rk">${y}</span>
-    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Open the prospect page">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small></span>
+  const nt=DESK.notes[p.tkr], open=DESK.noteOpen===p.tkr;
+  const row=`<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-grip" title="Drag to move" aria-hidden="true">&#8942;&#8942;</span><span class="dk-rk">${y}</span>
+    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="${deskPage(p)?'Open the prospect page':'Show the player card'}">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}${nt&&!open?`<span class="dk-nt" title="${deskEsc(nt.text)}">&ldquo;${deskEsc(nt.text)}&rdquo;</span>`:''}</span>
     <span class="dk-sub">$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</span>
     <span class="dk-d ${cls}" title="Market (consensus) rank ${m}"><b>${dl}</b><span>MKT #${m}</span></span>
-    <span class="dk-acts"><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="-1" aria-label="Move ${deskEsc(p.name)} up" ${i===0?'disabled':''}>&#9650;</button><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="1" aria-label="Move ${deskEsc(p.name)} down" ${i===n-1?'disabled':''}>&#9660;</button><button type="button" class="dk-ic" data-dkrm="${p.tkr}" aria-label="Remove ${deskEsc(p.name)} from your board">&times;</button></span></li>`;
+    <span class="dk-acts"><button type="button" class="dk-ic nt${nt?' has':''}${open?' on':''}" data-dknote="${p.tkr}" aria-label="${nt?'Edit your note on':'Add a note on'} ${deskEsc(p.name)}" title="${nt?'Edit your note':'Add a note'}">&#9998;</button><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="-1" aria-label="Move ${deskEsc(p.name)} up" ${i===0?'disabled':''}>&#9650;</button><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="1" aria-label="Move ${deskEsc(p.name)} down" ${i===n-1?'disabled':''}>&#9660;</button><button type="button" class="dk-ic" data-dkrm="${p.tkr}" aria-label="Remove ${deskEsc(p.name)} from your board">&times;</button></span></li>`;
+  return row+(open?deskNoteEd(p):'');
+}
+function deskNoteEd(p){
+  const n=DESK.noteDraft.length;
+  return `<li class="dk-noteli" data-noteof="${p.tkr}"><form class="dk-noteed" id="dkNoteForm" autocomplete="off">
+    <label for="dkNote">YOUR NOTE ON ${deskEsc(p.name).toUpperCase()} <em>${DESK.me&&DESK.me.user&&DESK.me.user.private?'PRIVATE (YOUR ACCOUNT IS HIDDEN)':'PUBLIC WITH ANY OF YOUR PUBLIC BOARDS'}</em></label>
+    <textarea id="dkNote" maxlength="600" rows="3" placeholder="What you see in him: strengths, swing skills, the comp, what would change your mind.">${deskEsc(DESK.noteDraft)}</textarea>
+    <div class="dk-notebar"><span class="dk-cnt" id="dkNoteCnt">${n}/600</span>${DESK.noteErr?`<span class="dk-err">${deskEsc(DESK.noteErr)}</span>`:''}<span class="sp"></span>
+      ${DESK.notes[p.tkr]?'<button type="button" class="dk-btn warn" data-dk="notedel">DELETE NOTE</button>':''}<button type="button" class="dk-btn" data-dk="notecancel">CANCEL</button><button type="submit" class="dk-btn prim"${DESK.noteBusy?' disabled':''}>${DESK.noteBusy?'SAVING&hellip;':'SAVE NOTE'}</button></div></form></li>`;
 }
 function deskRowMkt(p){
   return `<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-rk">#${p.crank}</span>
-    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Open the prospect page">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small></span>
+    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="${deskPage(p)?'Open the prospect page':'Show the player card'}">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}</span>
     <span class="dk-acts"><button type="button" class="dk-ic add" data-dkadd="${p.tkr}" aria-label="Add ${deskEsc(p.name)} to your board">+ ADD</button></span></li>`;
 }
 function deskBoardView(){
@@ -6848,10 +6974,12 @@ function deskBoardView(){
   const bhead=`<div class="dk-tabs" role="tablist" aria-label="Your ${DESK_YEAR} boards">${tabs}${canNew&&!DESK.newOpen?`<button type="button" class="dk-tab add" data-dk="newboard" title="You can keep up to ${DESK_MAX} boards for the class">+ NEW BOARD <small>${real.length}/${DESK_MAX}</small></button>`:''}</div>
     ${newForm}
     <div class="dk-bhead">${bname}${DESK.bRen?'':mainTag}<span class="st"><b>${P.length}</b> RANKED &middot; ${rest.length} UNRANKED${P.length && P.length<DESK_MIN?' &middot; RANK AT LEAST '+DESK_MIN+' TO BE GRADED':''}</span><span class="sp"></span>
+      ${DESK.bRen||cur.virtual?'':deskShareBtns(cur)}
       ${DESK.bRen||cur.virtual?'':`<button type="button" class="dk-btn" data-dk="bren">RENAME BOARD</button>`}
       ${open&&!cur.virtual&&!DESK.bRen?`<button type="button" class="dk-btn warn${arm('delboard')?' arm':''}" data-dk="delboard"${DESK.busy?' disabled':''}>${arm('delboard')?'CONFIRM: DELETE &ldquo;'+deskEsc(cur.name).toUpperCase()+'&rdquo;':'DELETE BOARD'}</button>`:''}</div>
+    <p class="dk-hint">Hover a name for the player card (tap it on a phone). &#9998; adds your note on a player; it shows on your public boards.</p>
     ${many?`<p class="dk-mainnote">&#9733; Your MAIN board is the one graded on the leaderboard once the ${DESK_YEAR} draft locks. Your other boards get their own report card but aren&rsquo;t ranked.</p>`:''}`;
-  return `<div class="dk-acct"><div class="who"><small>MARKET ANALYST</small>${deskEsc(u.name)}</div>
+  return `<div class="dk-mine"><div class="dk-acct"><div class="who"><small>MARKET ANALYST</small>${deskEsc(u.name)}</div>
       <div class="meta">MEMBER SINCE ${deskDay(u.since)} &middot; SIGNED IN WITH ${(u.providers||[]).map(function(x){ return x.toUpperCase(); }).join(' + ')}</div><div class="sp"></div>
       <button type="button" class="dk-btn" data-dk="rename">CHANGE NAME</button><button type="button" class="dk-btn" data-dk="logout">SIGN OUT</button></div>
     <div class="dk-cls"><h2>${DESK_YEAR} CLASS &middot; YOUR BOARDS</h2>${tag}<span class="st">${lockTxt}</span><span class="st">${st}</span></div>
@@ -6868,8 +6996,10 @@ function deskBoardView(){
         ${rest.length?`<input type="text" id="dkQ" placeholder="Search name, ticker, school" value="${deskEsc(DESK.q)}" aria-label="Search the market list">`:''}
         ${restShown.length?`<ol class="dk-list">${restShown.map(deskRowMkt).join('')}</ol>`:`<div class="dk-empty">${rest.length?'No match.':'Every player in the class is on your board.'}</div>`}</section>
     </div>
-    <div class="dk-card dk-danger"><h3>ACCOUNT</h3>${deskPrivacy()}
-      <p style="margin-top:12px"><button type="button" class="dk-btn warn${arm('delete')?' arm':''}" data-dk="delete">${arm('delete')?'CONFIRM: DELETE MY ACCOUNT AND BOARDS':'DELETE MY ACCOUNT'}</button></p></div>`;
+    <div class="dk-card dk-danger"><h3>ACCOUNT</h3>
+      <p class="dk-mute">${u.private?'Your account is <b>hidden</b>: none of your boards or notes show on The Floor.':'Your public boards (&#9733; MAIN by default) and your notes on their players show on The Floor under your analyst name.'}</p>
+      <p><button type="button" class="dk-btn${u.private?' prim':''}" data-dk="privacy"${DESK.busy?' disabled':''}>${u.private?'SHOW MY PUBLIC BOARDS ON THE FLOOR':'HIDE ALL MY BOARDS FROM THE FLOOR'}</button></p>${deskPrivacy()}
+      <p style="margin-top:12px"><button type="button" class="dk-btn warn${arm('delete')?' arm':''}" data-dk="delete">${arm('delete')?'CONFIRM: DELETE MY ACCOUNT, BOARDS AND NOTES':'DELETE MY ACCOUNT'}</button></p></div></div>`;
 }
 /* ---------- edits + autosave ---------- */
 function deskChanged(){
@@ -6901,7 +7031,7 @@ function deskSave(){
     DESK.inflight=false;
     if(DESK.again && DESK.saveState!=='error' && DESK.saveState!=='locked'){ DESK.again=false; deskSave(); return; }
     DESK.again=false;
-    if(currentRouteKey==='DESK'){ const y=window.scrollY; desk(); window.scrollTo(0,y); deskKeepFocus(); }
+    if(currentRouteKey==='DESK'){ deskKeep(); deskKeepFocus(); }
   });
 }
 var deskFocus=null;
@@ -6933,6 +7063,23 @@ function deskAct(a){
   if(a==='bren'){ DESK.bRen=true; DESK.bErr=''; desk(); const i=document.getElementById('dkBoardName'); if(i){ i.focus(); i.select(); } return; }
   if(a==='bcancel'){ DESK.bRen=false; DESK.bErr=''; desk(); return; }
   if(a==='newcancel'){ DESK.newOpen=false; DESK.newErr=''; desk(); return; }
+  if(a==='notecancel'){ DESK.noteOpen=null; DESK.noteErr=''; deskKeep(); return; }
+  if(a==='notedel'){ deskNoteSave(''); return; }
+  if(a==='privacy'){
+    const want=!DESK.me.user.private; DESK.busy=true; desk();
+    deskFetch('/me/private',{method:'PUT', body:{private:want}}).then(function(j){ DESK.me.user.private=j.private; return deskLoadBoard(); })
+      .catch(function(e){ DESK.flash=deskEsc(e.message||'That didn&rsquo;t save.'); }).then(function(){ DESK.busy=false; DESK.floor=null; deskKeep(); });
+    return;
+  }
+  if(a==='share'){
+    const cur=deskCur(); if(cur.virtual) return;
+    const pub=!!cur.public, next = pub ? (cur.main ? false : null) : (cur.main ? null : true);
+    deskBoardReq(cur.slot,'PUT',{share:next}).catch(function(e){ DESK.flash=deskEsc(e.message||'That didn&rsquo;t save.'); }).then(function(){ DESK.floor=null; desk(); });
+    return;
+  }
+  if(a==='copylink'){ deskCopy(deskBoardUrl(DESK.me.user.key, DESK.slot), document.querySelector('[data-dk=copylink]')); return; }
+  if(a==='fcopy'){ const V=deskView(); deskCopy(deskBoardUrl(V.key, V.slot), document.querySelector('[data-dk=fcopy]')); return; }
+  if(a==='freload'){ DESK.floor=null; DESK.fb=null; desk(); return; }
   if(a==='delete'){
     if(!DESK.arm || DESK.arm!=='delete'){ deskArm('delete'); return; }
     deskDisarm();
@@ -6971,12 +7118,22 @@ document.addEventListener('click',function(ev){
   }
   if(currentRouteKey!=='DESK') return;
   if(t.closest('#deskBack')){ route(deskBackKey()); return; }
+  const go=t.closest('[data-dkgo]'); if(go){ ev.preventDefault(); DESK.flash=''; deskGo(go.dataset.dkgo); return; }
+  const pc=t.closest('[data-dkpopx]'); if(pc){ deskPopHide(true); return; }
+  const pf=t.closest('[data-dkpfull]'); if(pf){ deskPopHide(true); deskOpenPage(pf.dataset.dkpfull, false); return; }
+  const pfl=t.closest('[data-dkpfilm]'); if(pfl){ deskPopHide(true); deskOpenPage(pfl.dataset.dkpfilm, true); return; }
+  const ntb=t.closest('[data-dknote]');
+  if(ntb){ const k=ntb.dataset.dknote; DESK.flash='';
+    if(DESK.noteOpen===k){ DESK.noteOpen=null; } else { DESK.noteOpen=k; DESK.noteDraft=(DESK.notes[k]||{}).text||''; DESK.noteErr=''; }
+    deskKeep(); if(DESK.noteOpen){ const ta=document.getElementById('dkNote'); if(ta){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); } } return; }
   const s=t.closest('[data-dksign]'); if(s){ deskFlag(true); return; }
   const b=t.closest('[data-dk]'); if(b){ DESK.flash=''; deskAct(b.dataset.dk); return; }
   const tb=t.closest('[data-dkslot]');
   if(tb){ const sl=+tb.dataset.dkslot; if(sl!==DESK.slot){ DESK.flash=''; deskDisarm(); deskFlush(); deskUse(sl); DESK.newOpen=false; desk(); const f=document.querySelector('[data-dkslot="'+sl+'"]'); if(f) try{ f.focus({preventScroll:true}); }catch(_){} } return; }
   const o=t.closest('[data-dkopen]');
-  if(o){ const k=o.dataset.dkopen; if(CURCLASS!==DESK_YEAR){ CURCLASS=DESK_YEAR; reindex(); renderTape(); } route(k); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(o){ const k=o.dataset.dkopen;
+    if(DK_TOUCH || !deskPage(deskP(k))){ ev.preventDefault(); deskPopShow(k,o,DK_TOUCH); return; }   /* phones: tap = player card */
+    deskPopHide(true); deskOpenPage(k,false); return; }
   if(!deskOpen()) return;
   const add=t.closest('[data-dkadd]');
   if(add){ DESK.flash=''; const k=add.dataset.dkadd; if(DESK.picks.indexOf(k)<0) DESK.picks.push(k); deskFocus='#dkQ'; deskChanged(); return; }
@@ -6997,6 +7154,7 @@ document.addEventListener('submit',function(ev){
       .catch(function(e){ DESK.bErr=e.message||"That name didn't work."; }).then(function(){ desk(); if(DESK.bErr){ const i=document.getElementById('dkBoardName'); if(i){ i.value=v; i.focus(); } } });
     return;
   }
+  if(ev.target.id==='dkNoteForm'){ ev.preventDefault(); deskNoteSave(DESK.noteDraft); return; }
   if(ev.target.id==='dkNewForm'){
     ev.preventDefault(); if(DESK.busy) return;
     const v=(document.getElementById('dkNewName')||{}).value||'', from=(document.getElementById('dkNewFrom')||{}).value||'copy';
@@ -7011,30 +7169,280 @@ document.addEventListener('submit',function(ev){
   const v=(document.getElementById('dkName')||{}).value||'';
   DESK.nameErr='';
   deskFetch('/me/name',{method:'POST', body:{name:v}}).then(function(j){
-    DESK.me.user.name=j.name; DESK.renaming=false; DESK.flash='';
+    DESK.me.user.name=j.name; DESK.me.user.key=String(j.name).toLowerCase().replace(/[ ._-]/g,''); DESK.renaming=false; DESK.flash=''; DESK.floor=null;
     return DESK.picks?null:deskLoadBoard();
   }).catch(function(e){ DESK.nameErr=e.message||"That name didn't work."; }).then(function(){ desk(); if(DESK.nameErr){ const i=document.getElementById('dkName'); if(i){ i.value=v; i.focus(); } } });
 });
 document.addEventListener('input',function(ev){
+  if(ev.target && ev.target.id==='dkNote'){ DESK.noteDraft=ev.target.value; const c=document.getElementById('dkNoteCnt'); if(c) c.textContent=ev.target.value.length+'/600'; return; }
   if(!ev.target || ev.target.id!=='dkQ') return;
   DESK.q=ev.target.value; const pos=ev.target.selectionStart; desk();
   const i=document.getElementById('dkQ'); if(i){ i.focus(); try{ i.setSelectionRange(pos,pos); }catch(_){} }
 });
+/* ---------- view routing inside the desk ---------- */
+function deskView(){
+  const m=/^#desk\/floor(?:\/([a-z0-9]{3,20})\/([1-9]))?/.exec(location.hash);
+  if(!m) return {v:'mine'};
+  return m[1] ? {v:'fboard', key:m[1], slot:+m[2]} : {v:'floor'};
+}
+function deskGo(h){
+  if(location.hash===h) return;
+  try{ history.replaceState(Object.assign({},history.state||{},{y:window.scrollY||0}),''); history.pushState(Object.assign({},history.state||{},{y:0}),'',location.pathname+location.search+h); }catch(_){ location.hash=h; return; }
+  desk(); window.scrollTo({top:0,behavior:'instant'});
+}
+function deskKeep(){
+  if(currentRouteKey!=='DESK') return;
+  const a=document.activeElement, id=a&&a.id, s0=a&&a.selectionStart, s1=a&&a.selectionEnd, y=window.scrollY;
+  desk(); window.scrollTo(0,y);
+  if(id){ const b=document.getElementById(id); if(b && b!==document.activeElement){ try{ b.focus({preventScroll:true}); if(s0!=null) b.setSelectionRange(s0,s1); }catch(_){} } }
+}
+function deskBoardUrl(key,slot){ return location.origin+location.pathname+'#desk/floor/'+key+'/'+slot; }
+function deskCopy(u,btn){
+  const done=function(){ if(btn){ const t=btn.textContent; btn.textContent='LINK COPIED'; setTimeout(function(){ if(btn.isConnected) btn.textContent=t; },1800); } };
+  const coarse=window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  if(coarse && navigator.share){ navigator.share({title:'An analyst board on The Draft Stock Exchange', url:u}).catch(function(){}); return; }
+  try{ navigator.clipboard.writeText(u).then(done,function(){ prompt('Copy this link',u); }); }catch(_){ prompt('Copy this link',u); }
+}
+function deskShareBtns(cur){
+  const priv=!!(DESK.me.user.private);
+  if(priv) return `<span class="dk-vis off" title="Your whole account is hidden from The Floor (see ACCOUNT below)">HIDDEN</span>`;
+  const pub=!!cur.public;
+  return `<button type="button" class="dk-btn vis${pub?' pub':''}" data-dk="share"${DESK.busy?' disabled':''} title="${pub?'Anyone can see this board on The Floor. Click to make it private.':'Only you can see this board. Click to share it on The Floor.'}">${pub?'&#9679; PUBLIC':'&#9675; PRIVATE'}</button>`+
+    (pub&&DESK.me.user.key?`<button type="button" class="dk-btn" data-dk="copylink" title="Copy a link to this board">COPY LINK</button>`:'');
+}
+function deskPage(p){ return !!(p && CLASSES[DESK_YEAR] && CLASSES[DESK_YEAR].top.some(function(x){ return x.tkr===p.tkr; })); }
+function deskOpenPage(k, film){
+  const p=deskP(k); if(!deskPage(p)) return;
+  if(CURCLASS!==DESK_YEAR){ CURCLASS=DESK_YEAR; reindex(); renderTape(); }
+  route(k); window.scrollTo({top:0,behavior:'instant'});
+  if(film){ let n=0; const t=setInterval(function(){ n++;
+    if(currentRouteKey!==k){ clearInterval(t); return; }
+    if(typeof filmList==='function' && typeof openFilm==='function' && filmList(k)){ clearInterval(t); openFilm(k); } else if(n>60) clearInterval(t); },150); }
+}
+/* ---------- notes ---------- */
+function deskNoteSave(text){
+  const k=DESK.noteOpen; if(!k || DESK.noteBusy) return;
+  DESK.noteBusy=true; DESK.noteErr=''; deskKeep();
+  deskFetch('/notes/'+DESK_YEAR+'/'+k,{method:'PUT', body:{text:text}}).then(function(j){
+    if(j.text) DESK.notes[k]={text:j.text, updated:j.updated}; else delete DESK.notes[k];
+    DESK.noteOpen=null; DESK.noteDraft='';
+  }).catch(function(e){ DESK.noteErr=e.message||'That note did not save.'; if(e.status===401){ DESK.me={user:null, classes:(DESK.me||{}).classes}; deskFlag(false); } })
+  .then(function(){ DESK.noteBusy=false; deskKeep(); if(DESK.noteOpen){ const ta=document.getElementById('dkNote'); if(ta) ta.focus(); } });
+}
+/* ---------- stat lines: this season's per-game line from the nightly games file, else live.json, else pre-draft ---------- */
+var DK_G=null, DK_GF=false;
+function deskGames(){
+  if(DK_G || DK_GF || typeof glLive!=='function') return; DK_GF=true;
+  glLive(DESK_YEAR).then(function(G){ if(!G) return; DK_G=G; try{ if(typeof GNOW!=='undefined' && !GNOW[DESK_YEAR]) GNOW[DESK_YEAR]=G; }catch(_){}
+    deskStatPaint(); });
+}
+function deskTot(k){
+  const e=DK_G && DK_G.players && DK_G.players[k]; if(!e || !e.rows || !e.rows.length) return null;
+  const fd=e.rows.findIndex(function(r){ return r[0]==='#'; }), R=(fd>=0?e.rows.slice(0,fd):e.rows).filter(function(r){ return r[0]!=='#'; });
+  if(!R.length) return null;
+  const t={gp:R.length, min:0, gs:0, fgm:0, fga:0, tpm:0, tpa:0, ftm:0, fta:0, reb:0, ast:0, stl:0, blk:0, to:0, pts:0, pro:!!e.pro};
+  R.forEach(function(r){ t.min+=(typeof glMin==='function'?glMin(r[3]):(+r[3]||0)); t.gs+=+r[4]||0; t.fgm+=r[5]||0; t.fga+=r[6]||0; t.tpm+=r[7]||0; t.tpa+=r[8]||0;
+    t.ftm+=r[9]||0; t.fta+=r[10]||0; t.reb+=r[11]||0; t.ast+=r[12]||0; t.stl+=r[13]||0; t.blk+=r[14]||0; t.to+=r[15]||0; t.pts+=r[17]||0; });
+  return t;
+}
+function deskSeason(){ try{ return LV.season(); }catch(_){ return '2026-27'; } }
+function deskLine(p){
+  if(!p) return null;
+  const t=deskTot(p.tkr);
+  if(t){ const g=t.gp, pc=function(m,a){ return a?100*m/a:null; };
+    return {src:'live', gp:g, mp:t.min/g, pts:t.pts/g, reb:t.reb/g, ast:t.ast/g, stl:t.stl/g, blk:t.blk/g, to:t.to/g, tpm:t.tpm/g,
+      fgp:pc(t.fgm,t.fga), tpp:pc(t.tpm,t.tpa), ftp:pc(t.ftm,t.fta), tot:t}; }
+  let e=null; try{ e=LV.entry(p.tkr, DESK_YEAR); }catch(_){}
+  if(e && e.gp && e.st && !e.intl){ const s=e.st; return {src:'live', gp:e.gp, mp:s.min, pts:s.pts, reb:s.reb, ast:s.ast, stl:s.stl, blk:s.blk, to:s.to, tpm:s.tpm, fgp:s.fg, tpp:null, ftp:s.ft}; }
+  const L=p.line||{};
+  if(L.pts==null && L.reb==null) return null;
+  return {src:'pre', gp:p.gp, mp:p.mp, pts:L.pts, reb:L.reb, ast:L.ast, stl:L.stl, blk:L.blk, to:L.to, tpm:L.tpm, fgp:p.fg, tpp:null, ftp:p.ft, lvl:p.predraftLevel};
+}
+function deskStatInner(p){
+  const g=deskLine(p); if(!g) return '<i class="pre">NO STATS ON FILE</i>';
+  const f=function(v){ return v==null?'&mdash;':(+v).toFixed(1); };
+  const bits=[`<b>${f(g.pts)}</b> PTS`,`<b>${f(g.reb)}</b> REB`,`<b>${f(g.ast)}</b> AST`];
+  if(g.fgp!=null) bits.push(`${(+g.fgp).toFixed(1)} FG%`);
+  if(g.tpp!=null) bits.push(`${(+g.tpp).toFixed(1)} 3P%`);
+  const lab=g.src==='live' ? `<i>${deskSeason().replace(/^20/,'')} &middot; ${g.gp} GP</i>` : `<i class="pre" title="${deskEsc(g.lvl||'Pre-draft line')}">PRE-DRAFT</i>`;
+  return lab+' '+bits.join(' &middot; ');
+}
+function deskStatSpan(p){ return `<span class="dk-st" data-dkst="${p.tkr}">${deskStatInner(p)}</span>`; }
+function deskStatPaint(){ document.querySelectorAll('[data-dkst]').forEach(function(el){ el.innerHTML=deskStatInner(deskP(el.getAttribute('data-dkst'))); }); }
+/* ---------- the player card (hover on a computer, tap on a phone) ---------- */
+var DK_TOUCH=!!(window.matchMedia && window.matchMedia('(hover: none)').matches);
+var DK_POP={el:null, k:null, t:0, h:0, anchor:null};
+function deskPopNote(k){
+  const V=deskView();
+  if(V.v==='fboard'){ const F=DESK.fb && DESK.fb.data; const n=F && F.notes && F.notes[k]; return n ? {who:F.analyst.name, text:n.text} : null; }
+  const n=DESK.notes[k]; return n ? {who:'YOUR NOTE', text:n.text, mine:true} : null;
+}
+function deskPopHTML(k){
+  const p=deskP(k); if(!p) return '';
+  const g=deskLine(p), t=g&&g.tot, f1=function(v){ return v==null||isNaN(v)?'&mdash;':(+v).toFixed(1); }, pct=function(v){ return v==null||isNaN(v)?'&mdash;':(+v).toFixed(1)+'%'; };
+  const page=deskPage(p), otc=!page;
+  let e=null; try{ e=LV.entry(p.tkr, DESK_YEAR); }catch(_){}
+  const live=e&&e.gp&&e.price!=null&&!e.intl ? `<span><b>$${(+e.price).toFixed(2)}</b> LIVE &middot; #${e.rank}</span>` : '';
+  const rk=(p.boards||[]).map(function(b){ return b.rk; }).filter(function(x){ return x!=null; });
+  const cov=rk.length?`<span><b>${rk.length}</b> BOARDS &middot; HIGH #${Math.min.apply(null,rk)} &middot; LOW #${Math.max.apply(null,rk)}</span>`:'';
+  const pic=(typeof photoUrl==='function')?photoUrl(p):null;
+  let cur;
+  if(g && g.src==='live'){
+    const ma=function(m,a){ return t?`${(m/t.gp).toFixed(1)}-${(a/t.gp).toFixed(1)}`:''; };
+    cur=`<h5>${deskSeason()} &middot; ${g.gp} GP &middot; ${f1(g.mp)} MIN${g.gp<5?' <em>SMALL SAMPLE</em>':''}${t&&t.pro?' <em>PRO</em>':''}</h5>
+      <div class="dk-pgrid">${[['PTS',g.pts],['REB',g.reb],['AST',g.ast],['STL',g.stl],['BLK',g.blk],['TO',g.to]].map(function(a){ return `<div><b>${f1(a[1])}</b><span>${a[0]}</span></div>`; }).join('')}</div>
+      <div class="dk-pshoot"><span>FG <b>${pct(g.fgp)}</b>${t?' <i>'+ma(t.fgm,t.fga)+'</i>':''}</span><span>3P <b>${pct(g.tpp)}</b>${t?' <i>'+ma(t.tpm,t.tpa)+'</i>':''}</span><span>FT <b>${pct(g.ftp)}</b>${t?' <i>'+ma(t.ftm,t.fta)+'</i>':''}</span></div>`;
+    if(t && t.fga){
+      const ts=t.pts/(2*(t.fga+0.44*t.fta))*100, efg=(t.fgm+0.5*t.tpm)/t.fga*100, p40=function(v){ return t.min?v/t.min*40:null; };
+      const A=[['TS%',pct(ts),'True shooting: points per shooting possession, counting threes and free throws'],['eFG%',pct(efg),'Effective FG%: a made three counts 1.5 makes'],
+        ['3PA RATE',pct(t.tpa/t.fga*100),'Share of his shots that are threes'],['FT RATE',(t.fta/t.fga).toFixed(2),'Free-throw attempts per field-goal attempt'],
+        ['AST/TO',t.to?(t.ast/t.to).toFixed(2):(t.ast?'&infin;':'&mdash;'),'Assists per turnover'],['GAME SCORE',f1(t.gs/t.gp),'Hollinger Game Score, per game'],
+        ['PTS/40',f1(p40(t.pts)),'Points per 40 minutes'],['REB/40',f1(p40(t.reb)),'Rebounds per 40 minutes'],['AST/40',f1(p40(t.ast)),'Assists per 40 minutes'],
+        ['STL+BLK/40',f1(p40(t.stl+t.blk)),'Steals plus blocks per 40 minutes']];
+      cur+=`<h5>ADVANCED <em>FROM HIS BOX SCORES</em></h5><div class="dk-padv">${A.map(function(a){ return `<div title="${a[2]}"><span>${a[0]}</span><b>${a[1]}</b></div>`; }).join('')}</div>`;
+    }
+  } else cur=`<h5>${deskSeason()} &middot; NO GAMES YET</h5><p class="dk-pmut">His current-season line appears here after his first game, updated every morning.</p>`;
+  const L=p.line||{};
+  const pre=(L.pts!=null||L.reb!=null)?`<h5>PRE-DRAFT <em>${deskEsc(p.predraftLevel||'')}</em></h5><p class="dk-pline">${[['PTS',L.pts],['REB',L.reb],['AST',L.ast],['STL',L.stl],['BLK',L.blk]].filter(function(a){ return a[1]!=null; }).map(function(a){ return `<b>${f1(a[1])}</b> ${a[0]}`; }).join(' &middot; ')}${p.fg!=null?' &middot; '+(+p.fg).toFixed(1)+' FG%':''}${p.ft!=null?' &middot; '+(+p.ft).toFixed(1)+' FT%':''}${p.gp?' &middot; '+p.gp+' GP':''}</p>`:'';
+  const li=function(a){ return (a||[]).slice(0,2).map(function(x){ return `<li>${deskEsc(x)}</li>`; }).join(''); };
+  const bb=(p.bull&&p.bull.length)||(p.bear&&p.bear.length)?`<div class="dk-pbb"><div><h5 class="up">BULL CASE</h5><ul>${li(p.bull)}</ul></div><div><h5 class="dn">BEAR CASE</h5><ul>${li(p.bear)}</ul></div></div>`:'';
+  const N=deskPopNote(k);
+  const note=N?`<div class="dk-pnote"><h5>${N.mine?'YOUR NOTE':'NOTE &middot; '+deskEsc(N.who).toUpperCase()}</h5><p>${deskEsc(N.text)}</p></div>`:'';
+  return `<button type="button" class="dk-px" data-dkpopx aria-label="Close the player card">&times;</button>
+    <div class="dk-phead">${pic?`<img src="${pic}" alt="" loading="lazy" onerror="this.remove()">`:''}<div><div class="dk-ptk">$${p.tkr}${otc?' <em>OTC</em>':''}</div><div class="dk-pnm">${deskEsc(p.name)}</div>
+      <div class="dk-pmeta">${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}${p.cls?' &middot; '+deskEsc(p.cls):''}</div>${p.sector?`<div class="dk-psec">${deskEsc(p.sector)}</div>`:''}</div></div>
+    <div class="dk-pmkt"><span><b>#${p.crank}</b> CONSENSUS</span><span><b>$${(+p.price).toFixed(2)}</b> IPO</span>${live}${cov}</div>
+    ${p.tag?`<p class="dk-ptag">${deskEsc(p.tag)}</p>`:''}
+    ${note}${cur}${pre}${bb}
+    <div class="dk-pbtns">${page?`<button type="button" class="dk-btn prim" data-dkpfull="${p.tkr}">OPEN FULL PAGE</button><button type="button" class="dk-btn film" data-dkpfilm="${p.tkr}">&#9654; FILM LAB</button>`:'<span class="dk-pmut">OTC listing: no prospect page or Film Lab yet.</span>'}</div>`;
+}
+function deskPopShow(k, anchor, sheet){
+  if(DESK.dragging) return;
+  clearTimeout(DK_POP.h); clearTimeout(DK_POP.t);
+  let el=DK_POP.el;
+  if(!el || !el.isConnected){ el=document.createElement('div'); el.id='dkPop'; el.className='dk-pop'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','Player card');
+    el.addEventListener('mouseenter',function(){ clearTimeout(DK_POP.h); }); el.addEventListener('mouseleave',function(){ deskPopHide(); });
+    document.body.appendChild(el); DK_POP.el=el; }
+  if(DK_POP.k!==k || !el.classList.contains('on')) el.innerHTML=deskPopHTML(k);
+  DK_POP.k=k; DK_POP.anchor=anchor;
+  el.classList.toggle('sheet', !!sheet || window.innerWidth<700);
+  el.classList.add('on'); el.scrollTop=0;
+  if(!el.classList.contains('sheet')){
+    const r=anchor.getBoundingClientRect(), W=Math.min(440, window.innerWidth-24); el.style.width=W+'px'; const H=el.offsetHeight;
+    let x=r.right+14; if(x+W>window.innerWidth-12) x=Math.max(12, r.left-W-14);
+    if(x<12) x=12;
+    let y=r.top-20; y=Math.max(12, Math.min(y, window.innerHeight-H-12));
+    el.style.left=x+'px'; el.style.top=y+'px';
+  } else { el.style.left=el.style.top=el.style.width=''; }
+}
+function deskPopHide(now){
+  clearTimeout(DK_POP.t);
+  const go=function(){ if(DK_POP.el){ DK_POP.el.classList.remove('on'); } DK_POP.k=null; };
+  clearTimeout(DK_POP.h);
+  if(now) go(); else DK_POP.h=setTimeout(go,220);
+}
+document.addEventListener('mouseover',function(ev){
+  if(DK_TOUCH || currentRouteKey!=='DESK' || !ev.target.closest) return;
+  const o=ev.target.closest('.dk [data-dkopen]'); if(!o) return;
+  clearTimeout(DK_POP.h);
+  if(DK_POP.k===o.dataset.dkopen && DK_POP.el && DK_POP.el.classList.contains('on')) return;
+  clearTimeout(DK_POP.t); DK_POP.t=setTimeout(function(){ if(o.isConnected && o.matches(':hover')) deskPopShow(o.dataset.dkopen,o,false); },320);
+});
+document.addEventListener('mouseout',function(ev){
+  if(DK_TOUCH || !ev.target.closest) return;
+  const o=ev.target.closest('.dk [data-dkopen]'); if(!o) return;
+  if(ev.relatedTarget && DK_POP.el && DK_POP.el.contains(ev.relatedTarget)) return;
+  clearTimeout(DK_POP.t); deskPopHide();
+});
+document.addEventListener('click',function(ev){
+  if(!DK_POP.el || !DK_POP.el.classList.contains('on') || !ev.target.closest) return;
+  if(DK_POP.el.contains(ev.target) || ev.target.closest('[data-dkopen]')) return;
+  deskPopHide(true);
+},true);
+window.addEventListener('scroll',function(){ if(DK_POP.el && DK_POP.el.classList.contains('on') && !DK_POP.el.classList.contains('sheet')) deskPopHide(true); },{passive:true});
+/* ---------- THE FLOOR: other analysts' public boards ---------- */
+function deskAgo(ms){ if(!ms) return ''; const m=Math.round((Date.now()-ms)/60000); if(m<2) return 'JUST NOW'; if(m<60) return m+' MIN AGO'; const h=Math.round(m/60); if(h<24) return h+'H AGO'; const d=Math.round(h/24); return d<30?d+'D AGO':new Date(ms).toLocaleDateString([], {month:'short', day:'numeric'}).toUpperCase(); }
+function deskMyKey(){ return DESK.me && DESK.me.user && DESK.me.user.key; }
+function deskFloorView(){
+  const F=DESK.floor;
+  if(!F || (!F.loading && Date.now()-F.at>60000 && !F.err)){
+    DESK.floor={loading:true, at:Date.now(), data:F&&F.data};
+    deskFetch('/floor/'+DESK_YEAR).then(function(j){ DESK.floor={data:j, at:Date.now()}; })
+      .catch(function(e){ DESK.floor={err:e, at:Date.now(), data:F&&F.data}; })
+      .then(function(){ if(currentRouteKey==='DESK' && deskView().v==='floor') deskKeep(); });
+  }
+  const d=DESK.floor.data;
+  const intro=`<div class="dk-card dk-fintro"><h3>THE FLOOR <em>${DESK_YEAR} CLASS &middot; PUBLIC ANALYST BOARDS</em></h3>
+    <p class="dk-mute">Every analyst&rsquo;s &#9733; MAIN board is public by default, plus any other board they choose to share. Open one to see their order, where they break from the market and their notes on each player. Fan boards never feed DSX prices or rankings.</p></div>`;
+  if(!d){ return intro+(DESK.floor.err?`<div class="dk-card"><p>The Floor can&rsquo;t be reached right now.</p><button type="button" class="dk-btn prim" data-dk="freload">TRY AGAIN</button></div>`:`<div class="dk-card"><p class="dk-mute">LOADING THE FLOOR&hellip;</p></div>`); }
+  const B=d.boards||[], me=deskMyKey();
+  if(!B.length) return intro+`<div class="dk-card"><p>No public boards yet. Yours shows up here as soon as your &#9733; MAIN board has players on it.</p></div>`;
+  const nA=new Set(B.map(function(b){ return b.key; })).size;
+  const rows=B.map(function(b){
+    const top=(b.top||[]).map(function(t,i){ const p=deskP(t); return `<span><i>${i+1}</i>${p?deskEsc(p.name):'$'+t}</span>`; }).join('');
+    return `<li><a class="dk-fl" href="#desk/floor/${b.key}/${b.slot}" data-dkgo="#desk/floor/${b.key}/${b.slot}">
+      <span class="who">${deskEsc(b.analyst)}${b.official?' <em class="off" title="The DSX&rsquo;s own board">OFFICIAL</em>':''}${b.key===me?' <em class="you">YOU</em>':''}</span>
+      <span class="bn">${b.main?'<i title="MAIN board">&#9733;</i> ':''}${deskEsc(b.name)} <small>${b.count} RANKED &middot; ${deskAgo(b.updated)}</small></span>
+      <span class="top">${top}</span><span class="go">VIEW &rsaquo;</span></a></li>`;
+  }).join('');
+  return intro+`<div class="dk-pane dk-floor"><header><h3>${B.length} PUBLIC BOARD${B.length===1?'':'S'} &middot; ${nA} ANALYST${nA===1?'':'S'}</h3><span>MOST RECENTLY UPDATED FIRST</span></header><ol class="dk-flist">${rows}</ol></div>`;
+}
+function deskFloorBoard(key,slot){
+  const id=key+'/'+slot, F=DESK.fb;
+  if(!F || F.id!==id || (!F.loading && Date.now()-F.at>60000 && !F.err)){
+    DESK.fb={id:id, loading:true, at:Date.now(), data:F&&F.id===id?F.data:null};
+    deskFetch('/floor/'+DESK_YEAR+'/'+key+'/'+slot).then(function(j){ DESK.fb={id:id, data:j, at:Date.now()}; })
+      .catch(function(e){ DESK.fb={id:id, err:e, at:Date.now()}; })
+      .then(function(){ const V=deskView(); if(currentRouteKey==='DESK' && V.v==='fboard' && V.key+'/'+V.slot===id) deskKeep(); });
+  }
+  const back=`<p class="dk-fback"><button type="button" class="dk-btn" data-dkgo="#desk/floor">&larr; ALL PUBLIC BOARDS</button></p>`;
+  const d=DESK.fb.data;
+  if(!d){
+    if(DESK.fb.err) return back+`<div class="dk-card"><h3>BOARD NOT AVAILABLE</h3><p>${DESK.fb.err.status===404?'This board is private, was deleted, or the link is wrong.':'The Floor can&rsquo;t be reached right now.'}</p></div>`;
+    return back+`<div class="dk-card"><p class="dk-mute">LOADING THE BOARD&hellip;</p></div>`;
+  }
+  const A=d.analyst, bd=d.board, P=(bd.picks||[]).map(deskP).filter(Boolean), notes=d.notes||{};
+  const mine=(DESK.boards||[]).filter(function(x){ return x.main && !x.virtual; })[0], myIdx={};
+  if(mine && A.key!==deskMyKey()) mine.picks.forEach(function(t,i){ myIdx[t]=i+1; });
+  const cmp=!!mine && A.key!==deskMyKey() && mine.picks.length>0;
+  const deltas=P.map(function(p,i){ return {p:p, d:p.crank-(i+1)}; });
+  const bull=deltas.filter(function(x){ return x.d>0; }).sort(function(a,b){ return b.d-a.d; }).slice(0,3);
+  const bear=deltas.filter(function(x){ return x.d<0; }).sort(function(a,b){ return a.d-b.d; }).slice(0,3);
+  const call=function(x){ return `<div class="c"><b>${deskEsc(x.p.name)}</b><span class="dk-d ${x.d>0?'up':'dn'}"><b style="display:inline">${x.d>0?'+':''}${x.d}</b> <span>#${P.indexOf(x.p)+1} &middot; MKT #${x.p.crank}</span></span></div>`; };
+  const tabs=(d.boards||[]).length>1?`<div class="dk-tabs">${d.boards.map(function(b){ return `<button type="button" class="dk-tab${b.slot===bd.slot?' on':''}${b.main?' main':''}" data-dkgo="#desk/floor/${A.key}/${b.slot}">${b.main?'<i>&#9733;</i>':''}<span>${deskEsc(b.name)}</span><small>${b.count}</small></button>`; }).join('')}</div>`:'';
+  const rows=P.map(function(p,i){
+    const y=i+1, m=p.crank, dd=m-y, cls=dd>0?'up':(dd<0?'dn':'eq'), dl=dd>0?('+'+dd):(dd<0?String(dd):'EVEN'), n=notes[p.tkr];
+    const yo=cmp?(myIdx[p.tkr]?`<span class="dk-you" title="Where your MAIN board has him">YOU #${myIdx[p.tkr]}</span>`:'<span class="dk-you mut" title="Not on your MAIN board">YOU &mdash;</span>'):'';
+    return `<li class="dk-row ro${n?' hasn':''}" data-tkr="${p.tkr}"><span class="dk-rk">${y}</span>
+      <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="${deskPage(p)?'Open the prospect page':'Show the player card'}">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}${n?`<span class="dk-fnote">${deskEsc(n.text)}</span>`:''}</span>
+      ${yo}<span class="dk-d ${cls}" title="Market (consensus) rank ${m}"><b>${dl}</b><span>MKT #${m}</span></span></li>`;
+  }).join('');
+  const nN=Object.keys(notes).length;
+  return back+`<div class="dk-acct dk-fhead"><div class="who"><small>MARKET ANALYST${A.official?' &middot; <span class="off">OFFICIAL DSX BOARD</span>':''}</small>${deskEsc(A.name)}</div>
+      <div class="meta">MEMBER SINCE ${deskDay(A.since)} &middot; UPDATED ${deskAgo(bd.updated)}</div><div class="sp"></div>
+      <button type="button" class="dk-btn" data-dk="fcopy">COPY LINK</button></div>
+    ${tabs}<div class="dk-bhead${tabs?'':' solo'}"><h3 class="dk-bname">${deskEsc(bd.name)}</h3>${bd.main?'<span class="dk-maintag" title="The board this analyst is graded on">&#9733; MAIN BOARD</span>':''}
+      <span class="st"><b>${P.length}</b> RANKED &middot; <b>${nN}</b> NOTE${nN===1?'':'S'}</span><span class="sp"></span>${cmp?'<span class="st">YOU = YOUR &#9733; MAIN BOARD</span>':''}</div>
+    ${P.length?`<div class="dk-calls"><div><h4>BIGGEST BULL CALLS &middot; HIGHER THAN THE MARKET</h4>${bull.length?bull.map(call).join(''):'<div class="c dk-mute">None</div>'}</div>
+      <div><h4>BIGGEST BEAR CALLS &middot; LOWER THAN THE MARKET</h4>${bear.length?bear.map(call).join(''):'<div class="c dk-mute">None</div>'}</div></div>`:''}
+    <section class="dk-pane dk-board dk-fboard${cmp?' cmp':''}"><header><h3>${deskEsc(bd.name).toUpperCase()}</h3><span>READ-ONLY &middot; HOVER A NAME FOR THE PLAYER CARD</span></header>
+      ${P.length?`<ol class="dk-list">${rows}</ol>`:'<div class="dk-empty">This board is empty.</div>'}</section>`;
+}
 /* drag to reorder (mouse / pen; phones use the arrows) */
 (function(){
   let drag=null;
   document.addEventListener('pointerdown',function(ev){
-    const g=ev.target.closest && ev.target.closest('.dk-board .dk-grip');
+    const g=ev.target.closest && ev.target.closest('.dk-mine .dk-board .dk-grip');
     if(!g || currentRouteKey!=='DESK' || !deskOpen() || ev.button!==0) return;
     const row=g.closest('.dk-row'), list=row && row.parentNode; if(!row) return;
     ev.preventDefault();
-    drag={row:row, list:list, y0:ev.clientY, moved:false};
+    drag={row:row, list:list, y0:ev.clientY, moved:false}; DESK.dragging=true; deskPopHide(true);
     row.classList.add('drag');
     try{ g.setPointerCapture(ev.pointerId); }catch(_){}
   });
   document.addEventListener('pointermove',function(ev){
     if(!drag) return;
-    const rows=[...drag.list.children].filter(function(r){ return r!==drag.row; });
+    const rows=[...drag.list.children].filter(function(r){ return r!==drag.row && r.classList.contains('dk-row'); });
     let before=null;
     for(const r of rows){ const b=r.getBoundingClientRect(); if(ev.clientY < b.top+b.height/2){ before=r; break; } }
     if(before!==drag.row.nextSibling){ drag.list.insertBefore(drag.row, before); drag.moved=true; }
@@ -7044,8 +7452,9 @@ document.addEventListener('input',function(ev){
   function end(){
     if(!drag) return;
     const d=drag; drag=null; d.row.classList.remove('drag');
-    if(!d.moved) return;
-    DESK.picks=[...d.list.children].map(function(r){ return r.dataset.tkr; });
+    if(!d.moved){ DESK.dragging=false; return; }
+    DESK.dragging=false;
+    DESK.picks=[...d.list.children].filter(function(r){ return r.classList.contains('dk-row'); }).map(function(r){ return r.dataset.tkr; });
     deskChanged();
   }
   document.addEventListener('pointerup',end); document.addEventListener('pointercancel',end);
@@ -7053,9 +7462,13 @@ document.addEventListener('input',function(ev){
 window.addEventListener('beforeunload',function(e){ if(DESK.saveState==='saving'||DESK.saveState==='error'){ e.preventDefault(); e.returnValue=''; } });
 function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
 function deskClearHash(){ try{ if(/^#desk/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
-function deskLoadHash(){ if(!/^#desk/.test(location.hash)) return; if(currentRouteKey!=='DESK'){ deskReturnKey='MKT'; route('DESK'); } else if(/^#desk\?err=/.test(location.hash)) desk(); }
+function deskLoadHash(){ if(!/^#desk/.test(location.hash)){ deskPopHide(true); return; } if(currentRouteKey!=='DESK'){ deskReturnKey='MKT'; route('DESK'); } else desk(); }
 document.addEventListener('keydown',function(e){
-  if(e.key!=='Escape' || currentRouteKey!=='DESK') return;
+  if(currentRouteKey!=='DESK') return;
+  if(e.key==='Enter' && (e.ctrlKey||e.metaKey) && e.target && e.target.id==='dkNote'){ e.preventDefault(); deskNoteSave(DESK.noteDraft); return; }
+  if(e.key!=='Escape') return;
+  if(DK_POP.el && DK_POP.el.classList.contains('on')){ deskPopHide(true); return; }
+  if(DESK.noteOpen){ DESK.noteOpen=null; deskKeep(); return; }
   if(DESK.bRen||DESK.newOpen){ DESK.bRen=false; DESK.newOpen=false; DESK.bErr=DESK.newErr=''; desk(); return; }
   if(!(e.target && (e.target.tagName==='INPUT'||e.target.tagName==='SELECT'))) route(deskBackKey());
 });
