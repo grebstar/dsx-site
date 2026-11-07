@@ -1339,6 +1339,26 @@ td.lv .lvtags .lvt{margin-left:0}
 @media (min-width:861px) and (max-width:1499px){.shell{--railw:290px}}
 @media (prefers-reduced-motion:reduce){.shell,.railtog .chev{transition:none}}
 /*RAILTOG-CSS-END*/
+/*TAPETOG-CSS-START*/
+.tapetog{display:none}
+@media (min-width:861px){
+  .tape{transition:height .22s ease}
+  .tapetog{display:grid;place-items:center;position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:3;width:30px;height:28px;padding:0;background:#0A0C11;border:1px solid var(--line2);border-radius:3px;color:var(--lbl);cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .tapetog:hover,.tapetog:focus-visible{color:var(--amber);border-color:var(--amber);outline:none}
+  .tapetog svg{width:17px;height:17px;display:block}
+  .tapetog .chev{transform-box:fill-box;transform-origin:center;transition:transform .22s ease}
+  .tape.tapeoff{height:22px;cursor:pointer}
+  .tape.tapeoff:hover{background:#0E1117}
+  .tape.tapeoff .tape-track{visibility:hidden;animation-play-state:paused}
+  .tape.tapeoff::after{display:none}
+  .tape.tapeoff::before{content:'TICKER TAPE';position:absolute;left:12px;top:0;line-height:21px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.24em;color:var(--lbl)}
+  .tape.tapeoff:hover::before{color:var(--amber)}
+  .tape.tapeoff .tapetog{height:18px;width:30px}
+  .tape.tapeoff .tapetog svg{width:14px;height:14px}
+  .tape.tapeoff .tapetog .chev{transform:scaleY(-1)}
+}
+@media (prefers-reduced-motion:reduce){.tape,.tapetog .chev{transition:none}}
+/*TAPETOG-CSS-END*/
 /*DESK-CSS-START*/
 /* desklav Nov 6: Analyst Desk secondary text = lavender, same as the Closing/Opening Bell (was --mute #8B8271) */
 .dk{--mute:#B8AEE6}
@@ -1458,7 +1478,7 @@ td.lv .lvtags .lvt{margin-left:0}
   <div class="spacer"></div>
   <div id="clock">--:--:--</div>
 </div>
-<div class="tape"><div class="tape-track" id="tape"></div></div>
+<div class="tape"><div class="tape-track" id="tape"></div><button type="button" class="tapetog" id="tapeTog" onclick="event.stopPropagation();tapeTog()" title="Hide the ticker tape" aria-label="Hide the ticker tape" aria-controls="tape" aria-expanded="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M1.5 6h13"/><path class="chev" d="M6.2 10.4 8 8.6l1.8 1.8"/></svg></button></div>
 <div class="shell">
   <nav class="rail" id="rail"></nav>
   <main class="main" id="main"></main>
@@ -1705,6 +1725,26 @@ function measureChrome(){
 measureChrome();
 window.addEventListener('resize', measureChrome);
 if(window.ResizeObserver) new ResizeObserver(measureChrome).observe(document.querySelector('.topbar'));
+/*TAPETOG-JS-START*/
+/* hide / show the ticker tape on desktop (companion to the rail toggle); remembered per browser */
+function tapeTog(force){
+  const t=document.querySelector('.tape'); if(!t) return;
+  const off=(force===undefined) ? !t.classList.contains('tapeoff') : !!force;
+  t.classList.toggle('tapeoff',off);
+  try{ localStorage.setItem('dse-tapeoff-v1', off?'1':'0'); }catch(_){}
+  const b=document.getElementById('tapeTog');
+  if(b){ const l=off?'Show the ticker tape':'Hide the ticker tape'; b.title=l; b.setAttribute('aria-label',l); b.setAttribute('aria-expanded',off?'false':'true'); }
+  if(typeof measureChrome==='function'){ measureChrome(); setTimeout(measureChrome,260); }
+}
+(function(){
+  const t=document.querySelector('.tape'); if(!t) return;
+  try{ if(localStorage.getItem('dse-tapeoff-v1')==='1') tapeTog(true); }catch(_){}
+  t.addEventListener('click',function(e){
+    if(t.classList.contains('tapeoff') && !e.target.closest('.tapetog') && window.matchMedia('(min-width:861px)').matches) tapeTog(false);
+  });
+  if(window.ResizeObserver && typeof measureChrome==='function') new ResizeObserver(measureChrome).observe(t);
+})();
+/*TAPETOG-JS-END*/
 
 /* ---------- pricing mode: vs NBA veterans (default) or rookie class only ---------- */
 let classOnly=false;
