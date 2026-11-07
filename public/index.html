@@ -6669,7 +6669,7 @@ obLoadHash();
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
  {d:'2026-11-06',tag:'ANALYST DESK',t:'The Floor, player notes and player cards on the Analyst Desk',go:['OPEN THE ANALYST DESK','DESK'],
-  b:'The Floor shows other analysts&rsquo; public boards for the 2027 class: their order, where they break from the market, and their notes on each player. Your &#9733; MAIN board is public by default; you can make it private, share your other boards, or hide your account. Add a note on any player with the pencil button, every row now carries his current-season stat line, and hovering a name (tapping it on a phone) opens a player card with his basic and advanced stats, the bull and bear case, and links to his full page and Film Lab.'},
+  b:'The Floor shows other analysts&rsquo; public boards for the 2027 class: their order, where they break from the market, and their notes on each player. Your &#9733; MAIN board is public by default; you can make it private, share your other boards, or hide your account. Add a note on any player with the pencil button, every row now carries his current-season stat line, and clicking a player&rsquo;s name opens his player card with his basic and advanced stats, the bull and bear case, and links to his full page and Film Lab.'},
  {d:'2026-11-06',tag:'ANALYST DESK',t:'Keep up to three boards for a class',go:['OPEN THE ANALYST DESK','DESK'],
   b:'Market analysts can now keep up to three named boards for the 2027 class: your real board, a ceiling board, a contrarian board, whatever you like. Start a new one from a copy of your board, the market order or a blank slate, and switch between them with the tabs. Star one as your MAIN board; that is the one graded on the leaderboard once the draft locks, and your other boards get their own report card.'},
  {d:'2026-11-06',tag:'NEW FEATURE',t:'The Analyst Desk: file your own big board',go:['OPEN THE ANALYST DESK','DESK'],
@@ -6782,7 +6782,7 @@ wnDot(); wnLoadHash();
    #desk opens it; #desk?err=<why> is where a failed sign-in comes back to.
    Nov 6 (boards3): up to DESK_MAX named boards per class; one is the MAIN (starred) board,
    the only one that counts on the scorecard / leaderboard after the lock.
-   Nov 6 (floor): per-player notes, a live stat line on every row, a player card on hover (tap on phones),
+   Nov 6 (floor): per-player notes, a live stat line on every row, a player card when you click a name,
    and THE FLOOR (#desk/floor, #desk/floor/<analyst>/<slot>): other analysts' public boards. */
 var DESK_API='https://api.thedraftstockexchange.com', DESK_YEAR='2027', DESK_MIN=10, DESK_MAX=3;
 var DESK={me:undefined, err:null, loading:null, board:null, boards:null, slot:1, picks:null, saved:null, saveState:'', saveT:0, inflight:false,
@@ -6918,7 +6918,7 @@ function deskRowBoard(p,i,n){
   const dl=d>0?('+'+d):(d<0?String(d):'EVEN');
   const nt=DESK.notes[p.tkr], open=DESK.noteOpen===p.tkr;
   const row=`<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-grip" title="Drag to move" aria-hidden="true">&#8942;&#8942;</span><span class="dk-rk">${y}</span>
-    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="${deskPage(p)?'Open the prospect page':'Show the player card'}">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}${nt&&!open?`<span class="dk-nt" title="${deskEsc(nt.text)}">&ldquo;${deskEsc(nt.text)}&rdquo;</span>`:''}</span>
+    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Show the player card">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}${nt&&!open?`<span class="dk-nt" title="${deskEsc(nt.text)}">&ldquo;${deskEsc(nt.text)}&rdquo;</span>`:''}</span>
     <span class="dk-sub">$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</span>
     <span class="dk-d ${cls}" title="Market (consensus) rank ${m}"><b>${dl}</b><span>MKT #${m}</span></span>
     <span class="dk-acts"><button type="button" class="dk-ic nt${nt?' has':''}${open?' on':''}" data-dknote="${p.tkr}" aria-label="${nt?'Edit your note on':'Add a note on'} ${deskEsc(p.name)}" title="${nt?'Edit your note':'Add a note'}">&#9998;</button><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="-1" aria-label="Move ${deskEsc(p.name)} up" ${i===0?'disabled':''}>&#9650;</button><button type="button" class="dk-ic" data-dkmv="${i}" data-dir="1" aria-label="Move ${deskEsc(p.name)} down" ${i===n-1?'disabled':''}>&#9660;</button><button type="button" class="dk-ic" data-dkrm="${p.tkr}" aria-label="Remove ${deskEsc(p.name)} from your board">&times;</button></span></li>`;
@@ -6934,7 +6934,7 @@ function deskNoteEd(p){
 }
 function deskRowMkt(p){
   return `<li class="dk-row" data-tkr="${p.tkr}"><span class="dk-rk">#${p.crank}</span>
-    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="${deskPage(p)?'Open the prospect page':'Show the player card'}">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}</span>
+    <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Show the player card">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}</span>
     <span class="dk-acts"><button type="button" class="dk-ic add" data-dkadd="${p.tkr}" aria-label="Add ${deskEsc(p.name)} to your board">+ ADD</button></span></li>`;
 }
 function deskBoardView(){
@@ -6977,7 +6977,7 @@ function deskBoardView(){
       ${DESK.bRen||cur.virtual?'':deskShareBtns(cur)}
       ${DESK.bRen||cur.virtual?'':`<button type="button" class="dk-btn" data-dk="bren">RENAME BOARD</button>`}
       ${open&&!cur.virtual&&!DESK.bRen?`<button type="button" class="dk-btn warn${arm('delboard')?' arm':''}" data-dk="delboard"${DESK.busy?' disabled':''}>${arm('delboard')?'CONFIRM: DELETE &ldquo;'+deskEsc(cur.name).toUpperCase()+'&rdquo;':'DELETE BOARD'}</button>`:''}</div>
-    <p class="dk-hint">Hover a name for the player card (tap it on a phone). &#9998; adds your note on a player; it shows on your public boards.</p>
+    <p class="dk-hint">Click a player&rsquo;s name for his player card. &#9998; adds your note on a player; it shows on your public boards.</p>
     ${many?`<p class="dk-mainnote">&#9733; Your MAIN board is the one graded on the leaderboard once the ${DESK_YEAR} draft locks. Your other boards get their own report card but aren&rsquo;t ranked.</p>`:''}`;
   return `<div class="dk-mine"><div class="dk-acct"><div class="who"><small>MARKET ANALYST</small>${deskEsc(u.name)}</div>
       <div class="meta">MEMBER SINCE ${deskDay(u.since)} &middot; SIGNED IN WITH ${(u.providers||[]).map(function(x){ return x.toUpperCase(); }).join(' + ')}</div><div class="sp"></div>
@@ -7132,8 +7132,9 @@ document.addEventListener('click',function(ev){
   if(tb){ const sl=+tb.dataset.dkslot; if(sl!==DESK.slot){ DESK.flash=''; deskDisarm(); deskFlush(); deskUse(sl); DESK.newOpen=false; desk(); const f=document.querySelector('[data-dkslot="'+sl+'"]'); if(f) try{ f.focus({preventScroll:true}); }catch(_){} } return; }
   const o=t.closest('[data-dkopen]');
   if(o){ const k=o.dataset.dkopen;
-    if(DK_TOUCH || !deskPage(deskP(k))){ ev.preventDefault(); deskPopShow(k,o,DK_TOUCH); return; }   /* phones: tap = player card */
-    deskPopHide(true); deskOpenPage(k,false); return; }
+    ev.preventDefault();   /* a click (tap on a phone) opens the player card; a second click on the same name closes it */
+    if(DK_POP.k===k && DK_POP.el && DK_POP.el.classList.contains('on')){ deskPopHide(true); return; }
+    deskPopShow(k,o,DK_TOUCH); return; }
   if(!deskOpen()) return;
   const add=t.closest('[data-dkadd]');
   if(add){ DESK.flash=''; const k=add.dataset.dkadd; if(DESK.picks.indexOf(k)<0) DESK.picks.push(k); deskFocus='#dkQ'; deskChanged(); return; }
@@ -7269,7 +7270,7 @@ function deskStatInner(p){
 }
 function deskStatSpan(p){ return `<span class="dk-st" data-dkst="${p.tkr}">${deskStatInner(p)}</span>`; }
 function deskStatPaint(){ document.querySelectorAll('[data-dkst]').forEach(function(el){ el.innerHTML=deskStatInner(deskP(el.getAttribute('data-dkst'))); }); }
-/* ---------- the player card (hover on a computer, tap on a phone) ---------- */
+/* ---------- the player card (click a name; on a phone it opens as a bottom sheet) ---------- */
 var DK_TOUCH=!!(window.matchMedia && window.matchMedia('(hover: none)').matches);
 var DK_POP={el:null, k:null, t:0, h:0, anchor:null};
 function deskPopNote(k){
@@ -7321,7 +7322,6 @@ function deskPopShow(k, anchor, sheet){
   clearTimeout(DK_POP.h); clearTimeout(DK_POP.t);
   let el=DK_POP.el;
   if(!el || !el.isConnected){ el=document.createElement('div'); el.id='dkPop'; el.className='dk-pop'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','Player card');
-    el.addEventListener('mouseenter',function(){ clearTimeout(DK_POP.h); }); el.addEventListener('mouseleave',function(){ deskPopHide(); });
     document.body.appendChild(el); DK_POP.el=el; }
   if(DK_POP.k!==k || !el.classList.contains('on')) el.innerHTML=deskPopHTML(k);
   DK_POP.k=k; DK_POP.anchor=anchor;
@@ -7341,25 +7341,11 @@ function deskPopHide(now){
   clearTimeout(DK_POP.h);
   if(now) go(); else DK_POP.h=setTimeout(go,220);
 }
-document.addEventListener('mouseover',function(ev){
-  if(DK_TOUCH || currentRouteKey!=='DESK' || !ev.target.closest) return;
-  const o=ev.target.closest('.dk [data-dkopen]'); if(!o) return;
-  clearTimeout(DK_POP.h);
-  if(DK_POP.k===o.dataset.dkopen && DK_POP.el && DK_POP.el.classList.contains('on')) return;
-  clearTimeout(DK_POP.t); DK_POP.t=setTimeout(function(){ if(o.isConnected && o.matches(':hover')) deskPopShow(o.dataset.dkopen,o,false); },320);
-});
-document.addEventListener('mouseout',function(ev){
-  if(DK_TOUCH || !ev.target.closest) return;
-  const o=ev.target.closest('.dk [data-dkopen]'); if(!o) return;
-  if(ev.relatedTarget && DK_POP.el && DK_POP.el.contains(ev.relatedTarget)) return;
-  clearTimeout(DK_POP.t); deskPopHide();
-});
 document.addEventListener('click',function(ev){
   if(!DK_POP.el || !DK_POP.el.classList.contains('on') || !ev.target.closest) return;
   if(DK_POP.el.contains(ev.target) || ev.target.closest('[data-dkopen]')) return;
   deskPopHide(true);
 },true);
-window.addEventListener('scroll',function(){ if(DK_POP.el && DK_POP.el.classList.contains('on') && !DK_POP.el.classList.contains('sheet')) deskPopHide(true); },{passive:true});
 /* ---------- THE FLOOR: other analysts' public boards ---------- */
 function deskAgo(ms){ if(!ms) return ''; const m=Math.round((Date.now()-ms)/60000); if(m<2) return 'JUST NOW'; if(m<60) return m+' MIN AGO'; const h=Math.round(m/60); if(h<24) return h+'H AGO'; const d=Math.round(h/24); return d<30?d+'D AGO':new Date(ms).toLocaleDateString([], {month:'short', day:'numeric'}).toUpperCase(); }
 function deskMyKey(){ return DESK.me && DESK.me.user && DESK.me.user.key; }
@@ -7414,7 +7400,7 @@ function deskFloorBoard(key,slot){
     const y=i+1, m=p.crank, dd=m-y, cls=dd>0?'up':(dd<0?'dn':'eq'), dl=dd>0?('+'+dd):(dd<0?String(dd):'EVEN'), n=notes[p.tkr];
     const yo=cmp?(myIdx[p.tkr]?`<span class="dk-you" title="Where your MAIN board has him">YOU #${myIdx[p.tkr]}</span>`:'<span class="dk-you mut" title="Not on your MAIN board">YOU &mdash;</span>'):'';
     return `<li class="dk-row ro${n?' hasn':''}" data-tkr="${p.tkr}"><span class="dk-rk">${y}</span>
-      <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="${deskPage(p)?'Open the prospect page':'Show the player card'}">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}${n?`<span class="dk-fnote">${deskEsc(n.text)}</span>`:''}</span>
+      <span class="dk-pl"><button type="button" data-dkopen="${p.tkr}" title="Show the player card">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small>${deskStatSpan(p)}${n?`<span class="dk-fnote">${deskEsc(n.text)}</span>`:''}</span>
       ${yo}<span class="dk-d ${cls}" title="Market (consensus) rank ${m}"><b>${dl}</b><span>MKT #${m}</span></span></li>`;
   }).join('');
   const nN=Object.keys(notes).length;
@@ -7425,7 +7411,7 @@ function deskFloorBoard(key,slot){
       <span class="st"><b>${P.length}</b> RANKED &middot; <b>${nN}</b> NOTE${nN===1?'':'S'}</span><span class="sp"></span>${cmp?'<span class="st">YOU = YOUR &#9733; MAIN BOARD</span>':''}</div>
     ${P.length?`<div class="dk-calls"><div><h4>BIGGEST BULL CALLS &middot; HIGHER THAN THE MARKET</h4>${bull.length?bull.map(call).join(''):'<div class="c dk-mute">None</div>'}</div>
       <div><h4>BIGGEST BEAR CALLS &middot; LOWER THAN THE MARKET</h4>${bear.length?bear.map(call).join(''):'<div class="c dk-mute">None</div>'}</div></div>`:''}
-    <section class="dk-pane dk-board dk-fboard${cmp?' cmp':''}"><header><h3>${deskEsc(bd.name).toUpperCase()}</h3><span>READ-ONLY &middot; HOVER A NAME FOR THE PLAYER CARD</span></header>
+    <section class="dk-pane dk-board dk-fboard${cmp?' cmp':''}"><header><h3>${deskEsc(bd.name).toUpperCase()}</h3><span>READ-ONLY &middot; CLICK A NAME FOR THE PLAYER CARD</span></header>
       ${P.length?`<ol class="dk-list">${rows}</ol>`:'<div class="dk-empty">This board is empty.</div>'}</section>`;
 }
 /* drag to reorder (mouse / pen; phones use the arrows) */
