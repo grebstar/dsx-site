@@ -7715,48 +7715,6 @@ document.addEventListener('click',function(ev){
 })();
 /*DEEPLINK-JS-END*/</script>
 
-<script>/*PERF-JS-START*/
-/* ?perf=1 : on-page timing readout (unimorph, Nov 6 2026). ?perf=0 turns it off. Nothing runs unless it is on. */
-(function(){
-  let on=false;
-  try{
-    const q=location.search;
-    if(/[?&]perf=1\b/.test(q)) sessionStorage.setItem('dsx-perf','1');
-    if(/[?&]perf=0\b/.test(q)) sessionStorage.removeItem('dsx-perf');
-    on=sessionStorage.getItem('dsx-perf')==='1';
-  }catch(_){}
-  if(!on) return;
-  const box=document.createElement('div'); box.id='dsxPerf';
-  box.style.cssText='position:fixed;right:10px;bottom:10px;z-index:99999;background:rgba(8,10,14,.94);border:1px solid #E0B24A;color:#E8E2D3;font:11px/1.45 "IBM Plex Mono",monospace;padding:8px 10px;min-width:300px;max-width:420px;pointer-events:none;letter-spacing:.02em';
-  document.body.appendChild(box);
-  const rows=[]; let lastUni=null; let lt=0;
-  const fmt=v=>v==null?'—':(v<10?v.toFixed(1):Math.round(v))+' ms';
-  const col=v=>v==null?'#8B8271':v<100?'#2FD07F':v<300?'#E0B24A':'#FF5A5A';
-  function draw(){
-    let s='<div style="color:#E0B24A;font-weight:700;letter-spacing:.12em;margin-bottom:4px">DSX PERF &middot; ?perf=0 TO HIDE</div>';
-    if(lastUni) s+='<div>ONE-UNIVERSE REDRAW: site <b style="color:'+col(lastUni.site)+'">'+fmt(lastUni.site)+'</b> &middot; other code after it <b style="color:'+col(lastUni.other)+'">'+fmt(lastUni.other)+'</b></div>';
-    s+='<div style="color:#8B8271">LONG TASKS (&gt;50 ms) SINCE LOAD: '+lt+'</div>';
-    s+=rows.slice(-6).reverse().map(r=>'<div>'+r.n+' <span style="color:#8B8271">'+r.tg+'</span> &rarr; <b style="color:'+col(r.d)+'">'+fmt(r.d)+'</b> to next paint</div>').join('');
-    box.innerHTML=s;
-  }
-  try{ new PerformanceObserver(l=>{ for(const e of l.getEntries()){ if(!e.interactionId) continue;
-      const t=e.target; const tg=t?(t.id?'#'+t.id:(t.dataset&&t.dataset.y?'chip '+t.dataset.y:(t.className&&typeof t.className==='string'?'.'+t.className.split(' ')[0]:t.tagName.toLowerCase()))):'';
-      const last=rows[rows.length-1];
-      if(last && last.id===e.interactionId){ if(e.duration>last.d) last.d=e.duration; }
-      else rows.push({id:e.interactionId,n:/^key/.test(e.name)?'key':'click',tg,d:e.duration}); }
-    draw(); }).observe({type:'event',durationThreshold:16,buffered:true}); }catch(_){}
-  try{ new PerformanceObserver(l=>{ lt+=l.getEntries().length; draw(); }).observe({type:'longtask',buffered:true}); }catch(_){}
-  if(typeof uniRefresh==='function'){
-    const orig=uniRefresh;
-    window.uniRefresh=function(){
-      const a=performance.now(); const r=orig.apply(this,arguments); const b=performance.now();
-      Promise.resolve().then(()=>{ lastUni={site:b-a,other:performance.now()-b}; draw(); });
-      return r;
-    };
-  }
-  draw();
-})();
-/*PERF-JS-END*/</script>
 </body>
 </html>
 
