@@ -2035,8 +2035,37 @@ function railRow(p,sel,live){
     <span class="tk">${p.tkr}</span><span class="px lvpx">${f2(i.price)}</span>
     <span class="nm">${i.rank}. ${p.name}</span><span class="ch">${mv}</span></button>`;
 }
+/*MORPH-JS-START*/
+/* dsxMorph (unimorph, Nov 6 2026): put new HTML into a container by changing only what differs.
+   Fewer DOM nodes created/removed per click = far less work for browser extensions that watch the page. */
+function dsxMorph(el,html){
+  const t=document.createElement('template'); t.innerHTML=html;
+  dsxMorphKids(el,t.content);
+}
+function dsxMorphAttrs(x,y){
+  const xa=x.attributes;
+  for(let i=xa.length-1;i>=0;i--){ const n=xa[i].name; if(!y.hasAttribute(n)) x.removeAttribute(n); }
+  const ya=y.attributes;
+  for(let i=0;i<ya.length;i++){ const a=ya[i]; if(x.getAttribute(a.name)!==a.value) x.setAttribute(a.name,a.value); }
+}
+function dsxMorphKids(a,b){
+  let x=a.firstChild, y=b.firstChild;
+  while(y){
+    const ny=y.nextSibling;
+    if(!x){ a.appendChild(y); }
+    else if(x.nodeType===y.nodeType && x.nodeName===y.nodeName){
+      const nx=x.nextSibling;
+      if(x.nodeType===1){ if(!x.isEqualNode(y)){ dsxMorphAttrs(x,y); dsxMorphKids(x,y); } }
+      else if(x.nodeValue!==y.nodeValue) x.nodeValue=y.nodeValue;
+      x=nx;
+    } else { const nx=x.nextSibling; a.replaceChild(y,x); x=nx; }
+    y=ny;
+  }
+  while(x){ const nx=x.nextSibling; a.removeChild(x); x=nx; }
+}
+/*MORPH-JS-END*/
 function rail(sel){
-  const r=document.getElementById('rail'), keep=r.scrollTop;
+  const r=document.getElementById('rail');
   const canLive=railLiveOK(), live=(railMode==='live' && canLive);
   let list=D.slice();
   if(live){
@@ -2051,7 +2080,9 @@ function rail(sel){
     <span class="nm">${CURCLASS} Class Index</span><span class="ch mut">INDEX</span></div>
     <h4 class="railsort"><span>LISTINGS &middot;</span><select id="railSort" aria-label="Order the listings by"><option value="ipo"${live?'':' selected'}>BY COMPOSITE (IPO)</option><option value="live"${live?' selected':''}${canLive?'':' disabled'}>BY LIVE PRICE${canLive?'':' (N/A)'}</option></select></h4>`;
   list.forEach(p=>{ h+=railRow(p,sel,live); });
-  r.innerHTML=h; r.scrollTop=keep;
+  dsxMorph(r,h);
+  { const c=document.getElementById('railClass'); if(c && c.value!==CURCLASS) c.value=CURCLASS;
+    const s=document.getElementById('railSort'); if(s){ const v=live?'live':'ipo'; if(s.value!==v) s.value=v; } }
   r.querySelectorAll('.wl').forEach(b=>{ b.onclick=()=>route(b.dataset.k);
     if(b.classList.contains('mktrow')) b.onkeydown=e=>{ if(e.target===b && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); route('MKT'); } }; });
   const rc=document.getElementById('railClass');
@@ -5152,7 +5183,7 @@ function leagueRankings(){
     const m=ev.target.closest('[data-more]'); if(m){ UNI.limit = m.dataset.more==='all' ? 1e9 : UNI.limit+50; uniRefresh(); }
   });
   uniHash(); uniRefresh();
-  window.scrollTo({top:0,behavior:'instant'});
+  requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
 }
 
 async function uniCopyLink(btn){
@@ -5183,15 +5214,15 @@ function uniRefresh(){
   rows.sort(uniCmp);
   const nOol=rows.filter(r=>r.ool).length, nNo=rows.filter(r=>!r.ool && r.score==null).length;
   const sum=document.getElementById('uniSum');
-  if(sum) sum.innerHTML = rows.length
+  if(sum) dsxMorph(sum, rows.length
     ? `<b>${nRanked.toLocaleString()}</b> ranked player${nRanked===1?'':'s'} from <b>${UNI.cls.size}</b> class${UNI.cls.size===1?'':'es'}`
       +(nNo?` &middot; <b>${nNo}</b> unranked (no full 2025-26 season)`:'')
       +(UNI.busts?` &middot; <b>${nOol.toLocaleString()}</b> no longer in the NBA at the bottom`:'')
-    : '';
+    : '');
   if(!rows.length){
-    out.innerHTML='<div class="cmp-empty"><div class="t">NO PLAYERS TO SHOW</div><p>'
+    dsxMorph(out,'<div class="cmp-empty"><div class="t">NO PLAYERS TO SHOW</div><p>'
       +(UNI.cls.size?'Nothing matches the current filters. Clear the name filter or switch more classes on.':'No classes are switched on. Press ALL or pick a class above.')
-      +'</p></div>';
+      +'</p></div>');
     return;
   }
   const shown=rows.slice(0,UNI.limit);
@@ -5241,7 +5272,7 @@ function uniRefresh(){
         <button type="button" class="cmp-act" data-more="50">SHOW ${Math.min(50,left)} MORE</button>
         <button type="button" class="cmp-act" data-more="all">SHOW ALL ${rows.length.toLocaleString()}</button></div>`
     : `<div class="ldb-more"><span>SHOWING ALL ${rows.length.toLocaleString()}</span></div>`;
-  out.innerHTML=`<div class="cmp-wrap ldb-wrap"><table class="ldbt"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>${more}`;
+  dsxMorph(out,`<div class="cmp-wrap ldb-wrap"><table class="ldbt"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>${more}`);
 }
 
 document.addEventListener('click',function(ev){
@@ -6906,6 +6937,48 @@ document.addEventListener('click',function(ev){
 })();
 /*DEEPLINK-JS-END*/</script>
 
+<script>/*PERF-JS-START*/
+/* ?perf=1 : on-page timing readout (unimorph, Nov 6 2026). ?perf=0 turns it off. Nothing runs unless it is on. */
+(function(){
+  let on=false;
+  try{
+    const q=location.search;
+    if(/[?&]perf=1\b/.test(q)) sessionStorage.setItem('dsx-perf','1');
+    if(/[?&]perf=0\b/.test(q)) sessionStorage.removeItem('dsx-perf');
+    on=sessionStorage.getItem('dsx-perf')==='1';
+  }catch(_){}
+  if(!on) return;
+  const box=document.createElement('div'); box.id='dsxPerf';
+  box.style.cssText='position:fixed;right:10px;bottom:10px;z-index:99999;background:rgba(8,10,14,.94);border:1px solid #E0B24A;color:#E8E2D3;font:11px/1.45 "IBM Plex Mono",monospace;padding:8px 10px;min-width:300px;max-width:420px;pointer-events:none;letter-spacing:.02em';
+  document.body.appendChild(box);
+  const rows=[]; let lastUni=null; let lt=0;
+  const fmt=v=>v==null?'—':(v<10?v.toFixed(1):Math.round(v))+' ms';
+  const col=v=>v==null?'#8B8271':v<100?'#2FD07F':v<300?'#E0B24A':'#FF5A5A';
+  function draw(){
+    let s='<div style="color:#E0B24A;font-weight:700;letter-spacing:.12em;margin-bottom:4px">DSX PERF &middot; ?perf=0 TO HIDE</div>';
+    if(lastUni) s+='<div>ONE-UNIVERSE REDRAW: site <b style="color:'+col(lastUni.site)+'">'+fmt(lastUni.site)+'</b> &middot; other code after it <b style="color:'+col(lastUni.other)+'">'+fmt(lastUni.other)+'</b></div>';
+    s+='<div style="color:#8B8271">LONG TASKS (&gt;50 ms) SINCE LOAD: '+lt+'</div>';
+    s+=rows.slice(-6).reverse().map(r=>'<div>'+r.n+' <span style="color:#8B8271">'+r.tg+'</span> &rarr; <b style="color:'+col(r.d)+'">'+fmt(r.d)+'</b> to next paint</div>').join('');
+    box.innerHTML=s;
+  }
+  try{ new PerformanceObserver(l=>{ for(const e of l.getEntries()){ if(!e.interactionId) continue;
+      const t=e.target; const tg=t?(t.id?'#'+t.id:(t.dataset&&t.dataset.y?'chip '+t.dataset.y:(t.className&&typeof t.className==='string'?'.'+t.className.split(' ')[0]:t.tagName.toLowerCase()))):'';
+      const last=rows[rows.length-1];
+      if(last && last.id===e.interactionId){ if(e.duration>last.d) last.d=e.duration; }
+      else rows.push({id:e.interactionId,n:/^key/.test(e.name)?'key':'click',tg,d:e.duration}); }
+    draw(); }).observe({type:'event',durationThreshold:16,buffered:true}); }catch(_){}
+  try{ new PerformanceObserver(l=>{ lt+=l.getEntries().length; draw(); }).observe({type:'longtask',buffered:true}); }catch(_){}
+  if(typeof uniRefresh==='function'){
+    const orig=uniRefresh;
+    window.uniRefresh=function(){
+      const a=performance.now(); const r=orig.apply(this,arguments); const b=performance.now();
+      Promise.resolve().then(()=>{ lastUni={site:b-a,other:performance.now()-b}; draw(); });
+      return r;
+    };
+  }
+  draw();
+})();
+/*PERF-JS-END*/</script>
 </body>
 </html>
 
