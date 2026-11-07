@@ -1460,6 +1460,39 @@ td.lv .lvtags .lvt{margin-left:0}
   .dk .dk-ic{width:36px;height:30px}
   .dk .dk-acct .who{font-size:19px}
 }
+/* boards3 Nov 6: up to 3 named boards per class, one MAIN (starred) */
+.dk .dk-tabs{display:flex;flex-wrap:wrap;gap:0;margin:0 0 0;border-bottom:1px solid var(--line2)}
+.dk .dk-tab{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid transparent;border-bottom:0;margin-bottom:-1px;color:var(--mute);font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.06em;padding:9px 14px;cursor:pointer;max-width:100%}
+.dk .dk-tab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.dk .dk-tab small{font-size:9.5px;font-weight:600;color:var(--mute);border:1px solid var(--line2);padding:1px 5px;letter-spacing:.04em}
+.dk .dk-tab i{font-style:normal;color:var(--gold)}
+.dk .dk-tab:hover{color:var(--amber)}
+.dk .dk-tab.on{background:var(--panel);border-color:var(--line2);color:var(--ink);box-shadow:inset 0 2px 0 var(--amber)}
+.dk .dk-tab.add{color:var(--amber);font-weight:600;letter-spacing:.1em;font-size:10.5px}
+.dk .dk-tab.add:hover{background:var(--amber-g)}
+.dk .dk-bhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--panel);border:1px solid var(--line2);border-top:0;padding:11px 14px;margin:0 0 12px}
+.dk .dk-bhead .dk-bname{margin:0;font-family:var(--cond);font-size:21px;letter-spacing:.05em;color:var(--gold);font-weight:700;overflow-wrap:anywhere}
+.dk .dk-bhead .st{color:var(--mute);font-size:11px;letter-spacing:.08em}
+.dk .dk-bhead .st b{color:var(--ink)}
+.dk .dk-bhead .sp{flex:1}
+.dk .dk-maintag{font-size:10px;letter-spacing:.14em;padding:3px 8px;border:1px solid var(--gold);color:var(--gold);white-space:nowrap}
+.dk .dk-btn.star{border-color:var(--gold);color:var(--gold)}
+.dk .dk-btn.star:hover{background:var(--gold);color:#14100A}
+.dk .dk-bren,.dk .dk-newb{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dk .dk-newb{background:var(--panel);border:1px solid var(--line2);border-top:0;padding:11px 14px}
+.dk .dk-newb b{font-size:10px;letter-spacing:.14em;color:var(--mute);font-weight:600;width:100%}
+.dk .dk-bren .dk-err,.dk .dk-newb .dk-err{width:100%;margin:0}
+.dk .dk-newb+.dk-bhead{border-top:1px solid var(--line)}
+.dk select{background:var(--bg);border:1px solid var(--line2);color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:8px 10px;max-width:100%}
+.dk select:focus{border-color:var(--amber);outline:none}
+.dk .dk-mainnote{font-size:11.5px;color:var(--mute);margin:-4px 0 12px;line-height:1.55}
+@media (max-width:560px){
+  .dk .dk-tab{padding:8px 10px;font-size:11px}
+  .dk .dk-tab span{max-width:120px}
+  .dk .dk-bhead .dk-bname{font-size:19px;width:100%}
+  .dk .dk-bhead .sp{display:none}
+  .dk .dk-newb input[type=text],.dk .dk-bren input[type=text],.dk .dk-newb select{width:100%}
+}
 /*DESK-CSS-END*/
 </style>
 </head>
@@ -6530,6 +6563,8 @@ obLoadHash();
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-06',tag:'ANALYST DESK',t:'Keep up to three boards for a class',go:['OPEN THE ANALYST DESK','DESK'],
+  b:'Market analysts can now keep up to three named boards for the 2027 class: your real board, a ceiling board, a contrarian board, whatever you like. Start a new one from a copy of your board, the market order or a blank slate, and switch between them with the tabs. Star one as your MAIN board; that is the one graded on the leaderboard once the draft locks, and your other boards get their own report card.'},
  {d:'2026-11-06',tag:'NEW FEATURE',t:'The Analyst Desk: file your own big board',go:['OPEN THE ANALYST DESK','DESK'],
   b:'Sign in with Google or Discord, pick an analyst name and rank the 2027 class your way. Drag players on a computer or use the arrows on a phone; your board saves as you go and shows where you are higher or lower than the market on every player. Boards lock when the 2027 draft starts and get graded against the DSX consensus every season after. No email or password is stored, and it is free like everything else on the exchange.'},
  {d:'2026-11-05',tag:'THE CLOSING BELL',t:'Game breakdowns and past nights on The Closing Bell',go:['OPEN THE CLOSING BELL','BELL'],
@@ -6637,10 +6672,13 @@ wnDot(); wnLoadHash();
    an email or a password, only the analyst name and the boards.
    Fast-load rule: nothing is requested until someone opens the desk.
    Fan boards never feed the DHJ Price, the composite or any ranking.
-   #desk opens it; #desk?err=<why> is where a failed sign-in comes back to. */
-var DESK_API='https://api.thedraftstockexchange.com', DESK_YEAR='2027', DESK_MIN=10;
-var DESK={me:undefined, err:null, loading:null, board:null, picks:null, saved:null, saveState:'', saveT:0, inflight:false,
-  again:false, q:'', arm:null, armT:0, nameErr:'', renaming:false, flash:''};
+   #desk opens it; #desk?err=<why> is where a failed sign-in comes back to.
+   Nov 6 (boards3): up to DESK_MAX named boards per class; one is the MAIN (starred) board,
+   the only one that counts on the scorecard / leaderboard after the lock. */
+var DESK_API='https://api.thedraftstockexchange.com', DESK_YEAR='2027', DESK_MIN=10, DESK_MAX=3;
+var DESK={me:undefined, err:null, loading:null, board:null, boards:null, slot:1, picks:null, saved:null, saveState:'', saveT:0, inflight:false,
+  again:false, dirty:{}, sending:null, q:'', arm:null, armT:0, nameErr:'', renaming:false, flash:'',
+  newOpen:false, newErr:'', bRen:false, bErr:'', busy:false};
 var deskReturnKey='MKT';
 function deskFetch(path, opt){
   opt=opt||{};
@@ -6673,9 +6711,33 @@ function deskLoadMe(force){
 }
 function deskLoadBoard(){
   return deskFetch('/boards/'+DESK_YEAR).then(function(b){
-    DESK.board=b; DESK.picks=(b.picks||[]).filter(function(t){ return !!deskP(t); }); DESK.saved=b.updated; DESK.saveState=b.updated?'saved':'';
+    DESK.board=b; DESK.dirty={};
+    deskSetBoards(b.boards, true);
+    let want=+deskPref(); if(!deskB(want)) want=(DESK.boards.filter(function(x){ return x.main; })[0]||DESK.boards[0]).slot;
+    deskUse(want);
+    DESK.saved=deskCur().updated; DESK.saveState=DESK.saved?'saved':'';
   });
 }
+/* boards from the server; a board with unsaved local edits keeps its local picks */
+function deskSetBoards(list, fresh){
+  const old={}; (DESK.boards||[]).forEach(function(x){ old[x.slot]=x; });
+  let bs=(list||[]).map(function(x){
+    const o=old[x.slot], keep=!fresh && o && (DESK.dirty[x.slot] || DESK.sending===x.slot);
+    return {slot:x.slot, name:x.name, main:!!x.main, updated:x.updated,
+      picks: keep ? o.picks : (x.picks||[]).filter(function(t){ return !!deskP(t); })};
+  });
+  // no board yet: a not-yet-saved "My Board" in slot 1 (the first save creates it on the server)
+  if(!bs.length) bs=[{slot:1, name:'My Board', main:true, updated:null, picks:(!fresh && old[1] && old[1].virtual)?old[1].picks:[], virtual:true}];
+  DESK.boards=bs;
+  if(!deskB(DESK.slot)) DESK.slot=(bs.filter(function(x){ return x.main; })[0]||bs[0]).slot;
+  DESK.picks=deskCur().picks;
+}
+function deskB(slot){ return (DESK.boards||[]).filter(function(x){ return x.slot===slot; })[0]||null; }
+function deskCur(){ return deskB(DESK.slot)||(DESK.boards||[])[0]||{picks:[]}; }
+function deskUse(slot){ if(!deskB(slot)) return; DESK.slot=slot; DESK.picks=deskB(slot).picks; DESK.bRen=false; DESK.bErr=''; deskPref(slot); }
+function deskPref(v){ try{ if(v===undefined) return localStorage.getItem('dsx_desk_slot')||''; localStorage.setItem('dsx_desk_slot',String(v)); }catch(_){ return ''; } }
+function deskReal(){ return (DESK.boards||[]).filter(function(x){ return !x.virtual; }); }
+function deskFree(){ for(let i=1;i<=DESK_MAX;i++){ if(!deskB(i)||deskB(i).virtual&&i!==1) return i; } return 0; }
 function deskPool(){ const c=CLASSES[DESK_YEAR]; return c ? c.top.concat(c.otc||[]).filter(function(p){ return p && p.tkr; }) : []; }
 var DESK_IDX=null;
 function deskP(t){ if(!DESK_IDX){ DESK_IDX={}; deskPool().forEach(function(p){ DESK_IDX[p.tkr]=p; }); } return DESK_IDX[t]; }
@@ -6719,7 +6781,7 @@ function deskSignedOut(){
 }
 function deskPrivacy(){
   return `<details><summary>WHAT THE DSX STORES (PRIVACY)</summary>
-    <ul><li>Only the account number Google or Discord gives the DSX for you, the analyst name you pick, your boards, and when you made them. No email, no password, no real name, no profile picture.</li>
+    <ul><li>Only the account number Google or Discord gives the DSX for you, the analyst name you pick, your boards and their names, and when you made them. No email, no password, no real name, no profile picture.</li>
     <li>Your session is a cookie that page scripts can&rsquo;t read. The DSX keeps only a scrambled (hashed) copy of it.</li>
     <li>Your analyst name and boards may be shown publicly on the DSX in later updates (profiles and a leaderboard). You can make a board private when that ships.</li>
     <li>Delete your account any time from this page. It removes the account, your sign-in link and every board right away.</li>
@@ -6767,19 +6829,41 @@ function deskBoardView(){
   const calls=P.length?`<div class="dk-calls"><div><h4>YOUR BIGGEST BULL CALLS &middot; HIGHER THAN THE MARKET</h4>${bull.length?bull.map(call).join(''):'<div class="c dk-mute">None yet</div>'}</div>
     <div><h4>YOUR BIGGEST BEAR CALLS &middot; LOWER THAN THE MARKET</h4>${bear.length?bear.map(call).join(''):'<div class="c dk-mute">None yet</div>'}</div></div>`:'';
   const arm=function(k){ return DESK.arm===k; };
+  const cur=deskCur(), real=deskReal(), many=real.length>1;
+  const tabs=DESK.boards.map(function(x){
+    const on=x.slot===DESK.slot;
+    return `<button type="button" class="dk-tab${on?' on':''}${x.main?' main':''}" role="tab" aria-selected="${on}" data-dkslot="${x.slot}" title="${x.main?'Your MAIN board (the one graded on the leaderboard)':'Switch to this board'}">${x.main?'<i aria-label="Main board">&#9733;</i>':''}<span>${deskEsc(x.name)}</span><small>${x.picks.length}</small></button>`;
+  }).join('');
+  const canNew=open && real.length && real.length<DESK_MAX && !cur.virtual;
+  const free=deskFree();
+  const newForm=DESK.newOpen&&canNew?`<form class="dk-newb" id="dkNewForm" autocomplete="off"><b>NEW BOARD ${real.length+1} OF ${DESK_MAX}</b>
+      <input type="text" id="dkNewName" maxlength="30" value="${deskEsc('Board '+(real.length+1))}" aria-label="New board name">
+      <select id="dkNewFrom" aria-label="Start the new board from"><option value="copy">START FROM A COPY OF &ldquo;${deskEsc(cur.name).toUpperCase()}&rdquo;</option><option value="market">START FROM THE MARKET ORDER</option><option value="empty">START EMPTY</option></select>
+      <button type="submit" class="dk-btn prim"${DESK.busy?' disabled':''}>CREATE BOARD</button><button type="button" class="dk-btn" data-dk="newcancel">CANCEL</button>
+      ${DESK.newErr?`<p class="dk-err">${deskEsc(DESK.newErr)}</p>`:''}</form>`:'';
+  const bname=DESK.bRen?`<form class="dk-bren" id="dkBoardNameForm" autocomplete="off"><input type="text" id="dkBoardName" maxlength="30" value="${deskEsc(cur.name)}" aria-label="Board name"><button type="submit" class="dk-btn prim"${DESK.busy?' disabled':''}>SAVE</button><button type="button" class="dk-btn" data-dk="bcancel">CANCEL</button>${DESK.bErr?`<p class="dk-err">${deskEsc(DESK.bErr)}</p>`:''}</form>`
+    :`<h3 class="dk-bname">${deskEsc(cur.name)}</h3>`;
+  const mainTag=cur.main?(many?'<span class="dk-maintag" title="Only your MAIN board is graded on the leaderboard after the draft locks">&#9733; MAIN BOARD</span>':'')
+    :(open?`<button type="button" class="dk-btn star" data-dk="mainboard"${DESK.busy?' disabled':''} title="Only your MAIN board is graded on the leaderboard after the draft locks">&#9733; MAKE THIS MY MAIN BOARD</button>`:'');
+  const bhead=`<div class="dk-tabs" role="tablist" aria-label="Your ${DESK_YEAR} boards">${tabs}${canNew&&!DESK.newOpen?`<button type="button" class="dk-tab add" data-dk="newboard" title="You can keep up to ${DESK_MAX} boards for the class">+ NEW BOARD <small>${real.length}/${DESK_MAX}</small></button>`:''}</div>
+    ${newForm}
+    <div class="dk-bhead">${bname}${DESK.bRen?'':mainTag}<span class="st"><b>${P.length}</b> RANKED &middot; ${rest.length} UNRANKED${P.length && P.length<DESK_MIN?' &middot; RANK AT LEAST '+DESK_MIN+' TO BE GRADED':''}</span><span class="sp"></span>
+      ${DESK.bRen||cur.virtual?'':`<button type="button" class="dk-btn" data-dk="bren">RENAME BOARD</button>`}
+      ${open&&!cur.virtual&&!DESK.bRen?`<button type="button" class="dk-btn warn${arm('delboard')?' arm':''}" data-dk="delboard"${DESK.busy?' disabled':''}>${arm('delboard')?'CONFIRM: DELETE &ldquo;'+deskEsc(cur.name).toUpperCase()+'&rdquo;':'DELETE BOARD'}</button>`:''}</div>
+    ${many?`<p class="dk-mainnote">&#9733; Your MAIN board is the one graded on the leaderboard once the ${DESK_YEAR} draft locks. Your other boards get their own report card but aren&rsquo;t ranked.</p>`:''}`;
   return `<div class="dk-acct"><div class="who"><small>MARKET ANALYST</small>${deskEsc(u.name)}</div>
       <div class="meta">MEMBER SINCE ${deskDay(u.since)} &middot; SIGNED IN WITH ${(u.providers||[]).map(function(x){ return x.toUpperCase(); }).join(' + ')}</div><div class="sp"></div>
       <button type="button" class="dk-btn" data-dk="rename">CHANGE NAME</button><button type="button" class="dk-btn" data-dk="logout">SIGN OUT</button></div>
-    <div class="dk-cls"><h2>${DESK_YEAR} CLASS &middot; YOUR BOARD</h2>${tag}<span class="st">${lockTxt}</span>
-      <span class="st"><b>${P.length}</b> RANKED &middot; ${rest.length} UNRANKED${P.length && P.length<DESK_MIN?' &middot; RANK AT LEAST '+DESK_MIN+' TO BE GRADED':''}</span><span class="st">${st}</span></div>
+    <div class="dk-cls"><h2>${DESK_YEAR} CLASS &middot; YOUR BOARDS</h2>${tag}<span class="st">${lockTxt}</span><span class="st">${st}</span></div>
+    ${bhead}
     ${open?`<div class="dk-tools">
-      <button type="button" class="dk-btn${P.length?' warn'+(arm('market')?' arm':''):' prim'}" data-dk="market">${P.length?(arm('market')?'CONFIRM: REPLACE MY BOARD':'RESET TO MARKET ORDER'):'START FROM THE MARKET ORDER'}</button>
+      <button type="button" class="dk-btn${P.length?' warn'+(arm('market')?' arm':''):' prim'}" data-dk="market">${P.length?(arm('market')?'CONFIRM: REPLACE THIS BOARD':'RESET TO MARKET ORDER'):'START FROM THE MARKET ORDER'}</button>
       ${rest.length&&P.length?'<button type="button" class="dk-btn" data-dk="addall">ADD THE REST IN MARKET ORDER</button>':''}
-      ${P.length?`<button type="button" class="dk-btn warn${arm('clear')?' arm':''}" data-dk="clear">${arm('clear')?'CONFIRM: CLEAR MY BOARD':'CLEAR BOARD'}</button>`:''}</div>`:''}
+      ${P.length?`<button type="button" class="dk-btn warn${arm('clear')?' arm':''}" data-dk="clear">${arm('clear')?'CONFIRM: CLEAR THIS BOARD':'CLEAR BOARD'}</button>`:''}</div>`:''}
     ${calls}
     <div class="dk-grid">
-      <section class="dk-pane dk-board"><header><h3>YOUR BOARD</h3><span>${open?'DRAG OR USE THE ARROWS &middot; +/&minus; VS MARKET':'READ-ONLY'}</span></header>
-        ${P.length?`<ol class="dk-list" id="dkList">${P.map(function(p,i){ return deskRowBoard(p,i,P.length); }).join('')}</ol>`:`<div class="dk-empty">Your board is empty. Start from the market order and move players up or down, or add players one at a time from the market list.</div>`}</section>
+      <section class="dk-pane dk-board"><header><h3>${deskEsc(cur.name).toUpperCase()}</h3><span>${open?'DRAG OR USE THE ARROWS &middot; +/&minus; VS MARKET':'READ-ONLY'}</span></header>
+        ${P.length?`<ol class="dk-list" id="dkList">${P.map(function(p,i){ return deskRowBoard(p,i,P.length); }).join('')}</ol>`:`<div class="dk-empty">This board is empty. Start from the market order and move players up or down, or add players one at a time from the market list.</div>`}</section>
       <section class="dk-pane dk-mkt"><header><h3>THE MARKET</h3><span>DSX CONSENSUS &middot; NOT ON YOUR BOARD</span></header>
         ${rest.length?`<input type="text" id="dkQ" placeholder="Search name, ticker, school" value="${deskEsc(DESK.q)}" aria-label="Search the market list">`:''}
         ${restShown.length?`<ol class="dk-list">${restShown.map(deskRowMkt).join('')}</ol>`:`<div class="dk-empty">${rest.length?'No match.':'Every player in the class is on your board.'}</div>`}</section>
@@ -6789,23 +6873,34 @@ function deskBoardView(){
 }
 /* ---------- edits + autosave ---------- */
 function deskChanged(){
+  const cb=deskB(DESK.slot); if(cb) cb.picks=DESK.picks;
+  DESK.dirty[DESK.slot]=1;
   DESK.saveState='saving'; clearTimeout(DESK.saveT);
   DESK.saveT=setTimeout(deskSave, 900);
   desk(); deskKeepFocus();
 }
+function deskFlush(){ if(DESK.saveT && Object.keys(DESK.dirty).length){ clearTimeout(DESK.saveT); DESK.saveT=0; deskSave(); } }
 function deskSave(){
   if(DESK.inflight){ DESK.again=true; return; }
-  DESK.inflight=true; DESK.saveState='saving';
-  const sent=(DESK.picks||[]).slice();
-  deskFetch('/boards/'+DESK_YEAR,{method:'PUT', body:{picks:sent}}).then(function(b){
-    DESK.saved=b.updated; DESK.saveState='saved';
+  DESK.saveT=0;
+  const ks=Object.keys(DESK.dirty); if(!ks.length){ return; }
+  const slot=+ks[0]; delete DESK.dirty[slot];
+  const bd=deskB(slot); if(!bd){ deskSave(); return; }
+  DESK.inflight=true; DESK.sending=slot; DESK.saveState='saving';
+  const body={picks:bd.picks.slice()}; if(bd.virtual) body.name=bd.name;
+  deskFetch('/boards/'+DESK_YEAR+'/'+slot,{method:'PUT', body:body}).then(function(b){
+    DESK.sending=null; deskSetBoards(b.boards);
+    DESK.saved=b.saved||b.updated; DESK.saveState=Object.keys(DESK.dirty).length?'saving':'saved';
+    if(Object.keys(DESK.dirty).length) DESK.again=true;
   }).catch(function(e){
+    DESK.sending=null; DESK.dirty[slot]=1;
     DESK.saveState=(e.status===423)?'locked':'error';
     if(e.status===423 && DESK.me && DESK.me.classes && DESK.me.classes[DESK_YEAR]) DESK.me.classes[DESK_YEAR].status='locked';
     if(e.status===401){ DESK.me={user:null, classes:(DESK.me||{}).classes}; deskFlag(false); }
   }).then(function(){
     DESK.inflight=false;
-    if(DESK.again){ DESK.again=false; deskSave(); return; }
+    if(DESK.again && DESK.saveState!=='error' && DESK.saveState!=='locked'){ DESK.again=false; deskSave(); return; }
+    DESK.again=false;
     if(currentRouteKey==='DESK'){ const y=window.scrollY; desk(); window.scrollTo(0,y); deskKeepFocus(); }
   });
 }
@@ -6815,18 +6910,33 @@ function deskKeepFocus(){
   const el=document.querySelector(deskFocus); deskFocus=null;
   if(el && !el.disabled){ try{ el.focus({preventScroll:true}); }catch(_){ el.focus(); } }
 }
+/* board management (create / rename / main / delete): saved right away, not through autosave */
+function deskBoardReq(slot, method, body, after){
+  deskFlush(); DESK.busy=true; desk();
+  return deskFetch('/boards/'+DESK_YEAR+'/'+slot, {method:method, body:body}).then(function(b){
+    deskSetBoards(b.boards); if(after) after(b); DESK.busy=false;
+  }).catch(function(e){
+    DESK.busy=false;
+    if(e.status===423 && DESK.me && DESK.me.classes && DESK.me.classes[DESK_YEAR]) DESK.me.classes[DESK_YEAR].status='locked';
+    if(e.status===401){ DESK.me={user:null, classes:(DESK.me||{}).classes}; deskFlag(false); }
+    throw e;
+  });
+}
 function deskArm(k){ DESK.arm=k; clearTimeout(DESK.armT); DESK.armT=setTimeout(function(){ DESK.arm=null; if(currentRouteKey==='DESK') desk(); }, 5000); desk(); }
 function deskDisarm(){ DESK.arm=null; clearTimeout(DESK.armT); }
 function deskAct(a){
   if(a==='retry'){ DESK.err=null; DESK.me=undefined; desk(); return; }
-  if(a==='logout'){ deskFetch('/auth/logout',{method:'POST'}).catch(function(){}).then(function(){ DESK.me={user:null, classes:(DESK.me||{}).classes}; DESK.picks=null; DESK.renaming=false; deskFlag(false); desk(); }); return; }
+  if(a==='logout'){ deskFetch('/auth/logout',{method:'POST'}).catch(function(){}).then(function(){ DESK.me={user:null, classes:(DESK.me||{}).classes}; DESK.picks=null; DESK.boards=null; DESK.dirty={}; DESK.renaming=false; deskFlag(false); desk(); }); return; }
   if(a==='rename'){ DESK.renaming=true; DESK.nameErr=''; desk(); const i=document.getElementById('dkName'); if(i) i.focus(); return; }
   if(a==='cancelname'){ DESK.renaming=false; DESK.nameErr=''; desk(); return; }
   if(a==='save'){ deskSave(); desk(); return; }
+  if(a==='bren'){ DESK.bRen=true; DESK.bErr=''; desk(); const i=document.getElementById('dkBoardName'); if(i){ i.focus(); i.select(); } return; }
+  if(a==='bcancel'){ DESK.bRen=false; DESK.bErr=''; desk(); return; }
+  if(a==='newcancel'){ DESK.newOpen=false; DESK.newErr=''; desk(); return; }
   if(a==='delete'){
     if(!DESK.arm || DESK.arm!=='delete'){ deskArm('delete'); return; }
     deskDisarm();
-    deskFetch('/me',{method:'DELETE'}).then(function(){ DESK.me={user:null, classes:(DESK.me||{}).classes}; DESK.picks=null; deskFlag(false); DESK.flash='Your account and boards were deleted.'; desk(); })
+    deskFetch('/me',{method:'DELETE'}).then(function(){ DESK.me={user:null, classes:(DESK.me||{}).classes}; DESK.picks=null; DESK.boards=null; DESK.dirty={}; deskFlag(false); DESK.flash='Your account and boards were deleted.'; desk(); })
       .catch(function(){ DESK.flash='Delete failed. Try again in a moment.'; desk(); });
     return;
   }
@@ -6835,6 +6945,20 @@ function deskAct(a){
   if(a==='market'){
     if((DESK.picks||[]).length && DESK.arm!=='market'){ deskArm('market'); return; }
     deskDisarm(); DESK.picks=pool.map(function(p){ return p.tkr; }); deskChanged(); return;
+  }
+  if(a==='newboard'){ if(deskReal().length>=DESK_MAX) return; DESK.newOpen=true; DESK.newErr=''; desk(); const i=document.getElementById('dkNewName'); if(i){ i.focus(); i.select(); } return; }
+  if(a==='mainboard'){
+    const slot=DESK.slot;
+    deskBoardReq(slot,'PUT',{main:true}).catch(function(e){ DESK.flash=deskEsc(e.message||'That didn&rsquo;t save. Try again.'); }).then(function(){ desk(); });
+    return;
+  }
+  if(a==='delboard'){
+    if(DESK.arm!=='delboard'){ deskArm('delboard'); return; }
+    deskDisarm(); const slot=DESK.slot, nm=deskCur().name;
+    delete DESK.dirty[slot];
+    deskBoardReq(slot,'DELETE',undefined,function(){ const m=DESK.boards.filter(function(x){ return x.main; })[0]||DESK.boards[0]; deskUse(m.slot); DESK.flash='Deleted the board &ldquo;'+deskEsc(nm)+'&rdquo;.'; })
+      .catch(function(e){ DESK.flash=deskEsc(e.message||'Delete failed. Try again in a moment.'); }).then(function(){ desk(); });
+    return;
   }
   if(a==='addall'){ const on={}; DESK.picks.forEach(function(t){ on[t]=1; }); pool.forEach(function(p){ if(!on[p.tkr]) DESK.picks.push(p.tkr); }); deskChanged(); return; }
   if(a==='clear'){ if(DESK.arm!=='clear'){ deskArm('clear'); return; } deskDisarm(); DESK.picks=[]; deskChanged(); return; }
@@ -6849,6 +6973,8 @@ document.addEventListener('click',function(ev){
   if(t.closest('#deskBack')){ route(deskBackKey()); return; }
   const s=t.closest('[data-dksign]'); if(s){ deskFlag(true); return; }
   const b=t.closest('[data-dk]'); if(b){ DESK.flash=''; deskAct(b.dataset.dk); return; }
+  const tb=t.closest('[data-dkslot]');
+  if(tb){ const sl=+tb.dataset.dkslot; if(sl!==DESK.slot){ DESK.flash=''; deskDisarm(); deskFlush(); deskUse(sl); DESK.newOpen=false; desk(); const f=document.querySelector('[data-dkslot="'+sl+'"]'); if(f) try{ f.focus({preventScroll:true}); }catch(_){} } return; }
   const o=t.closest('[data-dkopen]');
   if(o){ const k=o.dataset.dkopen; if(CURCLASS!==DESK_YEAR){ CURCLASS=DESK_YEAR; reindex(); renderTape(); } route(k); window.scrollTo({top:0,behavior:'instant'}); return; }
   if(!deskOpen()) return;
@@ -6862,7 +6988,25 @@ document.addEventListener('click',function(ev){
     deskFocus='[data-dkmv="'+j+'"][data-dir="'+mv.dataset.dir+'"]'; deskChanged(); return; }
 });
 document.addEventListener('submit',function(ev){
-  if(!ev.target || ev.target.id!=='dkNameForm') return;
+  if(!ev.target) return;
+  if(ev.target.id==='dkBoardNameForm'){
+    ev.preventDefault(); if(DESK.busy) return;
+    const v=(document.getElementById('dkBoardName')||{}).value||'', cur=deskCur();
+    if(cur.virtual){ cur.name=v.trim().replace(/\s+/g,' ')||cur.name; DESK.bRen=false; desk(); return; }
+    deskBoardReq(cur.slot,'PUT',{name:v},function(){ DESK.bRen=false; DESK.bErr=''; })
+      .catch(function(e){ DESK.bErr=e.message||"That name didn't work."; }).then(function(){ desk(); if(DESK.bErr){ const i=document.getElementById('dkBoardName'); if(i){ i.value=v; i.focus(); } } });
+    return;
+  }
+  if(ev.target.id==='dkNewForm'){
+    ev.preventDefault(); if(DESK.busy) return;
+    const v=(document.getElementById('dkNewName')||{}).value||'', from=(document.getElementById('dkNewFrom')||{}).value||'copy';
+    const slot=deskFree(); if(!slot){ DESK.newErr='You already have '+DESK_MAX+' boards. Delete one first.'; desk(); return; }
+    const picks=from==='market'?deskPool().slice().sort(function(a,b){ return a.crank-b.crank; }).map(function(p){ return p.tkr; }):from==='copy'?deskCur().picks.slice():[];
+    deskBoardReq(slot,'PUT',{name:v, picks:picks},function(){ deskUse(slot); DESK.newOpen=false; DESK.newErr=''; DESK.saved=deskCur().updated; DESK.saveState='saved'; })
+      .catch(function(e){ DESK.newErr=e.message||"That board didn't save."; }).then(function(){ desk(); if(DESK.newErr){ const i=document.getElementById('dkNewName'); if(i){ i.value=v; i.focus(); } } });
+    return;
+  }
+  if(ev.target.id!=='dkNameForm') return;
   ev.preventDefault();
   const v=(document.getElementById('dkName')||{}).value||'';
   DESK.nameErr='';
@@ -6910,7 +7054,11 @@ window.addEventListener('beforeunload',function(e){ if(DESK.saveState==='saving'
 function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
 function deskClearHash(){ try{ if(/^#desk/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
 function deskLoadHash(){ if(!/^#desk/.test(location.hash)) return; if(currentRouteKey!=='DESK'){ deskReturnKey='MKT'; route('DESK'); } else if(/^#desk\?err=/.test(location.hash)) desk(); }
-document.addEventListener('keydown',function(e){ if(e.key==='Escape' && currentRouteKey==='DESK' && !(e.target && e.target.tagName==='INPUT')) route(deskBackKey()); });
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Escape' || currentRouteKey!=='DESK') return;
+  if(DESK.bRen||DESK.newOpen){ DESK.bRen=false; DESK.newOpen=false; DESK.bErr=DESK.newErr=''; desk(); return; }
+  if(!(e.target && (e.target.tagName==='INPUT'||e.target.tagName==='SELECT'))) route(deskBackKey());
+});
 window.addEventListener('hashchange',deskLoadHash);
 deskLoadHash();
 /*DESK-JS-END*/
