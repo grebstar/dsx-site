@@ -1598,6 +1598,40 @@ td.lv .lvtags .lvt{margin-left:0}
   .dk-pop .dk-padv{grid-template-columns:repeat(2,1fr)}
   .dk-pop .dk-pbb{grid-template-columns:1fr}
 }
+/* quote Nov 6: QUOTE BOARD view */
+.dk .dk-vsw{display:flex;gap:0;margin:0 0 12px;border:1px solid var(--line2);width:max-content;max-width:100%}
+.dk .dk-vsw button{background:transparent;border:0;border-right:1px solid var(--line2);color:var(--mute);font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.12em;padding:8px 14px;cursor:pointer}
+.dk .dk-vsw button:last-child{border-right:0}
+.dk .dk-vsw button em{font-style:normal;font-weight:500;font-size:9.5px;letter-spacing:.08em;margin-left:6px;opacity:.85}
+.dk .dk-vsw button.on{background:var(--amber-g);color:var(--amber);box-shadow:inset 0 -2px 0 var(--amber)}
+.dk .dk-vsw button:hover{color:var(--amber)}
+.dk .dk-quote>header{flex-wrap:wrap}
+.dk .dk-qsrc{display:inline-flex;border:1px solid var(--line2)}
+.dk .dk-qsrc button{background:transparent;border:0;border-right:1px solid var(--line2);color:var(--mute);font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:5px 10px;cursor:pointer}
+.dk .dk-qsrc button:last-child{border-right:0}
+.dk .dk-qsrc button.on{color:var(--amber);background:var(--amber-g)}
+.dk .dk-qnote{font-size:11px;color:var(--mute);margin:0;padding:8px 12px;border-bottom:1px solid var(--line);line-height:1.55}
+.dk .dk-qwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.dk table.dk-qt{border-collapse:separate;border-spacing:0;width:100%;font-size:11.5px;font-variant-numeric:tabular-nums}
+.dk .dk-qt th{position:sticky;top:0;background:var(--panel);z-index:1;border-bottom:1px solid var(--line2);padding:0;white-space:nowrap}
+.dk .dk-qt th button{background:transparent;border:0;color:var(--mute);font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;padding:9px 7px;cursor:pointer;width:100%;text-align:right}
+.dk .dk-qt th.pl button{text-align:left}
+.dk .dk-qt th button:hover{color:var(--amber)}
+.dk .dk-qt th.s button{color:var(--amber)}
+.dk .dk-qt td{padding:6px 7px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:right;color:var(--ink)}
+.dk .dk-qt td.s{background:var(--amber-g);color:var(--amber);font-weight:700}
+.dk .dk-qt td.rk{font-family:var(--cond);font-size:15px;font-weight:700;color:var(--amber)}
+.dk .dk-qt td.pl,.dk .dk-qt th.pl{text-align:left;position:sticky;left:0;background:var(--panel);z-index:2;min-width:150px;max-width:210px;box-shadow:1px 0 0 var(--line)}
+.dk .dk-qt th.pl{z-index:3}
+.dk .dk-qt td.pl button{background:none;border:0;padding:0;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:12px;cursor:pointer;text-align:left;display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.dk .dk-qt td.pl button:hover{color:var(--amber)}
+.dk .dk-qt td.pl small{display:block;color:var(--mute);font-size:9.5px;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.dk .dk-qt tr.off td{opacity:.55}
+.dk .dk-qt tr.off td.pl{opacity:1}.dk .dk-qt tr.off td.pl button{color:var(--mute)}
+.dk .dk-qt tbody tr:hover td{background:var(--amber-g)}
+.dk .dk-qt .up{color:var(--up)}.dk .dk-qt .dn{color:var(--down)}.dk .dk-qt .mut{color:var(--mute)}
+@media (max-width:560px){.dk .dk-vsw{width:100%}.dk .dk-vsw button{flex:1;padding:8px 6px}.dk .dk-vsw button em{display:none}
+  .dk .dk-qt td.pl,.dk .dk-qt th.pl{min-width:120px;max-width:140px}}
 /*DESK-CSS-END*/
 </style>
 </head>
@@ -6668,6 +6702,8 @@ obLoadHash();
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-06',tag:'ANALYST DESK',t:'Quote Board view on the Analyst Desk',go:['OPEN THE ANALYST DESK','DESK'],
+  b:'Switch any board to QUOTE BOARD to see every player in the 2027 class in one table with his stats: games, minutes, points, rebounds, assists, steals, blocks, turnovers, threes, FG%, 3P%, FT%, true shooting, eFG%, assist-to-turnover, Game Score and per-40 numbers, plus his live and IPO prices. Click any column to sort by it, and flip between this season and the pre-draft line. It works on other analysts&rsquo; boards on The Floor too.'},
  {d:'2026-11-06',tag:'ANALYST DESK',t:'The Floor, player notes and player cards on the Analyst Desk',go:['OPEN THE ANALYST DESK','DESK'],
   b:'The Floor shows other analysts&rsquo; public boards for the 2027 class: their order, where they break from the market, and their notes on each player. Your &#9733; MAIN board is public by default; you can make it private, share your other boards, or hide your account. Add a note on any player with the pencil button, every row now carries his current-season stat line, and clicking a player&rsquo;s name opens his player card with his basic and advanced stats, the bull and bear case, and links to his full page and Film Lab.'},
  {d:'2026-11-06',tag:'ANALYST DESK',t:'Keep up to three boards for a class',go:['OPEN THE ANALYST DESK','DESK'],
@@ -6782,12 +6818,15 @@ wnDot(); wnLoadHash();
    #desk opens it; #desk?err=<why> is where a failed sign-in comes back to.
    Nov 6 (boards3): up to DESK_MAX named boards per class; one is the MAIN (starred) board,
    the only one that counts on the scorecard / leaderboard after the lock.
+   Nov 6 (quote): a QUOTE BOARD view of a board: every player in the class with his stats, sortable by any column.
    Nov 6 (floor): per-player notes, a live stat line on every row, a player card when you click a name,
    and THE FLOOR (#desk/floor, #desk/floor/<analyst>/<slot>): other analysts' public boards. */
 var DESK_API='https://api.thedraftstockexchange.com', DESK_YEAR='2027', DESK_MIN=10, DESK_MAX=3;
 var DESK={me:undefined, err:null, loading:null, board:null, boards:null, slot:1, picks:null, saved:null, saveState:'', saveT:0, inflight:false,
   again:false, dirty:{}, sending:null, q:'', arm:null, armT:0, nameErr:'', renaming:false, flash:'',
   newOpen:false, newErr:'', bRen:false, bErr:'', busy:false,
+  view:(function(){ try{ return localStorage.getItem('dsx_desk_view')==='quote'?'quote':'list'; }catch(_){ return 'list'; } })(),
+  qs:{k:'you', dir:1, src:'season'},
   notes:{}, noteOpen:null, noteDraft:'', noteErr:'', noteBusy:false, floor:null, fb:null, dragging:false};
 var deskReturnKey='MKT';
 function deskFetch(path, opt){
@@ -6977,7 +7016,7 @@ function deskBoardView(){
       ${DESK.bRen||cur.virtual?'':deskShareBtns(cur)}
       ${DESK.bRen||cur.virtual?'':`<button type="button" class="dk-btn" data-dk="bren">RENAME BOARD</button>`}
       ${open&&!cur.virtual&&!DESK.bRen?`<button type="button" class="dk-btn warn${arm('delboard')?' arm':''}" data-dk="delboard"${DESK.busy?' disabled':''}>${arm('delboard')?'CONFIRM: DELETE &ldquo;'+deskEsc(cur.name).toUpperCase()+'&rdquo;':'DELETE BOARD'}</button>`:''}</div>
-    <p class="dk-hint">Click a player&rsquo;s name for his player card. &#9998; adds your note on a player; it shows on your public boards.</p>
+    <p class="dk-hint">Click a player&rsquo;s name for his player card. &#9998; adds your note on a player; it shows on your public boards. QUOTE BOARD shows every player&rsquo;s stats in one sortable table.</p>
     ${many?`<p class="dk-mainnote">&#9733; Your MAIN board is the one graded on the leaderboard once the ${DESK_YEAR} draft locks. Your other boards get their own report card but aren&rsquo;t ranked.</p>`:''}`;
   return `<div class="dk-mine"><div class="dk-acct"><div class="who"><small>MARKET ANALYST</small>${deskEsc(u.name)}</div>
       <div class="meta">MEMBER SINCE ${deskDay(u.since)} &middot; SIGNED IN WITH ${(u.providers||[]).map(function(x){ return x.toUpperCase(); }).join(' + ')}</div><div class="sp"></div>
@@ -6989,13 +7028,14 @@ function deskBoardView(){
       ${rest.length&&P.length?'<button type="button" class="dk-btn" data-dk="addall">ADD THE REST IN MARKET ORDER</button>':''}
       ${P.length?`<button type="button" class="dk-btn warn${arm('clear')?' arm':''}" data-dk="clear">${arm('clear')?'CONFIRM: CLEAR THIS BOARD':'CLEAR BOARD'}</button>`:''}</div>`:''}
     ${calls}
-    <div class="dk-grid">
+    ${deskViewSw()}
+    ${DESK.view==='quote'?deskQuote(P.map(function(p){ return p.tkr; }), cur.name, null):`<div class="dk-grid">
       <section class="dk-pane dk-board"><header><h3>${deskEsc(cur.name).toUpperCase()}</h3><span>${open?'DRAG OR USE THE ARROWS &middot; +/&minus; VS MARKET':'READ-ONLY'}</span></header>
         ${P.length?`<ol class="dk-list" id="dkList">${P.map(function(p,i){ return deskRowBoard(p,i,P.length); }).join('')}</ol>`:`<div class="dk-empty">This board is empty. Start from the market order and move players up or down, or add players one at a time from the market list.</div>`}</section>
       <section class="dk-pane dk-mkt"><header><h3>THE MARKET</h3><span>DSX CONSENSUS &middot; NOT ON YOUR BOARD</span></header>
         ${rest.length?`<input type="text" id="dkQ" placeholder="Search name, ticker, school" value="${deskEsc(DESK.q)}" aria-label="Search the market list">`:''}
         ${restShown.length?`<ol class="dk-list">${restShown.map(deskRowMkt).join('')}</ol>`:`<div class="dk-empty">${rest.length?'No match.':'Every player in the class is on your board.'}</div>`}</section>
-    </div>
+    </div>`}
     <div class="dk-card dk-danger"><h3>ACCOUNT</h3>
       <p class="dk-mute">${u.private?'Your account is <b>hidden</b>: none of your boards or notes show on The Floor.':'Your public boards (&#9733; MAIN by default) and your notes on their players show on The Floor under your analyst name.'}</p>
       <p><button type="button" class="dk-btn${u.private?' prim':''}" data-dk="privacy"${DESK.busy?' disabled':''}>${u.private?'SHOW MY PUBLIC BOARDS ON THE FLOOR':'HIDE ALL MY BOARDS FROM THE FLOOR'}</button></p>${deskPrivacy()}
@@ -7118,6 +7158,14 @@ document.addEventListener('click',function(ev){
   }
   if(currentRouteKey!=='DESK') return;
   if(t.closest('#deskBack')){ route(deskBackKey()); return; }
+  const vw=t.closest('[data-dkview]');
+  if(vw){ DESK.view=vw.dataset.dkview; try{ localStorage.setItem('dsx_desk_view',DESK.view); }catch(_){} DESK.noteOpen=null; deskKeep(); return; }
+  const qh=t.closest('[data-dkqs]');
+  if(qh){ const k=qh.dataset.dkqs, c=DK_QCOLS.filter(function(x){ return x.k===k; })[0]; if(!c) return;
+    if(DESK.qs.k===k) DESK.qs.dir=-DESK.qs.dir; else { DESK.qs.k=k; DESK.qs.dir=c.asc?1:-1; }
+    deskKeep(); const h=document.querySelector('[data-dkqs="'+k+'"]'); if(h) try{ h.focus({preventScroll:true}); }catch(_){} return; }
+  const qsrc=t.closest('[data-dkqsrc]');
+  if(qsrc){ DESK.qs.src=qsrc.dataset.dkqsrc; deskKeep(); return; }
   const go=t.closest('[data-dkgo]'); if(go){ ev.preventDefault(); DESK.flash=''; deskGo(go.dataset.dkgo); return; }
   const pc=t.closest('[data-dkpopx]'); if(pc){ deskPopHide(true); return; }
   const pf=t.closest('[data-dkpfull]'); if(pf){ deskPopHide(true); deskOpenPage(pf.dataset.dkpfull, false); return; }
@@ -7235,7 +7283,7 @@ var DK_G=null, DK_GF=false;
 function deskGames(){
   if(DK_G || DK_GF || typeof glLive!=='function') return; DK_GF=true;
   glLive(DESK_YEAR).then(function(G){ if(!G) return; DK_G=G; try{ if(typeof GNOW!=='undefined' && !GNOW[DESK_YEAR]) GNOW[DESK_YEAR]=G; }catch(_){}
-    deskStatPaint(); });
+    deskStatPaint(); if(DESK.view==='quote' && document.getElementById('dkQuote')) deskKeep(); });
 }
 function deskTot(k){
   const e=DK_G && DK_G.players && DK_G.players[k]; if(!e || !e.rows || !e.rows.length) return null;
@@ -7411,8 +7459,105 @@ function deskFloorBoard(key,slot){
       <span class="st"><b>${P.length}</b> RANKED &middot; <b>${nN}</b> NOTE${nN===1?'':'S'}</span><span class="sp"></span>${cmp?'<span class="st">YOU = YOUR &#9733; MAIN BOARD</span>':''}</div>
     ${P.length?`<div class="dk-calls"><div><h4>BIGGEST BULL CALLS &middot; HIGHER THAN THE MARKET</h4>${bull.length?bull.map(call).join(''):'<div class="c dk-mute">None</div>'}</div>
       <div><h4>BIGGEST BEAR CALLS &middot; LOWER THAN THE MARKET</h4>${bear.length?bear.map(call).join(''):'<div class="c dk-mute">None</div>'}</div></div>`:''}
-    <section class="dk-pane dk-board dk-fboard${cmp?' cmp':''}"><header><h3>${deskEsc(bd.name).toUpperCase()}</h3><span>READ-ONLY &middot; CLICK A NAME FOR THE PLAYER CARD</span></header>
-      ${P.length?`<ol class="dk-list">${rows}</ol>`:'<div class="dk-empty">This board is empty.</div>'}</section>`;
+    ${deskViewSw()}
+    ${DESK.view==='quote'?deskQuote(bd.picks||[], bd.name, cmp?mine.picks:null):`<section class="dk-pane dk-board dk-fboard${cmp?' cmp':''}"><header><h3>${deskEsc(bd.name).toUpperCase()}</h3><span>READ-ONLY &middot; CLICK A NAME FOR THE PLAYER CARD</span></header>
+      ${P.length?`<ol class="dk-list">${rows}</ol>`:'<div class="dk-empty">This board is empty.</div>'}</section>`}`;
+}
+/* ---------- QUOTE BOARD: every player in the class, sortable by any column ---------- */
+function deskViewSw(){
+  return `<div class="dk-vsw" role="tablist" aria-label="Board view"><button type="button" role="tab" aria-selected="${DESK.view!=='quote'}" class="${DESK.view!=='quote'?'on':''}" data-dkview="list">BOARD</button><button type="button" role="tab" aria-selected="${DESK.view==='quote'}" class="${DESK.view==='quote'?'on':''}" data-dkview="quote">QUOTE BOARD <em>EVERY PLAYER &middot; SORT ANY STAT</em></button></div>`;
+}
+/* one player's numbers for the quote board: this season (games file, else live.json) or the pre-draft line */
+function deskQStats(p, src){
+  const o={};
+  if(src==='pre'){
+    const L=p.line||{};
+    o.gp=p.gp; o.min=p.mp; o.pts=L.pts; o.reb=L.reb; o.ast=L.ast; o.stl=L.stl; o.blk=L.blk; o.to=L.to; o.tpm=L.tpm; o.fgp=p.fg; o.tpp=null; o.ftp=p.ft;
+    return o;
+  }
+  const t=deskTot(p.tkr);
+  if(t){ const g=t.gp, pc=function(m,a){ return a?100*m/a:null; };
+    o.gp=g; o.min=t.min/g; o.pts=t.pts/g; o.reb=t.reb/g; o.ast=t.ast/g; o.stl=t.stl/g; o.blk=t.blk/g; o.to=t.to/g; o.tpm=t.tpm/g;
+    o.fgp=pc(t.fgm,t.fga); o.tpp=pc(t.tpm,t.tpa); o.ftp=pc(t.ftm,t.fta);
+    o.ts=(t.fga||t.fta)?t.pts/(2*(t.fga+0.44*t.fta))*100:null; o.efg=t.fga?(t.fgm+0.5*t.tpm)/t.fga*100:null;
+    o.ato=t.to?t.ast/t.to:null; o.gs=t.gs/g; o.p40=t.min?t.pts/t.min*40:null; o.sb40=t.min?(t.stl+t.blk)/t.min*40:null; o.pro=t.pro;
+    return o; }
+  let e=null; try{ e=LV.entry(p.tkr, DESK_YEAR); }catch(_){}
+  if(e && e.gp && e.st && !e.intl){ const x=e.st; o.gp=e.gp; o.min=x.min; o.pts=x.pts; o.reb=x.reb; o.ast=x.ast; o.stl=x.stl; o.blk=x.blk; o.to=x.to; o.tpm=x.tpm; o.fgp=x.fg; o.ftp=x.ft; o.ato=x.to?x.ast/x.to:null; }
+  return o;
+}
+var DK_QCOLS=[
+  {k:'you', lab:'RK', t:'Rank on this board', asc:1, f:'i'},
+  {k:'cmp', lab:'YOU', t:'Rank on your MAIN board', asc:1, f:'i', only:'cmp'},
+  {k:'mkt', lab:'MKT', t:'DSX consensus (market) rank', asc:1, f:'i'},
+  {k:'d', lab:'+/&minus;', t:'Board rank vs market rank (+ = higher than the market)', f:'d'},
+  {k:'name', lab:'PLAYER', t:'Player name', asc:1, f:'name'},
+  {k:'live', lab:'LIVE $', t:'Live price (this season)', f:'$'},
+  {k:'ipo', lab:'IPO $', t:'IPO price (frozen, from the consensus rank)', f:'$'},
+  {k:'gp', lab:'GP', t:'Games played', f:'i'},
+  {k:'min', lab:'MIN', t:'Minutes per game', f:'1'},
+  {k:'pts', lab:'PTS', t:'Points per game', f:'1'},
+  {k:'reb', lab:'REB', t:'Rebounds per game', f:'1'},
+  {k:'ast', lab:'AST', t:'Assists per game', f:'1'},
+  {k:'stl', lab:'STL', t:'Steals per game', f:'1'},
+  {k:'blk', lab:'BLK', t:'Blocks per game', f:'1'},
+  {k:'to', lab:'TO', t:'Turnovers per game (sorts low to high first)', asc:1, f:'1'},
+  {k:'tpm', lab:'3PM', t:'Threes made per game', f:'1'},
+  {k:'fgp', lab:'FG%', t:'Field-goal percentage', f:'%'},
+  {k:'tpp', lab:'3P%', t:'Three-point percentage', f:'%'},
+  {k:'ftp', lab:'FT%', t:'Free-throw percentage', f:'%'},
+  {k:'ts', lab:'TS%', t:'True shooting %, from his box scores', f:'%', season:1},
+  {k:'efg', lab:'eFG%', t:'Effective FG% (a three counts 1.5 makes)', f:'%', season:1},
+  {k:'ato', lab:'AST/TO', t:'Assists per turnover', f:'2'},
+  {k:'gs', lab:'GmSc', t:'Hollinger Game Score per game', f:'1', season:1},
+  {k:'p40', lab:'PTS/40', t:'Points per 40 minutes', f:'1', season:1},
+  {k:'sb40', lab:'STK/40', t:'Steals + blocks per 40 minutes', f:'1', season:1}
+];
+function deskQuote(picks, bname, cmpPicks){
+  const src=DESK.qs.src==='pre'?'pre':'season', on={}, mine={};
+  picks.forEach(function(t,i){ on[t]=i+1; });
+  (cmpPicks||[]).forEach(function(t,i){ mine[t]=i+1; });
+  const cols=DK_QCOLS.filter(function(c){ return (c.only!=='cmp'||cmpPicks) && !(c.season && src==='pre'); });
+  if(!cols.some(function(c){ return c.k===DESK.qs.k; })) DESK.qs={k:'you', dir:1, src:src};
+  const rows=deskPool().map(function(p){
+    const x=deskQStats(p,src); let e=null; try{ e=LV.entry(p.tkr, DESK_YEAR); }catch(_){}
+    x.p=p; x.you=on[p.tkr]||null; x.cmp=mine[p.tkr]||null; x.mkt=p.crank; x.d=x.you?p.crank-x.you:null; x.name=p.name;
+    x.ipo=p.price; x.live=(e&&e.gp&&e.price!=null&&!e.intl)?e.price:null;
+    return x;
+  });
+  const K=DESK.qs.k, dir=DESK.qs.dir;
+  rows.sort(function(a,b){
+    const va=a[K], vb=b[K], na=(va==null||va===''||(typeof va==='number'&&isNaN(va))), nb=(vb==null||vb===''||(typeof vb==='number'&&isNaN(vb)));
+    if(na&&nb) return a.mkt-b.mkt; if(na) return 1; if(nb) return -1;   /* blanks always sink */
+    if(K==='name') return dir*String(va).localeCompare(String(vb));
+    return (va===vb) ? a.mkt-b.mkt : dir*(va-vb);
+  });
+  const fm=function(c,v){
+    if(v==null || (typeof v==='number'&&isNaN(v))) return '<span class="mut">&mdash;</span>';
+    if(c.f==='i') return String(Math.round(v));
+    if(c.f==='1') return (+v).toFixed(1);
+    if(c.f==='2') return (+v).toFixed(2);
+    if(c.f==='%') return (+v).toFixed(1);
+    if(c.f==='$') return '$'+(+v).toFixed(2);
+    if(c.f==='d') return v>0?'<span class="up">+'+v+'</span>':v<0?'<span class="dn">'+v+'</span>':'<span class="mut">EVEN</span>';
+    return String(v);
+  };
+  const head=cols.map(function(c){
+    const s=c.k===K, arrow=s?(dir>0?' &#9650;':' &#9660;'):'';
+    return `<th class="${c.f==='name'?'pl':'n'}${s?' s':''}" aria-sort="${s?(dir>0?'ascending':'descending'):'none'}"><button type="button" data-dkqs="${c.k}" title="${c.t}. Click to sort.">${c.lab}${arrow}</button></th>`;
+  }).join('');
+  const body=rows.map(function(x){
+    const p=x.p;
+    return `<tr class="${x.you?'':'off'}">`+cols.map(function(c){
+      if(c.f==='name') return `<td class="pl"><button type="button" data-dkopen="${p.tkr}" title="Show the player card">${deskEsc(p.name)}</button><small>$${p.tkr} &middot; ${deskEsc(p.pos||'')} &middot; ${deskEsc(p.school||'')}</small></td>`;
+      return `<td class="n${c.k===K?' s':''}${c.k==='you'?' rk':''}">${fm(c,x[c.k])}</td>`;
+    }).join('')+'</tr>';
+  }).join('');
+  const nOn=picks.length, nSeason=rows.filter(function(x){ return src==='season' && x.gp; }).length;
+  return `<section class="dk-pane dk-quote" id="dkQuote"><header><h3>QUOTE BOARD &middot; ${deskEsc(bname).toUpperCase()}</h3>
+      <span class="dk-qsrc" role="group" aria-label="Which stats"><button type="button" class="${src==='season'?'on':''}" data-dkqsrc="season">${deskSeason()} SEASON</button><button type="button" class="${src==='pre'?'on':''}" data-dkqsrc="pre">PRE-DRAFT</button></span></header>
+    <p class="dk-qnote">All ${rows.length} players in the ${DESK_YEAR} class. Click any column to sort; click it again to flip the order. ${nOn<rows.length?`Players not on this board are dimmed with no rank. `:''}${src==='season'?`${nSeason} have played this season; per-game averages from their box scores, regular season only. Blank = no games yet.`:'Pre-draft lines come from each player&rsquo;s prospect profile (for most of this class, the 2025-26 high-school or pro season).'}</p>
+    <div class="dk-qwrap"><table class="dk-qt"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div></section>`;
 }
 /* drag to reorder (mouse / pen; phones use the arrows) */
 (function(){
