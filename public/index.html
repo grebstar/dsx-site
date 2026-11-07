@@ -1316,6 +1316,29 @@ td.lv .lvtags .lvt{margin-left:0}
   }
 }
 /*HEROFIT-CSS-END*/
+/*RAILTOG-CSS-START*/
+.railtogw{display:none}
+@media (min-width:861px){
+  .shell{--railw:320px;grid-template-columns:var(--railw) 1fr;transition:grid-template-columns .22s ease}
+  .shell.railoff{grid-template-columns:40px 1fr}
+  .rail{overflow-x:hidden}
+  .railtogw{display:flex;justify-content:flex-end;position:sticky;top:0;height:0;overflow:visible;z-index:4}
+  .railtog{width:30px;height:30px;margin-right:7px;padding:0;display:grid;place-items:center;background:#0A0C11;border:1px solid var(--line2);border-radius:3px;color:var(--lbl);cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .railtog:hover,.railtog:focus-visible{color:var(--amber);border-color:var(--amber);outline:none}
+  .railtog svg{width:17px;height:17px;display:block}
+  .railtog .chev{transform-box:fill-box;transform-origin:center;transition:transform .22s ease}
+  .shell.railoff .railtog .chev{transform:scaleX(-1)}
+  .shell.railoff .rail{height:calc(100vh - var(--chrome,68px));overflow:hidden;cursor:pointer}
+  .shell.railoff .rail:hover{background:#0E1117}
+  .shell.railoff .rail>*:not(.railtogw){display:none}
+  .shell.railoff .railtogw{justify-content:center}
+  .shell.railoff .railtog{margin-right:0}
+  .shell.railoff .rail::after{content:'LISTINGS';display:block;writing-mode:vertical-rl;margin:46px auto 0;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.24em;color:var(--lbl)}
+  .shell.railoff .rail:hover::after{color:var(--amber)}
+}
+@media (min-width:861px) and (max-width:1499px){.shell{--railw:290px}}
+@media (prefers-reduced-motion:reduce){.shell,.railtog .chev{transition:none}}
+/*RAILTOG-CSS-END*/
 /*DESK-CSS-START*/
 /* desklav Nov 6: Analyst Desk secondary text = lavender, same as the Closing/Opening Bell (was --mute #8B8271) */
 .dk{--mute:#B8AEE6}
@@ -2064,6 +2087,29 @@ function dsxMorphKids(a,b){
   while(x){ const nx=x.nextSibling; a.removeChild(x); x=nx; }
 }
 /*MORPH-JS-END*/
+/*RAILTOG-JS-START*/
+/* hide / show the listings rail on desktop, like a collapsible sidebar; remembered per browser */
+const RAILTOG_SVG='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M5.5 2.5v11"/><path class="chev" d="M10.6 6.2 8.8 8l1.8 1.8"/></svg>';
+function railIsOff(){ const s=document.querySelector('.shell'); return !!(s && s.classList.contains('railoff')); }
+function railTogLabel(off){ return off ? 'Show the listings' : 'Hide the listings'; }
+function railTogHTML(){ const off=railIsOff(), t=railTogLabel(off);
+  return `<div class="railtogw"><button type="button" class="railtog" onclick="event.stopPropagation();railTog()" title="${t}" aria-label="${t}" aria-controls="rail" aria-expanded="${off?'false':'true'}">${RAILTOG_SVG}</button></div>`; }
+function railTog(force){
+  const s=document.querySelector('.shell'); if(!s) return;
+  const off=(force===undefined) ? !s.classList.contains('railoff') : !!force;
+  s.classList.toggle('railoff',off);
+  try{ localStorage.setItem('dse-railoff-v1', off?'1':'0'); }catch(_){}
+  const b=document.querySelector('.railtog');
+  if(b){ const t=railTogLabel(off); b.title=t; b.setAttribute('aria-label',t); b.setAttribute('aria-expanded',off?'false':'true'); }
+}
+(function(){
+  try{ if(localStorage.getItem('dse-railoff-v1')==='1'){ const s=document.querySelector('.shell'); if(s) s.classList.add('railoff'); } }catch(_){}
+  const r=document.getElementById('rail');
+  if(r) r.addEventListener('click',function(e){
+    if(railIsOff() && !e.target.closest('.railtog') && window.matchMedia('(min-width:861px)').matches) railTog(false);
+  });
+})();
+/*RAILTOG-JS-END*/
 function rail(sel){
   const r=document.getElementById('rail');
   const canLive=railLiveOK(), live=(railMode==='live' && canLive);
@@ -2075,7 +2121,7 @@ function rail(sel){
       if(a!=null) return -1; if(b!=null) return 1; return x.crank-y.crank; });
   }
   const rcOpts=[...document.querySelectorAll('#classSel option')].map(o=>`<option value="${o.value}"${o.value===CURCLASS?' selected':''}>RC${o.value.slice(2)} &middot; ${o.value}</option>`).join('');
-  let h=`<h4>MARKET</h4><div class="wl mktrow ${sel==='MKT'?'on':''}" data-k="MKT" role="button" tabindex="0">
+  let h=railTogHTML()+`<h4>MARKET</h4><div class="wl mktrow ${sel==='MKT'?'on':''}" data-k="MKT" role="button" tabindex="0">
     <span class="tk"><span class="selwrap"><select id="railClass" aria-label="Select draft class">${rcOpts}</select><svg class="cv" viewBox="0 0 12 8" width="9" height="6" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="px">${f2(D.reduce((a,p)=>a+px(p),0))}</span>
     <span class="nm">${CURCLASS} Class Index</span><span class="ch mut">INDEX</span></div>
     <h4 class="railsort"><span>LISTINGS &middot;</span><select id="railSort" aria-label="Order the listings by"><option value="ipo"${live?'':' selected'}>BY COMPOSITE (IPO)</option><option value="live"${live?' selected':''}${canLive?'':' disabled'}>BY LIVE PRICE${canLive?'':' (N/A)'}</option></select></h4>`;
