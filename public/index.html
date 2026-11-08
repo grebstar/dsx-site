@@ -7792,7 +7792,19 @@ window.addEventListener('popstate',function(e){
   requestAnimationFrame(function(){ window.scrollTo({top:y,behavior:'instant'}); });
 });
 /* SHARE / COPY LINK on every prospect page */
-function navShareUrl(p){ return location.origin+location.pathname+'#'+CURCLASS+'/'+p.tkr; }
+/*SHAREPAGE*/function navSlug(y,p){
+  // mirrors seo_build.py slugify() + build() collision rule, so the path matches the static page
+  const sl=function(n){ let t=String(n||'').normalize('NFKD').replace(/[^\x00-\x7f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); return t||'prospect'; };
+  const top=(CLASSES[y]&&CLASSES[y].top)||[];
+  const r=top.slice().sort(function(a,b){ return ((a.crank||999)-(b.crank||999)) || (a.name<b.name?-1:a.name>b.name?1:0); });
+  const seen=new Set();
+  for(const q of r){ let s=sl(q.name); if(seen.has(s)||s==='index') s=s+'-'+String(q.tkr).toLowerCase(); seen.add(s); if(q.tkr===p.tkr) return s; }
+  return null;
+}
+function navShareUrl(p){
+  const s=navSlug(CURCLASS,p);
+  return s ? 'https://thedraftstockexchange.com/'+CURCLASS+'/'+s+'?s=1' : location.origin+location.pathname+'#'+CURCLASS+'/'+p.tkr;
+}
 function navShareBtn(p){
   return '<button type="button" class="sharebtn" data-share="'+p.tkr+'" title="Copy a link to this prospect page">SHARE LINK</button>';
 }
