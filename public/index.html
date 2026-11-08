@@ -5134,7 +5134,7 @@ function cmpRefresh(){
 }
 
 async function cmpCopyLink(btn){
-  const txt=location.href.split('#')[0]+'#compare='+CMP_SEL.join(',');
+  const txt=(typeof secShareUrl==='function') ? secShareUrl('compare') : location.href.split('#')[0]+'#compare='+CMP_SEL.join(',');/*CMPCOPY*/
   let ok=false;
   try{ await navigator.clipboard.writeText(txt); ok=true; }catch(_){}
   if(!ok){
