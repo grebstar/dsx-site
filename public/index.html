@@ -659,6 +659,7 @@ tbody tr:last-child td{border-bottom:0}
   font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.13em;padding:5px 10px;cursor:pointer}
 .sharebtn:hover{background:rgba(224,178,74,.28)}
 .sharebtn.ok{background:var(--amber);color:#0B0E14}
+.secshare{margin:2px 0 0}/*SECSHARE-CSS*/
 /*DEEPLINK-CSS-END*/
 
 /*COMPARE-CSS-START*/
@@ -4889,7 +4890,32 @@ function glInner(tkr,si){
     <b>GS</b> = Game Score (Hollinger), a one-number summary of a single box score. Season high in gold; 30-point games bold.${!ix[1]&&nba?' No college log on file (pre-draft basketball outside the NCAA).':''}</div>`;
 }
 /*GAMELOG-JS-END*/</script>
-<script>/*COMPARE-JS-START*/
+<script>/*COMPARE-JS-START*//*SECSHARE*/
+const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings'};
+function secShareBtn(sec){ return '<div class="secshare"><button type="button" class="sharebtn" data-share-sec="'+sec+'" title="Copy a link to this page">SHARE LINK</button></div>'; }
+function secShareHash(sec){
+  const h=String(location.hash||'');
+  if(sec==='closing-bell'){
+    // pin the night being viewed, so the link still shows that night tomorrow
+    try{ const R=(LV.recap&&LV.recap())||null;
+      if(R && BELL.lg && R.leagues[BELL.lg]){ const d=BELL.night[BELL.lg]||R.leagues[BELL.lg].slate; return '#closingbell/'+BELL.lg+'/'+d+(BELL.game?'/'+BELL.game:''); } }catch(_){}
+    return /^#closingbell(\/|$)/.test(h)?h:'#closingbell';
+  }
+  if(sec==='opening-bell') return /^#openingbell(\/|$)/.test(h)?h:'#openingbell';
+  if(sec==='compare'){ try{ if(CMP_SEL.length) return '#compare='+CMP_SEL.join(','); }catch(_){} return '#compare'; }
+  if(sec==='one-universe') return /^#league(=|$)/.test(h)?h:'#league';
+  return '';
+}
+function secShareUrl(sec){ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
+document.addEventListener('click',function(ev){
+  const b=ev.target.closest && ev.target.closest('[data-share-sec]'); if(!b) return;
+  const sec=b.dataset.shareSec, u=secShareUrl(sec);
+  const done=function(){ b.textContent='LINK COPIED'; b.classList.add('ok'); setTimeout(function(){ b.textContent='SHARE LINK'; b.classList.remove('ok'); },1800); };
+  const coarse=window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  if(coarse && navigator.share){ navigator.share({title:(SEC_SHARE[sec]||'')+' · The Draft Stock Exchange', url:u}).catch(function(){}); return; }
+  try{ navigator.clipboard.writeText(u).then(done,function(){ b.textContent=u; }); }catch(_){ b.textContent=u; }
+});
+
 /* ================= COMPARE PROSPECTS ==========================================
    Pick two to four players from ANY class and read them side by side.
    Every class is already in the page (CLASSES), so this needs no server.
@@ -5037,7 +5063,7 @@ function compare(){
   cmpBuild();
   document.getElementById('main').innerHTML=`
   <div class="cmp">
-    <div class="cmp-title"><button type="button" id="cmpBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>COMPARE PROSPECTS</h1>
+    <div class="cmp-title"><button type="button" id="cmpBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>COMPARE PROSPECTS</h1>${secShareBtn('compare')}
       <p>Pick two to four players from any class, 2013 through 2027, and read them side by side. Each player&rsquo;s own
       first, second and third NBA seasons line up with each other, so a 2016 rookie year sits next to a 2025 one.</p></div>
     <div class="cmp-bar">
@@ -5494,7 +5520,7 @@ function leagueRankings(){
   const yrs=uniYears();
   document.getElementById('main').innerHTML=`
   <div class="cmp ldb uni">
-    <div class="cmp-title"><button type="button" id="uniBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>ONE-UNIVERSE RANKINGS</h1>
+    <div class="cmp-title"><button type="button" id="uniBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>ONE-UNIVERSE RANKINGS</h1>${secShareBtn('one-universe')}
       <p>Every class from ${UNI_FIRST} through ${UNI_LAST} dumped into one pool and re-ranked on a single score from each player&rsquo;s 2025-26 season,
       #1 at the top. Switch classes on and off to re-rank any mix. This is a separate view: it does not touch the board&rsquo;s prices.</p></div>
     <div class="cmp-bar ldb-bar">
@@ -5967,7 +5993,7 @@ function bellTape(L){
 }
 function closingBell(){
   const R=(LV.recap&&LV.recap())||null;
-  const head=`<div class="cmp-title"><button type="button" id="bellBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>THE CLOSING BELL</h1>
+  const head=`<div class="cmp-title"><button type="button" id="bellBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>THE CLOSING BELL</h1>${secShareBtn('closing-bell')}
     <p>The morning recap. Every board player who played on the most recent slate, how he did, how his live price moved, the finals and the film.
     NBA classes and the 2027 college class each show their own latest night. Click any final for the full box score, or step back through past nights. Posted every morning after the price update.</p></div>`;
   let body='';
@@ -6612,7 +6638,7 @@ function openingBell(){
   const lg=obPickLg(); OB.lg=lg;
   const d=obShown(lg), sb=OB_SB[obSbKey(lg,d)];
   if(sb && sb.state==='ok') obAfterSB(lg,d);
-  const head=`<div class="cmp-title"><button type="button" id="obBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>OPENING BELL PREVIEW</h1>
+  const head=`<div class="cmp-title"><button type="button" id="obBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>OPENING BELL PREVIEW</h1>${secShareBtn('opening-bell')}
     <p>The pre-game preview of tonight&rsquo;s slate, the morning mirror of the Closing Bell. Every board player scheduled to play with his DSX projected line next to the sportsbook&rsquo;s player props, the line on every game (spread, total, moneyline and projected team points), ESPN&rsquo;s win probability, the injury report and the latest tape. Lines are pulled live when you open this page. Click any game for the full preview.</p></div>`;
   const S={tabs:obTabs(), bar:'', note:'', tiles:'', watch:'', board:'', tape:'', sheet:'', foot:''};
   if(!sb || sb.state==='loading'){ S.bar=obBar(lg,d); S.watch='<div class="card"><div class="bl-load">LOADING THE SLATE&hellip;</div></div>'; }
@@ -6724,7 +6750,7 @@ function obOpen(id){
 }
 /* keep the back button when a prospectus redraws itself (its class film file landing, a live-price refresh) */
 function obBackFix(k){
-  if(!obBackFor) return;
+  try{ if(!obBackFor) return; }catch(_){ return; }
   if(obBackFor!==CURCLASS+'/'+k){ obBackFor=null; return; }
   const m=document.getElementById('main');
   if(m && !document.getElementById('obToOb')) m.insertAdjacentHTML('afterbegin','<button type="button" id="obToOb" class="cmp-back">&larr; BACK TO THE OPENING BELL PREVIEW</button>');
