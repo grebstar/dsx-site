@@ -2648,7 +2648,16 @@ var COMPS_LAB={age:'age at the draft',ht:'height',wt:'weight',ape:'wingspan over
 var COMPS_SAY=['age','ht','ape','pts40','reb40','ast40','stl40','blk40','tpm40','ft','ts','usg','astp','stlp','blkp','obpm','dbpm','tpar','ftar'];
 var COMPS_FAM={blk40:'blk',blkp:'blk',stl40:'stl',stlp:'stl',ast40:'ast',astp:'ast',tpm40:'three',tpar:'three',reb40:'reb'};
 var COMPS_FLAB={blk:'shot blocking',stl:'steals',ast:'passing',three:'three-point volume',reb:'rebounding'};
-var COMPS=null, COMPS_FROM=null;
+var COMPS=null, COMPS_FROM=null, BACKTO_TR=null;   /*COMPSBACK*/
+/* re-paint the back buttons after any redraw of the page they were added to */
+function compsBackPaint(){
+  var m=document.getElementById('main'); if(!m) return;
+  var here=CURCLASS+'/'+currentRouteKey;
+  if(COMPS_FROM && COMPS_FROM.to===here && !document.getElementById('compsBack'))
+    m.insertAdjacentHTML('afterbegin','<button type="button" id="compsBack" class="cmp-back">&larr; BACK TO '+COMPS_FROM.name.toUpperCase()+'</button>');
+  if(BACKTO_TR===here && !document.getElementById('trToTr'))
+    m.insertAdjacentHTML('afterbegin','<button type="button" id="trToTr" class="cmp-back">&larr; BACK TO THE TRACK RECORD</button>');
+}
 function compsPos(s){
   if(!s) return null;
   var M={PG:1,SG:2,SF:3,PF:4,C:5,G:1.5,F:3.5,GF:2.5,FC:4.5,W:2.5}, v=String(s).replace(/-/g,'/').split('/').map(function(x){ return M[x.trim()]; }).filter(function(x){ return x!=null; });
@@ -2730,6 +2739,7 @@ function compsOutCell(q){
     ' <span class="k">THROUGH '+(S.label||'')+'</span></div>';
 }
 function compsCard(p){
+  setTimeout(compsBackPaint,0);
   var head='<h3>COMPARABLE IPOs <em>CLOSEST DRAFT-DAY PROFILES &middot; '+COMPS_FIRST+'&ndash;'+COMPS_LAST+' CLASSES</em></h3>';
   if(!p.adv){
     return '<div class="card" data-comps="'+p.tkr+'">'+head+'<div class="advn"><b>Comparable IPOs are matched on a finished pre-draft season.</b> '+
@@ -2770,11 +2780,11 @@ function compsCard(p){
 }
 function compsOpen(y,tkr,ret){
   var C=CLASSES[y]; if(!C || !C.top.some(function(p){ return p.tkr===tkr; })) return;
-  COMPS_FROM=ret||null;
+  COMPS_FROM=(ret && ret.name) ? ret : null; BACKTO_TR=null;
+  if(COMPS_FROM) COMPS_FROM.to=y+'/'+tkr;
   if(CURCLASS!==y){ CURCLASS=y; reindex(); renderTape(); }
   route(tkr); window.scrollTo({top:0,behavior:'instant'});
-  var m=document.getElementById('main');
-  if(m && COMPS_FROM && COMPS_FROM.name) m.insertAdjacentHTML('afterbegin','<button type="button" id="compsBack" class="cmp-back">&larr; BACK TO '+COMPS_FROM.name.toUpperCase()+'</button>');
+  compsBackPaint();
 }
 document.addEventListener('click',function(ev){
   var t=ev.target; if(!t.closest) return;
@@ -6120,10 +6130,10 @@ function trClearHash(){
 }
 function trOpen(y,tkr){
   var C=CLASSES[y]; if(!C || !C.top.some(function(p){ return p.tkr===tkr; })) return;
+  BACKTO_TR=y+'/'+tkr; COMPS_FROM=null;
   if(CURCLASS!==y){ CURCLASS=y; reindex(); renderTape(); }
   route(tkr); window.scrollTo({top:0,behavior:'instant'});
-  var m=document.getElementById('main');
-  if(m) m.insertAdjacentHTML('afterbegin','<button type="button" id="trToTr" class="cmp-back">&larr; BACK TO THE TRACK RECORD</button>');
+  compsBackPaint();
 }
 function trBackKey(){ return (trReturnKey==='MKT'||trReturnKey==='CMP'||trReturnKey==='UNI'||trReturnKey==='FIND'||trReturnKey==='BELL'||trReturnKey==='OPEN'||trReturnKey==='NEW'||trReturnKey==='DESK'||byT[trReturnKey])?trReturnKey:'MKT'; }
 document.addEventListener('click',function(ev){
@@ -6132,7 +6142,7 @@ document.addEventListener('click',function(ev){
     if(currentRouteKey==='TRACK'){ route(trBackKey()); return; }
     trReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('TRACK'); window.scrollTo({top:0,behavior:'instant'}); return;
   }
-  if(t.closest('#trToTr')){ route('TRACK'); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(t.closest('#trToTr')){ BACKTO_TR=null; route('TRACK'); window.scrollTo({top:0,behavior:'instant'}); return; }
   if(currentRouteKey!=='TRACK') return;
   if(t.closest('#trBack')){ route(trBackKey()); return; }
   var o=t.closest('[data-tropen]'); if(o){ var a=o.dataset.tropen.split('|'); trOpen(a[0],a[1]); }
