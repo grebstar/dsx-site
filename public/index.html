@@ -1710,6 +1710,22 @@ td.lv .lvtags .lvt{margin-left:0}
 /* TAPEMOB: phones skip the ticker tape (saves a row of sticky chrome); desktop keeps it + its toggle */
 @media (max-width:860px){.tape{display:none}}
 /*TAPETOG-CSS-END*/
+/*JUMP-CSS-START*/
+/* quick-jump buttons in the prospectus header (between FILM LAB and the price) */
+.jumpbar{flex:1 1 210px;min-width:0;max-width:340px;align-self:center}
+.jumpbar .jl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.24em;color:var(--lbl);margin:0 0 5px 1px}
+.jumpbar .jb{display:flex;flex-wrap:wrap;gap:5px}
+.jumpbar button{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;padding:6px 8px;background:#0A0C11;border:1px solid var(--line2);border-radius:3px;color:var(--lbl);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.jumpbar button:hover,.jumpbar button:focus-visible{color:var(--amber);border-color:var(--amber);outline:none}
+#main .card{scroll-margin-top:calc(var(--chrome,68px) + 10px)}
+@media (max-width:860px){
+  .jumpbar{flex:1 1 100%;max-width:none;order:9}
+  .jumpbar .jb{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .jumpbar .jb::-webkit-scrollbar{display:none}
+  .jumpbar button{padding:9px 11px;font-size:11px}
+}
+/*JUMP-CSS-END*/
+
 /*DESK-CSS-START*/
 /* desklav Nov 6: Analyst Desk secondary text = lavender, same as the Closing/Opening Bell (was --mute #8B8271) */
 .dk{--mute:#B8AEE6}
@@ -2268,6 +2284,35 @@ function tapeTog(force){
   if(window.ResizeObserver && typeof measureChrome==='function') new ResizeObserver(measureChrome).observe(t);
 })();
 /*TAPETOG-JS-END*/
+/*JUMP-JS-START*/
+/* prospectus quick-jump buttons: one per section that exists on this page (filled after every redraw of #main) */
+var JUMPS=[['SEASON',/^CURRENT SEASON/],['GAME LOG',/^GAME LOG/],['STATS',/^(ADVANCED STATS|PRE-DRAFT STAT LINE)/],['SHOT PROFILE',/^SHOT PROFILE/],
+  ['COMPS',/^COMPARABLE IPO/],['CAREER',/^ROOKIE SEASON/],['BOARDS',/COVERAGE$/],['SCOUTING',/^SCOUTING REPORT/]];
+function jumpTarget(i){
+  var hs=document.querySelectorAll('#main .card > h3');
+  for(var k=0;k<hs.length;k++){ var t=(hs[k].firstChild&&hs[k].firstChild.textContent||'').trim(); if(JUMPS[i][1].test(t)) return hs[k].parentElement; }
+  return null;
+}
+function jumpPaint(){
+  var bar=document.querySelector('#main .jumpbar:not([data-done])'); if(!bar) return;
+  bar.setAttribute('data-done','1');
+  var out='';
+  for(var i=0;i<JUMPS.length;i++) if(jumpTarget(i)) out+='<button type="button" data-jump="'+i+'">'+JUMPS[i][0]+'</button>';
+  if(out) bar.innerHTML='<div class="jl">JUMP TO</div><div class="jb">'+out+'</div>'; else bar.remove();
+}
+(function(){
+  var m=document.getElementById('main'); if(!m) return;
+  if(window.MutationObserver) new MutationObserver(jumpPaint).observe(m,{childList:true});
+  jumpPaint();
+  m.addEventListener('click',function(e){
+    var b=e.target.closest && e.target.closest('[data-jump]'); if(!b) return;
+    var c=jumpTarget(+b.getAttribute('data-jump')); if(!c) return;
+    var still=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    c.scrollIntoView({behavior:still?'auto':'smooth',block:'start'});
+  });
+})();
+/*JUMP-JS-END*/
+
 
 /* ---------- pricing mode: vs NBA veterans (default) or rookie class only ---------- */
 let classOnly=false;
@@ -3230,6 +3275,7 @@ function player(p){
       <div class="bars">${[1,2,3,4,5].map(k=>`<i class="${k<=p.rating?'f':''}"></i>`).join('')}</div>
       <div class="l">MODEL RATING</div></div>`}
     ${typeof filmBtn==='function'?filmBtn(p):''}</div><!--/qact-->
+    <div class="jumpbar" aria-label="Jump to a section"></div>
     ${HASS(p)?`<div class="qpx settled">
       <div class="chain">${[{l:'IPO',v:px(p)}].concat(p.seasons.map((S,si)=>
           ({l:si===p.seasons.length-1?'NOW':S.label, v:spx(p,S)})))
