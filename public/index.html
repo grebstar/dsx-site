@@ -1142,6 +1142,132 @@ table.ldbt.trt td.sep,table.ldbt.trt th.sep{border-left:1px solid var(--line2)}
 .tr .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:0 14px}
 @media (max-width:640px){.tr .grid2{grid-template-columns:minmax(0,1fr)}.tr .tr-tile .v{font-size:26px}}
 /*TR-CSS-END*/
+/*MH-CSS-START*/
+/* hero button: market-open green, a pulsing dot + "N LIVE" while games are on */
+.cmpcta.mhcta{border-color:var(--up);background:rgba(47,174,114,.10);position:relative}
+.cmpcta.mhcta .cc-t{color:var(--up)}
+.cmpcta.mhcta .cc-t em{color:#7FCFA6}
+.cmpcta.mhcta svg{color:var(--up)}
+.cmpcta.mhcta:hover{background:rgba(47,174,114,.18)}
+.cmpcta.mhcta .mh-dotn{position:absolute;top:7px;right:10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--up);display:flex;align-items:center;gap:5px}
+.cmpcta.mhcta.live .mh-dotn::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--up);animation:mhpulse 1.6s ease-in-out infinite}
+.herotools #mhBtn{order:-1;grid-column:1 / -1}
+@media (min-width:1340px){
+  body .hero .herotools #mhBtn{grid-column:1 / span 2;grid-row:1}
+  body .hero .herotools #bellBtn{grid-column:1;grid-row:2}body .hero .herotools #openBtn{grid-column:2;grid-row:2}
+  body .hero .herotools #uniBtn{grid-column:1;grid-row:3}body .hero .herotools #psBtn{grid-column:2;grid-row:3}
+  body .hero .herotools #cmpBtn{grid-column:1;grid-row:4}body .hero .herotools #deskBtn{grid-column:2;grid-row:4}
+  body .hero .herotools #trackBtn{grid-column:1 / span 2;grid-row:5}
+}
+@keyframes mhpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+@media (prefers-reduced-motion:reduce){.cmpcta.mhcta.live .mh-dotn::before,.mh-live i{animation:none}}
+/* view */
+.mh{max-width:1400px}
+.mh .mh-live{color:var(--up);font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;gap:5px}
+.mh-live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--up);animation:mhpulse 1.6s ease-in-out infinite}
+.mh .mh-upd{margin-left:auto;font-size:10px;letter-spacing:.12em;color:var(--mute)}
+.mh .mh-lk{background:none;border:0;padding:0;font:inherit;color:var(--amber);cursor:pointer;border-bottom:1px dotted var(--amber-d)}
+.mh .mh-lk:hover{color:var(--gold)}
+.mh-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin:0 0 12px;scrollbar-width:thin}
+.mh-tile{flex:0 0 172px;text-align:left;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:var(--mono);padding:8px 10px;cursor:pointer}
+.mh-tile:hover{border-color:var(--line2)}
+.mh-tile.on{border-color:var(--amber);background:var(--amber-g)}
+.mh-tile.is-live{box-shadow:inset 3px 0 0 var(--up)}
+.mh-tile .r{display:flex;justify-content:space-between;font-size:13px;line-height:1.55}
+.mh-tile .r i,.mh-bt .nm i{font-style:normal;font-size:9px;color:var(--mute);margin-right:3px}
+.mh-tile .mh-ab{color:#B4B1AA}.mh-tile .w{color:var(--ink);font-weight:700}
+.mh-tile .mh-sc{font-weight:700}
+.mh-tile .s{font-size:9.5px;letter-spacing:.08em;color:var(--mute);margin-top:4px;display:flex;justify-content:space-between;gap:6px}
+.mh-tile .mh-n{color:var(--amber)}
+.mh-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px;align-items:start}
+.mh-side{position:sticky;top:12px}
+.mh-g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:0 14px}
+.mh-empty{padding:16px;font-size:12px;color:var(--mute);line-height:1.6}
+.mh-empty.sm{padding:6px 14px 10px}
+.mh-bug{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:14px 16px}
+.mh-bt{text-align:center}
+.mh-bt .nm{font-family:var(--cond);font-size:18px;font-weight:700;letter-spacing:.03em;color:#B4B1AA}
+.mh-bt .rec{font-size:10px;color:var(--mute);letter-spacing:.08em}
+.mh-bt .pts{font-family:var(--cond);font-size:44px;font-weight:700;line-height:1.05;color:#B4B1AA}
+.mh-bt.w .nm,.mh-bt.w .pts{color:var(--ink)}
+.mh-mid{text-align:center;font-size:11px;letter-spacing:.1em;color:var(--lbl)}
+.mh-mid .tv{color:var(--mute);font-size:9.5px;margin-top:4px}
+.mh-wp{padding:0 16px 12px}
+.mh-wpl{font-size:10px;letter-spacing:.12em;color:var(--lbl);margin-bottom:4px}
+.mh-wpl b{color:var(--ink)}
+.mh-wp svg{display:block;width:100%;height:54px}
+.mh-wpline{fill:none;stroke:var(--amber);stroke-width:2;vector-effect:non-scaling-stroke}
+.mh-wpm{stroke:var(--line2);stroke-dasharray:3 4;vector-effect:non-scaling-stroke}
+.mh-wpax{display:flex;justify-content:space-between;font-size:9px;color:var(--mute);letter-spacing:.1em;margin-top:3px}
+.mh-vframe{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.mh-vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.mh-vcap{padding:8px 12px;font-size:11px;color:#B4B1AA;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;border-bottom:1px solid var(--line)}
+.mh-vcap b{color:var(--ink)}
+.mh-vcap a{color:var(--amber)}
+.mh-vcap .cmp-act{margin-left:auto}
+.mh-vids{display:flex;gap:8px;overflow-x:auto;padding:10px 12px 12px}
+.mh-vid{flex:0 0 190px;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:0;text-align:left;cursor:pointer;font-family:var(--mono);position:relative}
+.mh-vid:hover,.mh-vid.on{border-color:var(--amber)}
+.mh-vid img,.mh-vid .ph{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.mh-vid .t{display:block;padding:6px 8px 8px;font-size:11px;line-height:1.4;white-space:normal}
+.mh-vid .t em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.12em;color:var(--amber);margin-bottom:2px}
+.mh-vid .d{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.75);font-size:10px;padding:1px 5px}
+.mh-boxbar{padding:8px 12px 0}
+table.mh-box{width:100%;border-collapse:separate;border-spacing:0;min-width:760px;font-size:12.5px}
+table.mh-box th{font-size:9.5px;letter-spacing:.1em;color:var(--lbl);text-align:right;padding:8px 6px;border-bottom:1px solid var(--line2);font-weight:600}
+table.mh-box td{text-align:right;padding:7px 6px;border-bottom:1px solid #171A21;white-space:nowrap;color:#B4B1AA}
+table.mh-box th.nm,table.mh-box td.nm{text-align:left;white-space:normal;min-width:160px}
+table.mh-box tr.bd td{color:var(--ink)}
+table.mh-box td.b,table.mh-box td.gs{font-weight:700;color:var(--ink)}
+table.mh-box td.gs{color:var(--gold)}
+table.mh-box .sub{display:block;font-size:9.5px;letter-spacing:.08em;color:var(--mute);margin-top:1px}
+table.mh-box .mh-lk{font-family:var(--cond);font-size:15px;font-weight:700;letter-spacing:.02em}
+table.mh-box td.ip,table.mh-box th.ip{min-width:150px}
+.mh-px{color:var(--ink);font-weight:700}
+.mh-pre{padding:6px 0}
+.mh-prow{display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;gap:10px;align-items:baseline;padding:7px 14px;border-bottom:1px solid #171A21;font-size:12px}
+.mh-prow .cl{font-size:9.5px;color:var(--mute);letter-spacing:.08em}
+.mh-prow .mh-lk,.mh-prow>span:nth-child(2){font-family:var(--cond);font-size:15px;font-weight:700}
+.mh-prow .ln{color:#B4B1AA;font-size:11px}.mh-prow .px{color:var(--ink);font-weight:700}
+.mh-note{padding:8px 14px 12px;font-size:11px;color:var(--mute);margin:0}
+.mh-spc{padding:10px 12px 0;display:flex;flex-wrap:wrap;gap:6px}
+.mh-spc .ldb-chip{min-width:0;padding:4px 8px;font-size:10.5px}
+.mh-court{padding:8px 12px 0}
+.mh-court svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
+.mh-court .ct{fill:#0B0D12;stroke:var(--line2)}
+.mh-court .cl{fill:none;stroke:#2A2E38;stroke-width:2}
+.mh-court .rim{fill:none;stroke:var(--amber-d);stroke-width:2}
+.mh-court .mk{fill:var(--up);stroke:var(--panel);stroke-width:2}
+.mh-court .ms path{stroke:var(--down);stroke-width:3;stroke-linecap:round}
+.mh-leg{display:flex;flex-wrap:wrap;gap:14px;padding:8px 12px 12px;font-size:10px;letter-spacing:.1em;color:#B4B1AA}
+.mh-leg i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.mh-leg i.mk{border-radius:50%;background:var(--up)}
+.mh-leg i.ms{background:linear-gradient(45deg,transparent 40%,var(--down) 40%,var(--down) 60%,transparent 60%),linear-gradient(-45deg,transparent 40%,var(--down) 40%,var(--down) 60%,transparent 60%)}
+.mh-pbp{max-height:520px;overflow-y:auto}
+.mh-pl{display:grid;grid-template-columns:62px 40px minmax(0,1fr) auto;gap:8px;padding:6px 12px;border-bottom:1px solid #171A21;font-size:11.5px;line-height:1.45;color:#9A9486}
+.mh-pl .ck{color:var(--mute);font-size:10.5px}
+.mh-pl .tm{font-size:10px;letter-spacing:.06em;color:var(--mute)}
+.mh-pl .tx em{font-style:normal;font-size:8.5px;letter-spacing:.12em;color:var(--amber);margin-left:4px}
+.mh-pl .sco{font-size:10.5px;color:var(--mute);white-space:nowrap}
+.mh-pl.sc{color:#C9C3B5}.mh-pl.sc .sco{color:var(--ink)}
+.mh-pl.bd{background:var(--amber-g);color:var(--ink)}
+.mh-mvh{font-size:9.5px;letter-spacing:.14em;color:var(--lbl);padding:10px 14px 4px;border-top:1px solid var(--line)}
+.mh-mvh:first-child{border-top:0}
+.mh-mv{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 14px;font-size:12px}
+.mh-mv .nm{min-width:0}
+.mh-mv .nm .mh-lk,.mh-mv .nm>span:first-child{font-family:var(--cond);font-size:14.5px;font-weight:700}
+.mh-mv .sub{display:block;font-size:9px;letter-spacing:.08em;color:var(--mute)}
+.mh-mv .v{white-space:nowrap;text-align:right}
+@media (max-width:1100px){.mh-grid{grid-template-columns:minmax(0,1fr)}.mh-side{position:static}}
+@media (max-width:640px){
+  .mh-bt .pts{font-size:34px}.mh-bt .nm{font-size:15px}
+  .mh-g2{grid-template-columns:minmax(0,1fr)}
+  .mh-tile{flex-basis:150px}
+  .mh-pl{grid-template-columns:52px 34px minmax(0,1fr)}.mh-pl .sco{grid-column:3}
+  .mh .mh-upd{flex-basis:100%;margin-left:0}
+}
+/*MH-CSS-END*/
+
 
 /* ===== WELCOME TOUR: button + floating video window ===== */
 .modebtn.tourbtn{position:relative;background:var(--amber);border-color:var(--amber);color:#14100A;font-weight:700;letter-spacing:.14em}
@@ -2657,6 +2783,7 @@ function compsBackPaint(){
     m.insertAdjacentHTML('afterbegin','<button type="button" id="compsBack" class="cmp-back">&larr; BACK TO '+COMPS_FROM.name.toUpperCase()+'</button>');
   if(BACKTO_TR===here && !document.getElementById('trToTr'))
     m.insertAdjacentHTML('afterbegin','<button type="button" id="trToTr" class="cmp-back">&larr; BACK TO THE TRACK RECORD</button>');
+  if(typeof mhBackPaint==='function') mhBackPaint();
 }
 function compsPos(s){
   if(!s) return null;
@@ -3520,7 +3647,7 @@ function market(){
   const rtot=D.reduce((a,p)=>a+rpx(p),0);
   const h=`
   <div class="hero">
-    <div class="hero-l"><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="trackBtn" class="cmpcta" title="Track Record: how every class was priced, and how it turned out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 16l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">TRACK RECORD<em>EVERY CLASS &middot; BOARDS VS TEAMS &middot; STEALS &amp; BUSTS</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
+    <div class="hero-l"><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="mhBtn" class="cmpcta mhcta" title="Market Hours: live games with board players, ESPN highlights as they post, and intraday prices"><span class="mh-dotn" aria-live="polite"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3.5l2.5-6 4 12 2.5-6H21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">MARKET HOURS<em>LIVE GAMES &middot; HIGHLIGHTS &middot; INTRADAY PRICES</em></span></button><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="trackBtn" class="cmpcta" title="Track Record: how every class was priced, and how it turned out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 16l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">TRACK RECORD<em>EVERY CLASS &middot; BOARDS VS TEAMS &middot; STEALS &amp; BUSTS</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
       <div class="sub">${D.length} LISTED OFFERINGS &middot; PRICED OFF A ${CM().nbw.split(' ')[0]}-BOARD COMPOSITE &middot; ${SETTLED()?(NSEAS()===1?'ROOKIE SEASON SETTLED':NSEAS()+' SEASONS SETTLED'):'POST-SUMMER-LEAGUE'}</div></div>
     <div class="hero-idx" style="text-align:right">
       <div style="font-family:var(--cond);font-size:30px;font-weight:700">${f2(tot)}</div>
@@ -4469,7 +4596,7 @@ function wireClassSel(k){
   const hero=document.getElementById('classSelHero');
   if(hero){ hero.value=CURCLASS; hero.onchange=function(){ setClass(this.value); }; }
   const pill=document.getElementById('classPill');
-  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK'||k==='TRACK') ? 'none' : '';
+  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK'||k==='TRACK'||k==='MH') ? 'none' : '';
   const top=document.getElementById('classSel');
   if(top) top.value=CURCLASS;
 }
@@ -4489,8 +4616,9 @@ function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteK
   if(k!=='OPEN' && typeof obClearHash==='function') obClearHash();
   if(k!=='DESK' && typeof deskClearHash==='function') deskClearHash();
   if(k!=='TRACK' && typeof trClearHash==='function') trClearHash();
-  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else if(k==='TRACK') trackRecord(); else player(byT[k]);
-  annotateTerms(); wireClassSel(k); if(typeof obBackFix==='function') obBackFix(k); }
+  if(k!=='MH' && typeof mhClearHash==='function') mhClearHash();
+  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else if(k==='TRACK') trackRecord(); else if(k==='MH') marketHours(); else player(byT[k]);
+  annotateTerms(); wireClassSel(k); if(typeof obBackFix==='function') obBackFix(k); if(k==='MKT' && typeof mhDotPaint==='function') mhDotPaint(); }
 route('MKT');
 
 /* ABOUT is a toggle: it remembers whatever you were looking at and puts you
@@ -4500,7 +4628,7 @@ route('MKT');
    have. Escape closes it the same way. */
 let aboutReturnKey='MKT';
 function closeAbout(){
-  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || aboutReturnKey==='DESK' || aboutReturnKey==='TRACK' || byT[aboutReturnKey]))
+  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || aboutReturnKey==='DESK' || aboutReturnKey==='TRACK' || aboutReturnKey==='MH' || byT[aboutReturnKey]))
     ? aboutReturnKey : 'MKT';
   route(back);
 }
@@ -5121,7 +5249,7 @@ function glInner(tkr,si){
 }
 /*GAMELOG-JS-END*/</script>
 <script>/*COMPARE-JS-START*//*SECSHARE*/
-const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings','track-record':'Track Record'};
+const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings','track-record':'Track Record','market-hours':'Market Hours'};
 function secShareBtn(sec){ return '<div class="secshare"><button type="button" class="sharebtn" data-share-sec="'+sec+'" title="Copy a link to this page">SHARE LINK</button></div>'; }
 function secShareHash(sec){
   const h=String(location.hash||'');
@@ -5135,9 +5263,10 @@ function secShareHash(sec){
   if(sec==='compare'){ try{ if(CMP_SEL.length) return '#compare='+CMP_SEL.join(','); }catch(_){} return '#compare'; }
   if(sec==='one-universe') return /^#league(=|$)/.test(h)?h:'#league';
   if(sec==='track-record') return /^#trackrecord(=|$)/.test(h)?h:'#trackrecord';
+  if(sec==='market-hours') return /^#markethours(\/|$)/.test(h)?h:'#markethours';
   return '';
 }
-function secShareUrl(sec){ if(sec==='track-record') return 'https://thedraftstockexchange.com/'+secShareHash(sec); /*TR-SHARE-ROOT*/ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
+function secShareUrl(sec){ if(sec==='track-record' || sec==='market-hours') return 'https://thedraftstockexchange.com/'+secShareHash(sec); /*TR-SHARE-ROOT*/ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
 document.addEventListener('click',function(ev){
   const b=ev.target.closest && ev.target.closest('[data-share-sec]'); if(!b) return;
   const sec=b.dataset.shareSec, u=secShareUrl(sec);
@@ -6135,7 +6264,7 @@ function trOpen(y,tkr){
   route(tkr); window.scrollTo({top:0,behavior:'instant'});
   compsBackPaint();
 }
-function trBackKey(){ return (trReturnKey==='MKT'||trReturnKey==='CMP'||trReturnKey==='UNI'||trReturnKey==='FIND'||trReturnKey==='BELL'||trReturnKey==='OPEN'||trReturnKey==='NEW'||trReturnKey==='DESK'||byT[trReturnKey])?trReturnKey:'MKT'; }
+function trBackKey(){ return (trReturnKey==='MKT'||trReturnKey==='CMP'||trReturnKey==='UNI'||trReturnKey==='FIND'||trReturnKey==='BELL'||trReturnKey==='OPEN'||trReturnKey==='NEW'||trReturnKey==='DESK'||trReturnKey==='MH'||byT[trReturnKey])?trReturnKey:'MKT'; }
 document.addEventListener('click',function(ev){
   var t=ev.target; if(!t.closest) return;
   if(t.closest('#trackBtn')){
@@ -6664,7 +6793,7 @@ document.addEventListener('click',function(ev){
   const t=ev.target;
   if(t.closest('#bellBtn')){ bellReturnKey=(currentRouteKey==='ABOUT'||currentRouteKey==='BELL')?'MKT':currentRouteKey; route('BELL'); window.scrollTo({top:0,behavior:'instant'}); return; }
   if(t.closest('#bellToBell')){ route('BELL'); window.scrollTo({top:0,behavior:'instant'}); return; }
-  if(t.closest('#bellBack')){ route((bellReturnKey==='MKT'||byT[bellReturnKey])?bellReturnKey:'MKT'); return; }
+  if(t.closest('#bellBack')){ route((bellReturnKey==='MKT'||bellReturnKey==='MH'||byT[bellReturnKey])?bellReturnKey:'MKT'); return; }
   const inModal=!!t.closest('#bellModal');
   if(currentRouteKey!=='BELL' && !inModal) return;
   const o=t.closest('[data-bellopen]'); if(o){ bellOpen(o.dataset.bellopen); window.scrollTo({top:0,behavior:'instant'}); return; }
@@ -7248,7 +7377,7 @@ document.addEventListener('click',function(ev){
   const t=ev.target; if(!t.closest) return;
   if(t.closest('#openBtn')){ obReturnKey=(currentRouteKey==='ABOUT'||currentRouteKey==='OPEN')?'MKT':currentRouteKey; route('OPEN'); window.scrollTo({top:0,behavior:'instant'}); return; }
   if(t.closest('#obToOb')){ route('OPEN'); window.scrollTo({top:0,behavior:'instant'}); return; }
-  if(t.closest('#obBack')){ route((obReturnKey==='MKT'||byT[obReturnKey]||obReturnKey==='BELL'||obReturnKey==='UNI'||obReturnKey==='CMP'||obReturnKey==='FIND'||obReturnKey==='NEW')?obReturnKey:'MKT'); return; }
+  if(t.closest('#obBack')){ route((obReturnKey==='MKT'||obReturnKey==='MH'||byT[obReturnKey]||obReturnKey==='BELL'||obReturnKey==='UNI'||obReturnKey==='CMP'||obReturnKey==='FIND'||obReturnKey==='NEW')?obReturnKey:'MKT'); return; }
   const inModal=!!t.closest('#obModal');
   if(currentRouteKey!=='OPEN' && !inModal) return;
   const o=t.closest('[data-obopen]'); if(o){ obOpen(o.dataset.obopen); window.scrollTo({top:0,behavior:'instant'}); return; }
@@ -7293,6 +7422,376 @@ function obLoadHash(){
 window.addEventListener('hashchange',obLoadHash);
 obLoadHash();
 /*OB-JS-END*/
+/*MH-JS-START*/
+/* ================= MARKET HOURS (Nov 8 2026) ===================================================
+   The live session between the Opening Bell (tonight's preview) and the Closing Bell (last night's recap).
+   Everything is ESPN's public JSON, fetched in the visitor's browser while this view is open:
+     scoreboard (every 30 s)        -> the game strip, scores, clocks
+     summary of the selected game   -> box score, play-by-play (+ shot locations), win probability,
+       (every 15 s)                    ESPN's official in-game highlight clips
+     summaries of the other live games (every 60 s) -> the cross-game INTRADAY MOVERS
+   Board players are matched on ESPN athlete id (NBA classes: p.espn; 2027: the id on his live game file),
+   with a name fallback. INTRADAY PRICE = the board's live formula re-run as if the game ended now:
+   his season line + tonight's line so far, re-ranked inside his class; the move is applied to his official
+   live rank, so a player who has not checked in shows no change. The official live price still updates the
+   next morning. Highlights play in ESPN's own embedded player (credited); "Watch on ESPN" is the fallback.
+   Polling stops the moment you leave the view or hide the tab. Reuses the Opening Bell's helpers
+   (obGame, obBoard, obColPlayers, obEntry, obFetchRos, obNbaPlayers, obJSON, obSlug, OB_SPORT). */
+let mhReturnKey='MKT', BACKTO_MH=null;
+const MH={lg:null, game:{}, sb:{}, sum:{}, sumAt:{}, vid:null, all:false, shotP:'all', timer:0, busy:{}, built:'', intra:{}, intraAt:0, dotAt:0};
+const MH_SB_MS=30000, MH_SEL_MS=15000, MH_ALL_MS=60000;
+const MH_BOX_KEYS={MIN:'min',PTS:'pts',FG:'fg','3PT':'tp',FT:'ft',REB:'reb',AST:'ast',TO:'to',STL:'stl',BLK:'blk',OREB:'oreb',DREB:'dreb',PF:'pf','+/-':'pm'};
+function mhUrl(lg,kind,id){
+  const b='https://site.api.espn.com/apis/site/v2/sports/basketball/'+OB_SPORT[lg]+'/';
+  return kind==='sb' ? b+'scoreboard'+(lg==='college'?'?groups=50&limit=500':'') : b+'summary?event='+encodeURIComponent(id);
+}
+function mhLive(g){ return g && g.state==='in'; }
+function mhPer(lg,n){ return lg==='college' ? (n<=2?'H'+n:'OT'+(n>3?n-2:'')) : (n<=4?'Q'+n:'OT'+(n>5?n-4:'')); }
+function mhFetchSB(lg){
+  if(MH.busy['sb'+lg]) return Promise.resolve(); MH.busy['sb'+lg]=1;
+  return obJSON(mhUrl(lg,'sb')).then(j=>{ MH.sb[lg]={at:Date.now(), games:(j.events||[]).map(e=>obGame(e,lg))}; })
+    .catch(()=>{ if(!MH.sb[lg]) MH.sb[lg]={at:Date.now(), err:1, games:[]}; else MH.sb[lg].at=Date.now(); })
+    .then(()=>{ MH.busy['sb'+lg]=0; });
+}
+function mhSplit(v){ const m=String(v||'').match(/^(\d+)-(\d+)$/); return m?[+m[1],+m[2]]:[0,0]; }
+function mhParse(j,lg){
+  const S={lg, players:[], plays:[], wp:[], vids:[], teams:{}, at:Date.now()};
+  const comp=(j.header&&j.header.competitions&&j.header.competitions[0])||{};
+  (comp.competitors||[]).forEach(c=>{ const t=c.team||{}; S.teams[String(t.id)]={id:String(t.id), ab:t.abbreviation||'', nm:t.shortDisplayName||t.displayName||'', loc:t.location||'', full:t.displayName||'', side:c.homeAway==='home'?'h':'a', sc:c.score, logo:(t.logos&&t.logos[0]&&t.logos[0].href)||t.logo||''}; });
+  const st=(comp.status&&comp.status.type)||{}; S.state=st.state||'pre'; S.detail=st.shortDetail||st.detail||'';
+  ((j.boxscore&&j.boxscore.players)||[]).forEach(T=>{ const tid=String((T.team&&T.team.id)||'');
+    (T.statistics||[]).forEach(g=>{ const lab=(g.labels||g.names||[]).map(x=>MH_BOX_KEYS[x]||x);
+      (g.athletes||[]).forEach(a=>{ const A=a.athlete||{}, s=a.stats||[], L={};
+        lab.forEach((k,i)=>{ L[k]=s[i]; });
+        const fg=mhSplit(L.fg), tp=mhSplit(L.tp), ft=mhSplit(L.ft), n=v=>(v==null||v===''||isNaN(+v))?0:+v;
+        S.players.push({aid:String(A.id||''), name:A.displayName||A.shortName||'', tid, starter:!!a.starter, dnp:!!a.didNotPlay || !s.length,
+          line:{min:n(L.min), pts:n(L.pts), reb:n(L.reb), ast:n(L.ast), stl:n(L.stl), blk:n(L.blk), to:n(L.to), pf:n(L.pf), oreb:n(L.oreb), dreb:n(L.dreb),
+            fgm:fg[0], fga:fg[1], tpm:tp[0], tpa:tp[1], ftm:ft[0], fta:ft[1], pm:L.pm==null?'':String(L.pm)}});
+      }); }); });
+  (j.plays||[]).forEach(p=>{ const c=p.coordinate||{}, ok=c.x!=null && c.x>=-1 && c.x<=51 && c.y>=-7 && c.y<=48;
+    S.plays.push({id:String(p.id||''), per:(p.period&&p.period.number)||0, clock:(p.clock&&p.clock.displayValue)||'', text:p.text||'',
+      a:p.awayScore, h:p.homeScore, sc:!!p.scoringPlay, sh:!!p.shootingPlay, val:p.scoreValue||0, tid:String((p.team&&p.team.id)||''),
+      aids:(p.participants||[]).map(x=>String((x.athlete&&x.athlete.id)||'')), x:ok?c.x:null, y:ok?c.y:null, ft:/free throw/i.test(p.text||'')}); });
+  S.wp=(j.winprobability||[]).map(w=>w.homeWinPercentage).filter(v=>v!=null);
+  S.vids=(j.videos||[]).map(v=>({id:String(v.id||''), h:v.headline||'', dur:v.duration||0, ts:v.originalPublishDate||v.lastModified||'',
+    thumb:v.thumbnail||'', web:(v.links&&v.links.web&&v.links.web.href)||''})).filter(v=>v.id).sort((a,b)=>a.ts<b.ts?1:-1);
+  return S;
+}
+function mhFetchSum(lg,id){
+  if(MH.busy['s'+id]) return Promise.resolve(); MH.busy['s'+id]=1;
+  return obJSON(mhUrl(lg,'sum',id)).then(j=>{ MH.sum[id]=mhParse(j,lg); }).catch(()=>{}).then(()=>{ MH.sumAt[id]=Date.now(); MH.busy['s'+id]=0; });
+}
+/* ---- board matching ---- */
+function mhBoardFor(lg,aid,name,team){
+  const B=obBoard();
+  if(lg==='nba'){
+    let r=B.byEspn[aid]; if(r) return r;
+    const c=B.byName[obSlug(name)]||[]; if(c.length===1) return c[0];
+    if(c.length>1 && team){ const m=c.filter(x=>{ const e=obEntry(x); return e && (OB_NBA2ESPN[e.tm]||e.tm)===team.ab; }); if(m.length===1) return m[0]; }
+    return null;
+  }
+  let r=B.col.find(x=>{ const e=obEntry(x); return e && e.id!=null && String(e.id)===aid; });
+  if(r) return r;
+  return B.col.find(x=>obSlug(x.n)===obSlug(name) && (!team || obColTeamMatch(x,team))) || null;
+}
+function mhBoardPlayers(S){
+  if(!S) return [];
+  if(S._bp && S._bpv===OB_GSTATE) return S._bp;
+  const out=[];
+  S.players.forEach(pl=>{ const r=mhBoardFor(S.lg,pl.aid,pl.name,S.teams[pl.tid]); if(r) out.push(Object.assign({r},pl)); });
+  S._bp=out; S._bpv=OB_GSTATE; return out;
+}
+function mhGmSc(L){ return L.pts+0.4*L.fgm-0.7*L.fga-0.4*(L.fta-L.ftm)+0.7*L.oreb+0.3*L.dreb+L.stl+0.7*L.ast+0.7*L.blk-0.4*L.pf-L.to; }
+/* ---- intraday price ---- */
+function mhRate(L){ return L.pts+0.7*L.reb+1.5*L.ast+1.8*L.stl+1.8*L.blk-L.to; }
+function mhScore(gp,rate,tg){ if(!gp) return null; const full=tg>0?tg:gp; let f=Math.pow(Math.min(1,gp/full),0.25); if(gp<10) f*=gp/10; return rate*f; }
+function mhIntraClass(y,tonight){
+  const C=CLASSES[y]; if(!C || typeof lvOn!=='function' || !lvOn(y)) return {};
+  const list=[...(C.top||[]),...(C.otc||[])];
+  const rows=list.map(p=>{ const k=LV.key(p), e=LV.entry(k,y)||{}; return {k, gp:e.gp||0, rate:e.rate||0, tg:e.tg||0, rank:e.rank||null, price:e.price, pro:!!e.intl}; });
+  let LG=0; rows.forEach(r=>{ LG=Math.max(LG, r.tg||r.gp); });
+  const ladder=[]; rows.forEach(r=>{ if(r.rank && r.price!=null) ladder[r.rank]=r.price; });
+  const rank=(key)=>{ const sc=rows.map(r=>({k:r.k, s:key(r)})).filter(x=>x.s!=null).sort((a,b)=>b.s-a.s); const m={}; sc.forEach((x,i)=>m[x.k]=i+1); return m; };
+  const base=rank(r=>r.pro?null:mhScore(r.gp,r.rate,r.tg||Math.max(LG,r.gp)));
+  const intra=rank(r=>{ if(r.pro) return null; const T=tonight[r.k];
+    if(!T || !(T.min>0)) return mhScore(r.gp,r.rate,r.tg||Math.max(LG,r.gp));
+    const gp=r.gp+1, rate=(r.rate*r.gp+mhRate(T))/gp; return mhScore(gp,rate,Math.max((r.tg||LG)+1,gp)); });
+  const out={}, maxR=ladder.length-1;
+  rows.forEach(r=>{ const T=tonight[r.k]; if(!T || r.pro) return;
+    if(!(T.min>0)){ out[r.k]={rank:r.rank, price:r.price, nrank:r.rank, nprice:r.price, chg:0, idle:1}; return; }
+    let nr = r.rank ? r.rank+(intra[r.k]-base[r.k]) : intra[r.k];
+    nr=Math.max(1, Math.min(nr, maxR>0?maxR:nr));
+    const np=ladder[nr]!=null ? ladder[nr] : (r.price!=null?r.price:0), op=r.price!=null?r.price:null;
+    out[r.k]={rank:r.rank, price:op, nrank:nr, nprice:np, chg:(op!=null && op>0)?(np/op-1)*100:null, debut:!r.rank};
+  });
+  return out;
+}
+function mhIntraAll(){
+  const byY={};
+  Object.values(MH.sum).forEach(S=>{ if(!S || S.state==='pre') return;
+    mhBoardPlayers(S).forEach(x=>{ (byY[x.r.y]||(byY[x.r.y]={}))[x.r.k]=x.line; }); });
+  const out={}; Object.keys(byY).forEach(y=>{ const m=mhIntraClass(y,byY[y]); Object.keys(m).forEach(k=>out[y+':'+k]=m[k]); });
+  MH.intra=out; MH.intraAt=Date.now(); return out;
+}
+function mhIntraCell(r){
+  const I=MH.intra[r.y+':'+r.k];
+  if(!I) return '<span class="mut">&mdash;</span>';
+  if(I.idle) return '<span class="mut">$'+(I.price!=null?f2(I.price):'&mdash;')+'</span>';
+  const c=I.chg, cl=c==null?'':(c>0.05?'up':c<-0.05?'down':'');
+  return '<span class="mh-px">$'+f2(I.nprice||0)+'</span> <span class="'+cl+'">'+(c==null?(I.debut?'NEW':''):(c>0.05?'▲ ':c<-0.05?'▼ ':'')+(c>0?'+':'')+c.toFixed(1)+'%')+'</span>';
+}
+/* ---- games / selection ---- */
+function mhGames(lg){
+  const sb=MH.sb[lg]; if(!sb) return null;
+  let gs=sb.games.slice();
+  if(lg==='college') gs=gs.filter(g=>obColPlayers(g).length);
+  const ord={in:0, pre:1, post:2};
+  gs.sort((a,b)=>(ord[a.state]-ord[b.state]) || (a.state==='post' ? (a.date<b.date?1:-1) : (a.date<b.date?-1:1)));
+  return gs;
+}
+function mhCount(lg){ const gs=mhGames(lg)||[]; return {live:gs.filter(mhLive).length, all:gs.length}; }
+function mhPick(lg){
+  const gs=mhGames(lg)||[]; if(!gs.length) return null;
+  const cur=MH.game[lg]; if(cur && gs.some(g=>g.id===cur)) return cur;
+  const live=gs.filter(mhLive);
+  const score=g=>{ const S=MH.sum[g.id]; return S?mhBoardPlayers(S).length:(lg==='college'?obColPlayers(g).length:0); };
+  const pick=(live.length?live:gs).slice().sort((a,b)=>score(b)-score(a))[0];
+  return MH.game[lg]=pick.id;
+}
+function mhFind(lg,id){ return (mhGames(lg)||[]).find(g=>g.id===id) || null; }
+/* ---- view ---- */
+function mhTeamLine(t,win){ return '<span class="mh-ab'+(win?' w':'')+'">'+(t.rank?'<i>'+t.rank+'</i>':'')+cmpEsc(t.ab||t.nm)+'</span><span class="mh-sc'+(win?' w':'')+'">'+(t.sc!=null&&t.sc!==''?cmpEsc(t.sc):'')+'</span>'; }
+function mhTile(g,on){
+  const a=+g.a.sc||0, h=+g.h.sc||0, fin=g.state==='post';
+  const st=g.state==='in' ? '<b class="mh-live"><i></i>'+cmpEsc(g.sd)+'</b>' : g.state==='pre' ? cmpEsc(obTip(g.date)) : 'FINAL'+(/OT/.test(g.sd)?' / '+cmpEsc(g.sd.replace(/^Final\/?/,'')):'');
+  const S=MH.sum[g.id], n=S?mhBoardPlayers(S).length:(g.lg==='college'?obColPlayers(g).length:null);
+  return '<button type="button" class="mh-tile'+(on?' on':'')+(g.state==='in'?' is-live':'')+'" data-mhg="'+g.id+'">'+
+    '<div class="r">'+mhTeamLine(g.a,fin&&a>h)+'</div><div class="r">'+mhTeamLine(g.h,fin&&h>a)+'</div>'+
+    '<div class="s">'+st+(n?' <span class="mh-n">'+n+' BOARD</span>':'')+'</div></button>';
+}
+function mhStripHtml(lg){
+  const gs=mhGames(lg);
+  if(!gs) return '<div class="mh-empty">Loading tonight&rsquo;s games&hellip;</div>';
+  if(!gs.length) return '<div class="mh-empty">'+(MH.sb[lg]&&MH.sb[lg].err?'ESPN&rsquo;s scoreboard did not answer. Retrying&hellip;':'No '+(lg==='nba'?'NBA games':'games with a 2027 prospect')+' on today&rsquo;s slate.')+'</div>';
+  return gs.map(g=>mhTile(g,g.id===MH.game[lg])).join('');
+}
+function mhWp(S,g){
+  if(!S || !S.wp.length) return '';
+  const W=300, H=54, n=S.wp.length, pts=S.wp.map((v,i)=>(n<2?0:i/(n-1)*W).toFixed(1)+','+(H-v*H).toFixed(1)).join(' ');
+  const last=S.wp[n-1], fav=last>=0.5?g.h:g.a, pc=Math.round((last>=0.5?last:1-last)*100);
+  const lab=S.state==='post' ? 'WIN PROBABILITY &middot; HOW IT PLAYED OUT' : '<b>'+cmpEsc(fav.ab)+' '+pc+'%</b> TO WIN';
+  return '<div class="mh-wp"><div class="mh-wpl">'+lab+'</div><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-label="Win probability over the game">'+
+    '<line x1="0" x2="'+W+'" y1="'+H/2+'" y2="'+H/2+'" class="mh-wpm"/><polyline points="'+pts+'" class="mh-wpline"/></svg>'+
+    '<div class="mh-wpax"><span>'+cmpEsc(g.h.ab)+' WIN &uarr;</span><span>50%</span><span>'+cmpEsc(g.a.ab)+' WIN &darr;</span></div></div>';
+}
+function mhBug(g,S){
+  const a=+g.a.sc||0, h=+g.h.sc||0, fin=g.state==='post';
+  const st=g.state==='in' ? '<b class="mh-live"><i></i>LIVE &middot; '+cmpEsc(g.sd)+'</b>' : g.state==='pre' ? 'TIP-OFF '+cmpEsc(obTip(g.date,1)) : '<b>FINAL</b>'+(/OT/.test(g.sd)?' &middot; '+cmpEsc(g.sd):'');
+  const side=(t,win)=>'<div class="mh-bt'+(win?' w':'')+'"><div class="nm">'+(t.rank?'<i>'+t.rank+'</i> ':'')+cmpEsc(t.full||t.nm)+'</div><div class="rec">'+cmpEsc(t.rec||'')+'</div><div class="pts">'+(g.state==='pre'?'&mdash;':cmpEsc(t.sc==null?'':t.sc))+'</div></div>';
+  return '<div class="mh-bug">'+side(g.a,fin&&a>h)+'<div class="mh-mid">'+st+(g.tv?'<div class="tv">'+cmpEsc(g.tv)+'</div>':'')+'</div>'+side(g.h,fin&&h>a)+'</div>'+mhWp(S,g);
+}
+function mhPlayerHtml(){
+  if(!MH.vid) return '';
+  return '<div class="mh-vframe"><iframe src="https://www.espn.com/core/video/iframe/_/id/'+encodeURIComponent(MH.vid.id)+'/endcard/false" title="'+cmpEsc(MH.vid.h)+'" allow="autoplay; fullscreen; encrypted-media" allowfullscreen loading="lazy"></iframe></div>'+
+    '<div class="mh-vcap"><b>'+cmpEsc(MH.vid.h)+'</b> &middot; Highlight: ESPN'+(MH.vid.web?' &middot; <a href="'+cmpEsc(MH.vid.web)+'" target="_blank" rel="noopener">Watch on ESPN</a>':'')+' <button type="button" class="cmp-act" data-mhvclose="1">CLOSE</button></div>';
+}
+function mhVidsHtml(S){
+  if(!S) return '<div class="mh-empty">Loading&hellip;</div>';
+  if(!S.vids.length) return '<div class="mh-empty">'+(S.state==='pre'?'Highlights post here during the game.':'No ESPN highlight clips for this game yet. They usually land a few minutes after the play.')+'</div>';
+  const names=mhBoardPlayers(S).map(x=>x.r);
+  return '<div class="mh-vids">'+S.vids.map(v=>{ const tag=names.find(r=>v.h.toLowerCase().indexOf(String(r.n).split(' ').slice(-1)[0].toLowerCase())>=0 && v.h.toLowerCase().indexOf(String(r.n).split(' ')[0].toLowerCase())>=0);
+    return '<button type="button" class="mh-vid'+(MH.vid&&MH.vid.id===v.id?' on':'')+'" data-mhv="'+v.id+'">'+(v.thumb?'<img src="'+cmpEsc(v.thumb)+'" alt="" loading="lazy">':'<span class="ph"></span>')+
+      '<span class="t">'+(tag?'<em>'+cmpEsc(tag.y==='2027'?'2027':tag.y+' CLASS')+'</em>':'')+cmpEsc(v.h)+'</span><span class="d">'+(v.dur?Math.floor(v.dur/60)+':'+String(v.dur%60).padStart(2,'0'):'')+'</span></button>'; }).join('')+'</div>';
+}
+function mhName(r){
+  const listed=r.listed && (typeof bellListed!=='function' || bellListed(r.y,r.p.tkr));
+  const t=cmpEsc(r.n);
+  return listed ? '<button type="button" class="mh-lk" data-mhopen="'+r.y+':'+cmpEsc(r.p.tkr)+'">'+t+'</button>' : '<span>'+t+'</span>';
+}
+function mhBoxHtml(g,S){
+  if(!S) return '<div class="mh-empty">Loading the box score&hellip;</div>';
+  if(S.state==='pre'){
+    let list=[];
+    if(g.lg==='college') list=obColPlayers(g).map(x=>({r:x.r, side:x.side}));
+    else { ['a','h'].forEach(s=>{ if(!OB_ROS[g[s].id]) obFetchRos(g[s].id); }); list=obNbaPlayers(g); }
+    if(!list.length) return '<div class="mh-empty">Board players show here at tip-off.</div>';
+    return '<div class="mh-pre">'+list.map(x=>{ const e=LV.entry(x.r.k,x.r.y)||{}, st=e.st;
+      return '<div class="mh-prow"><span class="cl">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y)+'</span>'+mhName(x.r)+'<span class="ln">'+(st?st.pts+' / '+st.reb+' / '+st.ast+' this season':'no games yet')+'</span><span class="px">'+(e.price!=null?'$'+f2(e.price):'')+'</span></div>'; }).join('')+
+      '</div><p class="mh-note">Live lines start at tip-off. Tonight&rsquo;s projections and props are on the <button type="button" class="mh-lk" data-mhgo="OPEN">Opening Bell Preview</button>.</p>';
+  }
+  const all=MH.all, B=mhBoardPlayers(S), bset=new Set(B.map(x=>x.aid));
+  let rows = all ? S.players.filter(p=>!p.dnp).map(p=>B.find(x=>x.aid===p.aid)||Object.assign({r:null},p)) : B.filter(x=>!x.dnp || x.line.min>0);
+  rows.sort((a,b)=>mhGmSc(b.line)-mhGmSc(a.line));
+  if(!rows.length) return '<div class="mh-empty">'+(B.length?'No board player has checked in yet.':'No board players in this game.')+'</div>';
+  const tab=S.teams;
+  const body=rows.map(x=>{ const L=x.line, T=tab[x.tid]||{};
+    return '<tr'+(x.r?' class="bd"':'')+'><td class="nm">'+(x.r?mhName(x.r)+'<span class="sub">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y)+' &middot; '+cmpEsc(T.ab||'')+'</span>':cmpEsc(x.name)+'<span class="sub">'+cmpEsc(T.ab||'')+'</span>')+'</td>'+
+      '<td class="b">'+L.pts+'</td><td>'+L.reb+'</td><td>'+L.ast+'</td><td class="gs">'+mhGmSc(L).toFixed(1)+'</td><td class="ip">'+(x.r?mhIntraCell(x.r):'')+'</td>'+
+      '<td>'+L.min+'</td><td>'+L.stl+'</td><td>'+L.blk+'</td><td>'+L.tpm+'</td><td>'+L.to+'</td><td>'+L.fgm+'-'+L.fga+'</td></tr>'; }).join('');
+  return '<div class="ldb-wrap"><table class="mh-box"><thead><tr><th class="nm">PLAYER</th><th>PTS</th><th>REB</th><th>AST</th><th>GMSC</th><th class="ip">INTRADAY</th><th>MIN</th><th>STL</th><th>BLK</th><th>3PM</th><th>TO</th><th>FG</th></tr></thead><tbody>'+body+'</tbody></table></div>';
+}
+function mhShotsHtml(S){
+  if(!S || S.state==='pre') return '';
+  const B=mhBoardPlayers(S), ids={}; B.forEach(x=>ids[x.aid]=x);
+  const shots=S.plays.filter(p=>p.sh && !p.ft && p.x!=null && p.aids[0] && ids[p.aids[0]] && (MH.shotP==='all' || MH.shotP===p.aids[0]));
+  const chips='<button type="button" class="ldb-chip" data-mhsp="all" aria-pressed="'+(MH.shotP==='all')+'">ALL</button>'+
+    B.filter(x=>S.plays.some(p=>p.sh&&!p.ft&&p.aids[0]===x.aid)).map(x=>'<button type="button" class="ldb-chip" data-mhsp="'+x.aid+'" aria-pressed="'+(MH.shotP===x.aid)+'">'+cmpEsc(String(x.r.n).split(' ').slice(-1)[0].toUpperCase())+'</button>').join('');
+  const X=v=>(v*10).toFixed(1), Y=v=>((v+5.25)*10).toFixed(1);
+  const court='<rect x="0" y="0" width="500" height="470" class="ct"/>'+
+    '<path d="M30 0 V'+Y(9)+' A237.5 237.5 0 0 0 470 '+Y(9)+' V0" class="cl"/><rect x="170" y="0" width="160" height="'+Y(13.75)+'" class="cl"/>'+
+    '<circle cx="250" cy="'+Y(13.75)+'" r="60" class="cl"/><circle cx="250" cy="'+Y(0)+'" r="7.5" class="rim"/><line x1="220" x2="280" y1="'+Y(-1.25)+'" y2="'+Y(-1.25)+'" class="rim"/>';
+  const marks=shots.map(p=>{ const cx=X(p.x), cy=Y(p.y), t=cmpEsc(mhPer(S.lg,p.per)+' '+p.clock+' · '+p.text);
+    return p.sc ? '<circle cx="'+cx+'" cy="'+cy+'" r="8" class="mk"><title>'+t+'</title></circle>'
+      : '<g class="ms"><title>'+t+'</title><path d="M'+(cx-6)+' '+(cy-6)+'L'+(+cx+6)+' '+(+cy+6)+'M'+(+cx+6)+' '+(cy-6)+'L'+(cx-6)+' '+(+cy+6)+'"/></g>'; }).join('');
+  const made=shots.filter(p=>p.sc).length;
+  return '<div class="ldb-chips mh-spc">'+chips+'</div><div class="mh-court"><svg viewBox="0 0 500 470" role="img" aria-label="Shot chart">'+court+marks+'</svg></div>'+
+    '<div class="mh-leg"><span><i class="mk"></i>MADE</span><span><i class="ms"></i>MISSED</span><span>'+made+' of '+shots.length+' from the field</span></div>';
+}
+function mhPbpHtml(S){
+  if(!S) return '';
+  if(!S.plays.length) return '<div class="mh-empty">'+(S.state==='pre'?'Play-by-play starts at tip-off.':'No play-by-play yet.')+'</div>';
+  const ids={}; mhBoardPlayers(S).forEach(x=>ids[x.aid]=x.r);
+  const tab=S.teams, hid=Object.values(tab).find(t=>t.side==='h'), aid_=Object.values(tab).find(t=>t.side==='a');
+  const list=S.plays.slice(-40).reverse();
+  return '<div class="mh-pbp">'+list.map(p=>{ const r=p.aids.map(a=>ids[a]).find(Boolean), T=tab[p.tid];
+    return '<div class="mh-pl'+(r?' bd':'')+(p.sc?' sc':'')+'"><span class="ck">'+mhPer(S.lg,p.per)+' '+cmpEsc(p.clock)+'</span><span class="tm">'+cmpEsc((T&&T.ab)||'')+'</span><span class="tx">'+cmpEsc(p.text)+(r?' <em>'+cmpEsc(r.y==='2027'?'2027':r.y+' CLASS')+'</em>':'')+'</span><span class="sco">'+(p.sc?cmpEsc((aid_?aid_.ab+' ':'')+p.a)+'&ndash;'+cmpEsc(p.h+(hid?' '+hid.ab:'')):'')+'</span></div>'; }).join('')+'</div>';
+}
+function mhMoversHtml(lg){
+  const gs=mhGames(lg)||[], seen={}, rows=[];
+  gs.forEach(g=>{ const S=MH.sum[g.id]; if(!S || S.state==='pre') return;
+    mhBoardPlayers(S).forEach(x=>{ if(seen[x.r.id] || !(x.line.min>0)) return; seen[x.r.id]=1;
+      const I=MH.intra[x.r.y+':'+x.r.k]; rows.push({x, g, gs:mhGmSc(x.line), chg:I&&I.chg!=null&&!I.idle?I.chg:null}); }); });
+  if(!rows.length) return '<div class="mh-empty">'+(gs.some(g=>g.state==='in')?'Waiting on the first box scores&hellip;':'Movers show up once games tip off.')+'</div>';
+  const top=rows.slice().sort((a,b)=>b.gs-a.gs).slice(0,8);
+  const up=rows.filter(r=>r.chg!=null && r.chg>0.05).sort((a,b)=>b.chg-a.chg).slice(0,5);
+  const dn=rows.filter(r=>r.chg!=null && r.chg<-0.05).sort((a,b)=>a.chg-b.chg).slice(0,5);
+  const li=(r,val)=>'<div class="mh-mv"><span class="nm">'+mhName(r.x.r)+'<span class="sub">'+cmpEsc(r.x.r.y==='2027'?'2027':r.x.r.y)+' &middot; '+cmpEsc((r.g.a.ab||'')+' @ '+(r.g.h.ab||''))+'</span></span><span class="v">'+val+'</span></div>';
+  return '<div class="mh-mvh">TOP GAME SCORES</div>'+top.map(r=>li(r,'<b>'+r.gs.toFixed(1)+'</b> <span class="mut">'+r.x.line.pts+'/'+r.x.line.reb+'/'+r.x.line.ast+'</span>')).join('')+
+    '<div class="mh-mvh">INTRADAY RISERS</div>'+(up.length?up.map(r=>li(r,'<span class="up">▲ +'+r.chg.toFixed(1)+'%</span>')).join(''):'<div class="mh-empty sm">None yet.</div>')+
+    '<div class="mh-mvh">INTRADAY FALLERS</div>'+(dn.length?dn.map(r=>li(r,'<span class="down">▼ '+r.chg.toFixed(1)+'%</span>')).join(''):'<div class="mh-empty sm">None yet.</div>');
+}
+function mhSel(){ const lg=MH.lg; const id=mhPick(lg); return id?mhFind(lg,id):null; }
+function marketHours(){
+  if(!MH.lg) MH.lg='nba';
+  obBoard(); if(typeof obLoadGames==='function') obLoadGames();
+  const lg=MH.lg, nC=mhCount('nba'), cC=mhCount('college');
+  const tab=(k,lab,c)=>'<button type="button" class="ldb-chip" data-mhlg="'+k+'" aria-pressed="'+(lg===k)+'">'+lab+(c.live?' <b class="mh-live"><i></i>'+c.live+' LIVE</b>':'')+'</button>';
+  document.getElementById('main').innerHTML=
+  '<div class="cmp mh">'+
+    '<div class="cmp-title"><button type="button" id="mhBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>MARKET HOURS</h1>'+secShareBtn('market-hours')+
+    '<p>The live session between the <button type="button" class="mh-lk" data-mhgo="OPEN">Opening Bell</button> and the <button type="button" class="mh-lk" data-mhgo="BELL">Closing Bell</button>. '+
+    'Every game with a board player, live: the score, the play-by-play, ESPN&rsquo;s highlights as they post, and where each prospect&rsquo;s price would sit if the game ended now. Updates on its own while this page is open.</p></div>'+
+    '<div class="cmp-bar ldb-bar"><div class="ldb-row"><span class="ldb-lab">LEAGUE</span><div class="ldb-chips" id="mhLg">'+tab('nba','NBA',nC)+tab('college','2027 &middot; COLLEGE',cC)+'</div><span class="mh-upd" id="mhUpd"></span></div></div>'+
+    '<div class="mh-strip" id="mhStrip"></div>'+
+    '<div class="mh-grid"><div class="mh-main">'+
+      '<div class="card"><div id="mhBug"></div></div>'+
+      '<div class="card"><h3>HIGHLIGHTS <em>ESPN &middot; IN-GAME CLIPS</em></h3><div id="mhPlayer"></div><div id="mhVids"></div></div>'+
+      '<div class="card"><h3>BOARD PLAYERS <em id="mhBoxEm">LIVE LINE &middot; INTRADAY PRICE</em></h3><div class="mh-boxbar"><button type="button" class="cmp-act" id="mhAll" aria-pressed="'+MH.all+'">'+(MH.all?'BOARD PLAYERS ONLY':'SHOW EVERY PLAYER')+'</button></div><div id="mhBox"></div></div>'+
+      '<div class="grid2 mh-g2"><div class="card"><h3>SHOT CHART <em>BOARD PLAYERS</em></h3><div id="mhShots"></div></div>'+
+      '<div class="card"><h3>PLAY-BY-PLAY <em>NEWEST FIRST</em></h3><div id="mhPbp"></div></div></div>'+
+    '</div><div class="mh-side"><div class="card"><h3>INTRADAY MOVERS <em id="mhMvEm">ALL LIVE GAMES</em></h3><div id="mhMovers"></div></div></div></div>'+
+    '<p class="cmp-legend ldb-legend"><b>How Market Hours works.</b> Scores, box scores, play-by-play, shot locations, win probability and highlight clips come from ESPN&rsquo;s public game feed, refreshed in your browser every 15&ndash;60 seconds while this page is open. '+
+    '<b>INTRADAY</b> is the board&rsquo;s live price formula run as if the game ended now: his season line plus tonight&rsquo;s line so far, re-ranked inside his class on the class&rsquo;s price ladder. It is a projection; the official live price updates the next morning. '+
+    '<b>GMSC</b> is Game Score (Hollinger). Highlight clips play in ESPN&rsquo;s own player and belong to ESPN. Players playing overseas are not live-priced.</p>'+
+  '</div>';
+  MH.built=lg; mhPaint(true); mhSetHash(); mhStart();
+}
+function mhPaint(full){
+  if(currentRouteKey!=='MH') return;
+  const lg=MH.lg, $=id=>document.getElementById(id);
+  if(!$('mhStrip')) return;
+  mhIntraAll();
+  const strip=$('mhStrip'), sx=strip.scrollLeft; strip.innerHTML=mhStripHtml(lg); strip.scrollLeft=sx;
+  const g=mhSel(), S=g?MH.sum[g.id]:null;
+  ['nba','college'].forEach(k=>{ const b=document.querySelector('[data-mhlg="'+k+'"]'); if(b){ const c=mhCount(k); const lv=b.querySelector('.mh-live'); const want=c.live?' <b class="mh-live"><i></i>'+c.live+' LIVE</b>':''; if((lv?lv.outerHTML:'')!==want.trim()) b.innerHTML=(k==='nba'?'NBA':'2027 &middot; COLLEGE')+want; } });
+  if(!g){ $('mhBug').innerHTML='<div class="mh-empty">'+(MH.sb[lg]?'Nothing on the slate right now.':'Loading&hellip;')+'</div>'; ['mhVids','mhBox','mhShots','mhPbp'].forEach(id=>$(id).innerHTML=''); }
+  else {
+    let G=g;
+    if(S && S.at>((MH.sb[lg]&&MH.sb[lg].at)||0)){ const T=Object.values(S.teams), A=T.find(t=>t.side==='a'), H=T.find(t=>t.side==='h');
+      G=Object.assign({},g,{state:S.state||g.state, sd:S.detail||g.sd, a:Object.assign({},g.a,{sc:A?A.sc:g.a.sc}), h:Object.assign({},g.h,{sc:H?H.sc:g.h.sc})}); }
+    $('mhBug').innerHTML=mhBug(G,S);
+    $('mhVids').innerHTML=mhVidsHtml(S);
+    if(full || (MH.vid && !$('mhPlayer').firstChild) || (!MH.vid && $('mhPlayer').firstChild)) $('mhPlayer').innerHTML=mhPlayerHtml();
+    $('mhBox').innerHTML=mhBoxHtml(g,S);
+    $('mhShots').innerHTML=mhShotsHtml(S)||'<div class="mh-empty">Shots show up after tip-off.</div>';
+    $('mhPbp').innerHTML=mhPbpHtml(S);
+  }
+  $('mhMovers').innerHTML=mhMoversHtml(lg);
+  const at=Math.max((MH.sb[lg]&&MH.sb[lg].at)||0, g&&MH.sumAt[g.id]||0);
+  $('mhUpd').textContent=at?'UPDATED '+new Date(at).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit'}):'';
+}
+/* ---- polling ---- */
+function mhStart(){ clearInterval(MH.timer); MH.timer=setInterval(mhTick,5000); mhTick(); }
+function mhStop(){ clearInterval(MH.timer); MH.timer=0; }
+function mhTick(){
+  if(currentRouteKey!=='MH'){ mhStop(); return; }
+  if(document.hidden) return;
+  const now=Date.now(), lg=MH.lg, jobs=[];
+  ['nba','college'].forEach(k=>{ const sb=MH.sb[k], ms=k===lg?MH_SB_MS:MH_SB_MS*2; if(!sb || now-sb.at>ms) jobs.push(mhFetchSB(k)); });
+  Promise.all(jobs).then(()=>{
+    const gs=mhGames(lg)||[], sel=mhSel(), more=[];
+    if(sel){ const t=MH.sumAt[sel.id]||0, ms=sel.state==='in'?MH_SEL_MS:(sel.state==='post'?5*60000:2*60000); if(now-t>ms) more.push(mhFetchSum(lg,sel.id)); }
+    gs.forEach(g=>{ if(sel && g.id===sel.id) return; if(g.state==='pre') return;
+      const t=MH.sumAt[g.id]||0, ms=g.state==='in'?MH_ALL_MS:30*60000; if(now-t>ms) more.push(mhFetchSum(lg,g.id)); });
+    return Promise.all(more).then(()=>{ if(jobs.length || more.length) mhPaint(false); });
+  });
+}
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden && currentRouteKey==='MH') mhTick(); });
+/* ---- hash / nav ---- */
+function mhSetHash(){
+  if(currentRouteKey!=='MH') return;
+  const g=MH.game[MH.lg]; const h='#markethours/'+MH.lg+(g?'/'+g:'');
+  try{ if(location.hash!==h) history.replaceState(history.state,'',location.pathname+location.search+h); }catch(_){}
+}
+function mhClearHash(){ mhStop(); try{ if(/^#markethours/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
+function mhParseHash(){ const m=/^#markethours(?:\/(nba|college)(?:\/(\d+))?)?$/.exec(location.hash||''); if(!m) return false; if(m[1]) MH.lg=m[1]; if(m[1]&&m[2]) MH.game[m[1]]=m[2]; return true; }
+function mhLoadHash(){ if(!/^#markethours/.test(location.hash)) return; mhParseHash();
+  if(currentRouteKey!=='MH'){ mhReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('MH'); } else marketHours(); }
+function mhBackKey(){ return (mhReturnKey==='MKT'||mhReturnKey==='CMP'||mhReturnKey==='UNI'||mhReturnKey==='FIND'||mhReturnKey==='BELL'||mhReturnKey==='OPEN'||mhReturnKey==='NEW'||mhReturnKey==='DESK'||mhReturnKey==='TRACK'||byT[mhReturnKey])?mhReturnKey:'MKT'; }
+function mhBackPaint(){
+  const m=document.getElementById('main'); if(!m) return;
+  if(BACKTO_MH===CURCLASS+'/'+currentRouteKey && !document.getElementById('mhToMh'))
+    m.insertAdjacentHTML('afterbegin','<button type="button" id="mhToMh" class="cmp-back">&larr; BACK TO MARKET HOURS</button>');
+}
+function mhOpen(y,tkr){
+  const C=CLASSES[y]; if(!C || !C.top.some(p=>p.tkr===tkr)) return;
+  BACKTO_MH=y+'/'+tkr; if(typeof COMPS_FROM!=='undefined') COMPS_FROM=null; if(typeof BACKTO_TR!=='undefined') BACKTO_TR=null;
+  if(CURCLASS!==y){ CURCLASS=y; reindex(); renderTape(); }
+  route(tkr); window.scrollTo({top:0,behavior:'instant'}); mhBackPaint();
+}
+document.addEventListener('click',function(ev){
+  const t=ev.target; if(!t.closest) return;
+  if(t.closest('#mhBtn')){
+    if(currentRouteKey==='MH'){ route(mhBackKey()); return; }
+    mhReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('MH'); window.scrollTo({top:0,behavior:'instant'}); return;
+  }
+  if(t.closest('#mhToMh')){ BACKTO_MH=null; route('MH'); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(currentRouteKey!=='MH') return;
+  if(t.closest('#mhBack')){ route(mhBackKey()); return; }
+  let b;
+  if((b=t.closest('[data-mhlg]'))){ if(MH.lg!==b.dataset.mhlg){ MH.lg=b.dataset.mhlg; MH.vid=null; MH.shotP='all'; marketHours(); } return; }
+  if((b=t.closest('[data-mhg]'))){ if(MH.game[MH.lg]!==b.dataset.mhg){ MH.game[MH.lg]=b.dataset.mhg; MH.vid=null; MH.shotP='all'; mhSetHash(); mhPaint(true); mhTick(); } return; }
+  if((b=t.closest('[data-mhv]'))){ const S=MH.sum[MH.game[MH.lg]]; const v=S&&S.vids.find(x=>x.id===b.dataset.mhv); if(v){ MH.vid=v; mhPaint(true); const p=document.getElementById('mhPlayer'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'}); } return; }
+  if(t.closest('[data-mhvclose]')){ MH.vid=null; mhPaint(true); return; }
+  if((b=t.closest('[data-mhsp]'))){ MH.shotP=b.dataset.mhsp; const S=MH.sum[MH.game[MH.lg]]; const e=document.getElementById('mhShots'); if(e) e.innerHTML=mhShotsHtml(S); return; }
+  if(t.closest('#mhAll')){ MH.all=!MH.all; const b2=document.getElementById('mhAll'); if(b2){ b2.setAttribute('aria-pressed',String(MH.all)); b2.textContent=MH.all?'BOARD PLAYERS ONLY':'SHOW EVERY PLAYER'; } mhPaint(false); return; }
+  if((b=t.closest('[data-mhopen]'))){ const a=b.dataset.mhopen.split(':'); mhOpen(a[0],a[1]); return; }
+  if((b=t.closest('[data-mhgo]'))){ const k=b.dataset.mhgo; if(k==='OPEN'){ obReturnKey='MH'; } else if(k==='BELL'){ bellReturnKey='MH'; } route(k); window.scrollTo({top:0,behavior:'instant'}); return; }
+});
+window.addEventListener('hashchange',mhLoadHash);
+/* hero button: a live dot + count once the scoreboards say games are on (one light check per page view) */
+function mhDot(){
+  const btn=document.getElementById('mhBtn'); if(!btn) return;
+  Promise.all(['nba','college'].map(k=>MH.sb[k]&&Date.now()-MH.sb[k].at<120000?null:mhFetchSB(k))).then(()=>{
+    MH.liveN=mhCount('nba').live+mhCount('college').live; mhDotPaint();
+  });
+}
+function mhDotPaint(){ const d=document.getElementById('mhBtn'), n=MH.liveN||0; if(!d) return;
+  d.classList.toggle('live',n>0); const s=d.querySelector('.mh-dotn'); if(s) s.textContent=n?n+' LIVE':''; }
+setTimeout(function(){ try{ mhLoadHash(); }catch(e){ console.error(e); } },0);
+setTimeout(function(){ try{ mhDot(); setInterval(()=>{ if(!document.hidden && currentRouteKey==='MKT') mhDot(); },180000); }catch(e){} },3500);
+/*MH-JS-END*/
+
 /*WN-JS-START*/
 /* ================= WHAT'S NEW =================================================
    The public changelog. Newest first. To add an upgrade: put a new object at the TOP of WN_LOG
@@ -7385,7 +7884,7 @@ function whatsNew(){
   try{ if(location.hash!=='#whatsnew') history.replaceState(history.state,'',location.pathname+location.search+'#whatsnew'); }catch(_){}
 }
 function wnClearHash(){ try{ if(/^#whatsnew/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
-function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||wnReturnKey==='DESK'||wnReturnKey==='TRACK'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
+function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||wnReturnKey==='DESK'||wnReturnKey==='TRACK'||wnReturnKey==='MH'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
 function wnAct(a){
   if(a.indexOf('CLASS:')===0){ const y=a.slice(6); if(CURCLASS!==y){ if(!setClass(y)) return; } else route('MKT'); }
   else if(a==='TOUR'){ route('MKT'); const t=document.getElementById('tourBtn'); if(t) t.click(); }
@@ -8191,7 +8690,7 @@ function deskQuote(picks, bname, cmpPicks){
   document.addEventListener('pointerup',end); document.addEventListener('pointercancel',end);
 })();
 window.addEventListener('beforeunload',function(e){ if(DESK.saveState==='saving'||DESK.saveState==='error'){ e.preventDefault(); e.returnValue=''; } });
-function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||deskReturnKey==='TRACK'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
+function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||deskReturnKey==='TRACK'||deskReturnKey==='MH'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
 function deskClearHash(){ try{ if(/^#desk/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
 function deskLoadHash(){ if(!/^#desk/.test(location.hash)){ deskPopHide(true); return; } if(currentRouteKey!=='DESK'){ deskReturnKey='MKT'; route('DESK'); } else desk(); }
 document.addEventListener('keydown',function(e){
@@ -8224,8 +8723,8 @@ deskLoadHash();
    Every replaceState in the page now passes history.state, so the views that
    write their own hash never wipe the entry's state. */
 var NAV={pop:false, tick:false, boot:true, home:'2026'};
-var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1,TRACK:1};
-var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/,TRACK:/^#trackrecord/};
+var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1,TRACK:1,MH:1};
+var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/,TRACK:/^#trackrecord/,MH:/^#markethours/};
 function navKey(k){ return (k==='MKT') ? CURCLASS+'/MKT' : (NAV_VIEWS[k] ? k : CURCLASS+'/'+k); }
 function navUrl(k){
   const base=location.pathname+location.search;
