@@ -1707,6 +1707,8 @@ td.lv .lvtags .lvt{margin-left:0}
   .tape.tapeoff .tapetog .chev{transform:scaleY(-1)}
 }
 @media (prefers-reduced-motion:reduce){.tape,.tapetog .chev{transition:none}}
+/* TAPEMOB: phones skip the ticker tape (saves a row of sticky chrome); desktop keeps it + its toggle */
+@media (max-width:860px){.tape{display:none}}
 /*TAPETOG-CSS-END*/
 /*DESK-CSS-START*/
 /* desklav Nov 6: Analyst Desk secondary text = lavender, same as the Closing/Opening Bell (was --mute #8B8271) */
