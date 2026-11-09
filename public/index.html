@@ -1212,7 +1212,19 @@ table.ldbt.trt td.sep,table.ldbt.trt th.sep{border-left:1px solid var(--line2)}
 .mh-vid .t{display:block;padding:6px 8px 8px;font-size:11px;line-height:1.4;white-space:normal}
 .mh-vid .t em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.12em;color:var(--amber);margin-bottom:2px}
 .mh-vid .d{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.75);font-size:10px;padding:1px 5px}
-.mh-boxbar{padding:8px 12px 0}
+.mh-boxbar{padding:8px 12px 0;display:flex;justify-content:flex-end}
+.mh-tabs{display:flex;gap:0;padding:8px 12px 0;border-bottom:1px solid var(--line2)}
+.mh-tab{flex:1 1 0;min-width:0;display:flex;align-items:baseline;gap:10px;background:transparent;border:1px solid var(--line2);border-bottom:0;color:#B4B1AA;font-family:var(--mono);padding:9px 12px;cursor:pointer;text-align:left;margin-bottom:-1px}
+.mh-tab+.mh-tab{border-left:0}
+.mh-tab .ab{font-family:var(--cond);font-size:16px;font-weight:700;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mh-tab .sc{font-family:var(--cond);font-size:18px;font-weight:700}
+.mh-tab .n{margin-left:auto;font-size:9.5px;letter-spacing:.12em;color:var(--amber);white-space:nowrap}
+.mh-tab:hover{color:var(--ink)}
+.mh-tab[aria-pressed="true"]{background:var(--panel2);color:var(--ink);border-top:2px solid var(--amber);border-bottom:1px solid var(--panel2)}
+table.mh-box tr.grp td{text-align:left;font-size:9.5px;letter-spacing:.14em;color:var(--lbl);background:#0B0D12;padding:6px}
+table.mh-box tr.tot td{border-top:1px solid var(--line2);color:var(--ink);font-weight:700}
+table.mh-box tr.bd td{background:var(--amber-g)}
+@media (max-width:640px){.mh-tab{flex-direction:column;gap:2px}.mh-tab .n{margin-left:0}.mh-tab .ab{font-size:14px}}
 table.mh-box{width:100%;border-collapse:separate;border-spacing:0;min-width:760px;font-size:12.5px}
 table.mh-box th{font-size:9.5px;letter-spacing:.1em;color:var(--lbl);text-align:right;padding:8px 6px;border-bottom:1px solid var(--line2);font-weight:600}
 table.mh-box td{text-align:right;padding:7px 6px;border-bottom:1px solid #171A21;white-space:nowrap;color:#B4B1AA}
@@ -7438,7 +7450,7 @@ obLoadHash();
    Polling stops the moment you leave the view or hide the tab. Reuses the Opening Bell's helpers
    (obGame, obBoard, obColPlayers, obEntry, obFetchRos, obNbaPlayers, obJSON, obSlug, OB_SPORT). */
 let mhReturnKey='MKT', BACKTO_MH=null;
-const MH={lg:null, game:{}, sb:{}, sum:{}, sumAt:{}, vid:null, all:false, shotP:'all', timer:0, busy:{}, built:'', intra:{}, intraAt:0, dotAt:0};
+const MH={lg:null, game:{}, sb:{}, sum:{}, sumAt:{}, vid:null, all:true, side:{}, shotP:'all', timer:0, busy:{}, built:'', intra:{}, intraAt:0, dotAt:0};
 const MH_SB_MS=30000, MH_SEL_MS=15000, MH_ALL_MS=60000;
 const MH_BOX_KEYS={MIN:'min',PTS:'pts',FG:'fg','3PT':'tp',FT:'ft',REB:'reb',AST:'ast',TO:'to',STL:'stl',BLK:'blk',OREB:'oreb',DREB:'dreb',PF:'pf','+/-':'pm'};
 function mhUrl(lg,kind,id){
@@ -7611,27 +7623,55 @@ function mhName(r){
   const t=cmpEsc(r.n);
   return listed ? '<button type="button" class="mh-lk" data-mhopen="'+r.y+':'+cmpEsc(r.p.tkr)+'">'+t+'</button>' : '<span>'+t+'</span>';
 }
+function mhSideOf(g){ /* the tab open for this game: the user's pick, else the side with more board players, else away */
+  if(MH.side[g.id]) return MH.side[g.id];
+  const S=MH.sum[g.id]; let na=0, nh=0;
+  if(S && S.state!=='pre'){ const T=S.teams; mhBoardPlayers(S).forEach(x=>{ const t=T[x.tid]; if(t&&t.side==='h') nh++; else na++; }); }
+  else if(g.lg==='college') obColPlayers(g).forEach(x=>{ if(x.side==='h') nh++; else na++; });
+  return nh>na?'h':'a';
+}
+function mhTabs(g,S,side,counts){
+  const t=s=>{ const T=g[s], sc=(S&&S.state!=='pre')?(Object.values(S.teams).find(x=>x.side===s)||{}).sc:null;
+    return '<button type="button" class="mh-tab" data-mhside="'+s+'" aria-pressed="'+(side===s)+'"><span class="ab">'+cmpEsc(T.full||T.nm||T.ab)+'</span>'+
+      (sc!=null&&sc!==''?'<span class="sc">'+cmpEsc(sc)+'</span>':'')+'<span class="n">'+(counts[s]||0)+' BOARD</span></button>'; };
+  return '<div class="mh-tabs" role="tablist">'+t('a')+t('h')+'</div>';
+}
 function mhBoxHtml(g,S){
   if(!S) return '<div class="mh-empty">Loading the box score&hellip;</div>';
+  const side=mhSideOf(g);
   if(S.state==='pre'){
     let list=[];
     if(g.lg==='college') list=obColPlayers(g).map(x=>({r:x.r, side:x.side}));
     else { ['a','h'].forEach(s=>{ if(!OB_ROS[g[s].id]) obFetchRos(g[s].id); }); list=obNbaPlayers(g); }
-    if(!list.length) return '<div class="mh-empty">Board players show here at tip-off.</div>';
-    return '<div class="mh-pre">'+list.map(x=>{ const e=LV.entry(x.r.k,x.r.y)||{}, st=e.st;
-      return '<div class="mh-prow"><span class="cl">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y)+'</span>'+mhName(x.r)+'<span class="ln">'+(st?st.pts+' / '+st.reb+' / '+st.ast+' this season':'no games yet')+'</span><span class="px">'+(e.price!=null?'$'+f2(e.price):'')+'</span></div>'; }).join('')+
-      '</div><p class="mh-note">Live lines start at tip-off. Tonight&rsquo;s projections and props are on the <button type="button" class="mh-lk" data-mhgo="OPEN">Opening Bell Preview</button>.</p>';
+    const counts={a:list.filter(x=>x.side==='a').length, h:list.filter(x=>x.side==='h').length};
+    const mine=list.filter(x=>x.side===side);
+    return mhTabs(g,S,side,counts)+(mine.length?'<div class="mh-pre">'+mine.map(x=>{ const e=LV.entry(x.r.k,x.r.y)||{}, st=e.st;
+      return '<div class="mh-prow"><span class="cl">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y)+'</span>'+mhName(x.r)+'<span class="ln">'+(st?st.pts+' / '+st.reb+' / '+st.ast+' this season':'no games yet')+'</span><span class="px">'+(e.price!=null?'$'+f2(e.price):'')+'</span></div>'; }).join('')+'</div>'
+      :'<div class="mh-empty">No board players on this side.</div>')+
+      '<p class="mh-note">The box score fills in at tip-off. Tonight&rsquo;s projections and props are on the <button type="button" class="mh-lk" data-mhgo="OPEN">Opening Bell Preview</button>.</p>';
   }
-  const all=MH.all, B=mhBoardPlayers(S), bset=new Set(B.map(x=>x.aid));
-  let rows = all ? S.players.filter(p=>!p.dnp).map(p=>B.find(x=>x.aid===p.aid)||Object.assign({r:null},p)) : B.filter(x=>!x.dnp || x.line.min>0);
-  rows.sort((a,b)=>mhGmSc(b.line)-mhGmSc(a.line));
-  if(!rows.length) return '<div class="mh-empty">'+(B.length?'No board player has checked in yet.':'No board players in this game.')+'</div>';
-  const tab=S.teams;
-  const body=rows.map(x=>{ const L=x.line, T=tab[x.tid]||{};
-    return '<tr'+(x.r?' class="bd"':'')+'><td class="nm">'+(x.r?mhName(x.r)+'<span class="sub">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y)+' &middot; '+cmpEsc(T.ab||'')+'</span>':cmpEsc(x.name)+'<span class="sub">'+cmpEsc(T.ab||'')+'</span>')+'</td>'+
+  const B=mhBoardPlayers(S), bmap={}; B.forEach(x=>bmap[x.aid]=x);
+  const T=S.teams, tidOf=s=>(Object.values(T).find(x=>x.side===s)||{}).id;
+  const counts={a:0,h:0}; B.forEach(x=>{ const t=T[x.tid]; counts[t&&t.side==='h'?'h':'a']++; });
+  const tid=tidOf(side);
+  let team=S.players.filter(p=>p.tid===tid).map(p=>bmap[p.aid]||Object.assign({r:null},p));
+  const dnp=team.filter(x=>x.dnp && !(x.line.min>0));
+  let rows=team.filter(x=>!(x.dnp && !(x.line.min>0)));
+  if(!MH.all) rows=rows.filter(x=>x.r);
+  /* starters first (ESPN order), then the bench by minutes */
+  const st=rows.filter(x=>x.starter), bn=rows.filter(x=>!x.starter).sort((a,b)=>b.line.min-a.line.min);
+  const tot={pts:0,reb:0,ast:0,stl:0,blk:0,tpm:0,tpa:0,to:0,fgm:0,fga:0,ftm:0,fta:0};
+  team.forEach(x=>{ Object.keys(tot).forEach(k=>tot[k]+=x.line[k]||0); });
+  const tr=(x)=>{ const L=x.line;
+    return '<tr class="'+(x.r?'bd':'')+'"><td class="nm">'+(x.r?mhName(x.r)+'<span class="sub">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y+' CLASS')+'</span>':cmpEsc(x.name))+'</td>'+
       '<td class="b">'+L.pts+'</td><td>'+L.reb+'</td><td>'+L.ast+'</td><td class="gs">'+mhGmSc(L).toFixed(1)+'</td><td class="ip">'+(x.r?mhIntraCell(x.r):'')+'</td>'+
-      '<td>'+L.min+'</td><td>'+L.stl+'</td><td>'+L.blk+'</td><td>'+L.tpm+'</td><td>'+L.to+'</td><td>'+L.fgm+'-'+L.fga+'</td></tr>'; }).join('');
-  return '<div class="ldb-wrap"><table class="mh-box"><thead><tr><th class="nm">PLAYER</th><th>PTS</th><th>REB</th><th>AST</th><th>GMSC</th><th class="ip">INTRADAY</th><th>MIN</th><th>STL</th><th>BLK</th><th>3PM</th><th>TO</th><th>FG</th></tr></thead><tbody>'+body+'</tbody></table></div>';
+      '<td>'+L.min+'</td><td>'+L.fgm+'-'+L.fga+'</td><td>'+L.tpm+'-'+L.tpa+'</td><td>'+L.ftm+'-'+L.fta+'</td><td>'+L.stl+'</td><td>'+L.blk+'</td><td>'+L.to+'</td><td>'+cmpEsc(L.pm||'')+'</td></tr>'; };
+  const grp=(lab,list)=>list.length?'<tr class="grp"><td colspan="14">'+lab+'</td></tr>'+list.map(tr).join(''):'';
+  const body=grp('STARTERS',st)+grp('BENCH',bn)+
+    (MH.all?'<tr class="tot"><td class="nm">TEAM</td><td class="b">'+tot.pts+'</td><td>'+tot.reb+'</td><td>'+tot.ast+'</td><td></td><td></td><td></td><td>'+tot.fgm+'-'+tot.fga+'</td><td>'+tot.tpm+'-'+tot.tpa+'</td><td>'+tot.ftm+'-'+tot.fta+'</td><td>'+tot.stl+'</td><td>'+tot.blk+'</td><td>'+tot.to+'</td><td></td></tr>':'');
+  const empty = !rows.length ? '<div class="mh-empty">'+(MH.all?'No box score for this team yet.':(counts[side]?'No board player on this side has checked in yet.':'No board players on this side.'))+'</div>' : '';
+  return mhTabs(g,S,side,counts)+(empty||'<div class="ldb-wrap"><table class="mh-box"><thead><tr><th class="nm">PLAYER</th><th>PTS</th><th>REB</th><th>AST</th><th>GMSC</th><th class="ip">INTRADAY</th><th>MIN</th><th>FG</th><th>3PT</th><th>FT</th><th>STL</th><th>BLK</th><th>TO</th><th>+/-</th></tr></thead><tbody>'+body+'</tbody></table></div>')+
+    (MH.all && dnp.length?'<p class="mh-note">Did not play: '+dnp.map(x=>cmpEsc(x.name)).join(', ')+'</p>':'');
 }
 function mhShotsHtml(S){
   if(!S || S.state==='pre') return '';
@@ -7689,7 +7729,7 @@ function marketHours(){
     '<div class="mh-grid"><div class="mh-main">'+
       '<div class="card"><div id="mhBug"></div></div>'+
       '<div class="card"><h3>HIGHLIGHTS <em>ESPN &middot; IN-GAME CLIPS</em></h3><div id="mhPlayer"></div><div id="mhVids"></div></div>'+
-      '<div class="card"><h3>BOARD PLAYERS <em id="mhBoxEm">LIVE LINE &middot; INTRADAY PRICE</em></h3><div class="mh-boxbar"><button type="button" class="cmp-act" id="mhAll" aria-pressed="'+MH.all+'">'+(MH.all?'BOARD PLAYERS ONLY':'SHOW EVERY PLAYER')+'</button></div><div id="mhBox"></div></div>'+
+      '<div class="card"><h3>BOX SCORE <em id="mhBoxEm">BOARD PLAYERS HIGHLIGHTED &middot; INTRADAY PRICE</em></h3><div class="mh-boxbar"><button type="button" class="cmp-act" id="mhAll" aria-pressed="'+(!MH.all)+'">'+(MH.all?'BOARD PLAYERS ONLY':'SHOW EVERY PLAYER')+'</button></div><div id="mhBox"></div></div>'+
       '<div class="grid2 mh-g2"><div class="card"><h3>SHOT CHART <em>BOARD PLAYERS</em></h3><div id="mhShots"></div></div>'+
       '<div class="card"><h3>PLAY-BY-PLAY <em>NEWEST FIRST</em></h3><div id="mhPbp"></div></div></div>'+
     '</div><div class="mh-side"><div class="card"><h3>INTRADAY MOVERS <em id="mhMvEm">ALL LIVE GAMES</em></h3><div id="mhMovers"></div></div></div></div>'+
@@ -7777,7 +7817,8 @@ document.addEventListener('click',function(ev){
   if((b=t.closest('[data-mhv]'))){ const S=MH.sum[MH.game[MH.lg]]; const v=S&&S.vids.find(x=>x.id===b.dataset.mhv); if(v){ MH.vid=v; mhPaint(true); const p=document.getElementById('mhPlayer'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'}); } return; }
   if(t.closest('[data-mhvclose]')){ MH.vid=null; mhPaint(true); return; }
   if((b=t.closest('[data-mhsp]'))){ MH.shotP=b.dataset.mhsp; const S=MH.sum[MH.game[MH.lg]]; const e=document.getElementById('mhShots'); if(e) e.innerHTML=mhShotsHtml(S); return; }
-  if(t.closest('#mhAll')){ MH.all=!MH.all; const b2=document.getElementById('mhAll'); if(b2){ b2.setAttribute('aria-pressed',String(MH.all)); b2.textContent=MH.all?'BOARD PLAYERS ONLY':'SHOW EVERY PLAYER'; } mhPaint(false); return; }
+  if(t.closest('#mhAll')){ MH.all=!MH.all; const b2=document.getElementById('mhAll'); if(b2){ b2.setAttribute('aria-pressed',String(!MH.all)); b2.textContent=MH.all?'BOARD PLAYERS ONLY':'SHOW EVERY PLAYER'; } mhPaint(false); return; }
+  if((b=t.closest('[data-mhside]'))){ const g=mhSel(); if(g){ MH.side[g.id]=b.dataset.mhside; const S=MH.sum[g.id]; const e=document.getElementById('mhBox'); if(e) e.innerHTML=mhBoxHtml(g,S); } return; }
   if((b=t.closest('[data-mhopen]'))){ const a=b.dataset.mhopen.split(':'); mhOpen(a[0],a[1]); return; }
   if((b=t.closest('[data-mhgo]'))){ const k=b.dataset.mhgo; if(k==='OPEN'){ obReturnKey='MH'; } else if(k==='BELL'){ bellReturnKey='MH'; } route(k); window.scrollTo({top:0,behavior:'instant'}); return; }
 });
