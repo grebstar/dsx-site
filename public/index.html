@@ -7458,7 +7458,7 @@ function mhParse(j,lg){
   const S={lg, players:[], plays:[], wp:[], vids:[], teams:{}, at:Date.now()};
   const comp=(j.header&&j.header.competitions&&j.header.competitions[0])||{};
   (comp.competitors||[]).forEach(c=>{ const t=c.team||{}; S.teams[String(t.id)]={id:String(t.id), ab:t.abbreviation||'', nm:t.shortDisplayName||t.displayName||'', loc:t.location||'', full:t.displayName||'', side:c.homeAway==='home'?'h':'a', sc:c.score, logo:(t.logos&&t.logos[0]&&t.logos[0].href)||t.logo||''}; });
-  const st=(comp.status&&comp.status.type)||{}; S.state=st.state||'pre'; S.detail=st.shortDetail||st.detail||'';
+  const st=(comp.status&&comp.status.type)||{}; S.state=st.state||'pre'; S.detail=st.shortDetail||st.detail||''; S.date=comp.date||'';
   ((j.boxscore&&j.boxscore.players)||[]).forEach(T=>{ const tid=String((T.team&&T.team.id)||'');
     (T.statistics||[]).forEach(g=>{ const lab=(g.labels||g.names||[]).map(x=>MH_BOX_KEYS[x]||x);
       (g.athletes||[]).forEach(a=>{ const A=a.athlete||{}, s=a.stats||[], L={};
@@ -7527,16 +7527,19 @@ function mhIntraClass(y,tonight){
   return out;
 }
 function mhIntraAll(){
-  const byY={};
+  const byY={}, inPrice={}, st=Date.parse((LV.stamp&&LV.stamp())||'');
   Object.values(MH.sum).forEach(S=>{ if(!S || S.state==='pre') return;
-    mhBoardPlayers(S).forEach(x=>{ (byY[x.r.y]||(byY[x.r.y]={}))[x.r.k]=x.line; }); });
+    /* a game that tipped before the morning pull is already inside the official live price: never count it twice */
+    const done=!isNaN(st) && S.date && Date.parse(S.date)<st;
+    mhBoardPlayers(S).forEach(x=>{ if(done){ inPrice[x.r.y+':'+x.r.k]=1; return; } (byY[x.r.y]||(byY[x.r.y]={}))[x.r.k]=x.line; }); });
   const out={}; Object.keys(byY).forEach(y=>{ const m=mhIntraClass(y,byY[y]); Object.keys(m).forEach(k=>out[y+':'+k]=m[k]); });
+  Object.keys(inPrice).forEach(id=>{ if(out[id]) return; const i=id.indexOf(':'), y=id.slice(0,i), k=id.slice(i+1), e=LV.entry(k,y)||{}; out[id]={idle:1, price:e.price, inprice:1}; });
   MH.intra=out; MH.intraAt=Date.now(); return out;
 }
 function mhIntraCell(r){
   const I=MH.intra[r.y+':'+r.k];
   if(!I) return '<span class="mut">&mdash;</span>';
-  if(I.idle) return '<span class="mut">$'+(I.price!=null?f2(I.price):'&mdash;')+'</span>';
+  if(I.idle) return '<span class="mut"'+(I.inprice?' title="This game is already in the official live price"':'')+'>$'+(I.price!=null?f2(I.price):'&mdash;')+(I.inprice?' &middot; IN PRICE':'')+'</span>';
   const c=I.chg, cl=c==null?'':(c>0.05?'up':c<-0.05?'down':'');
   return '<span class="mh-px">$'+f2(I.nprice||0)+'</span> <span class="'+cl+'">'+(c==null?(I.debut?'NEW':''):(c>0.05?'▲ ':c<-0.05?'▼ ':'')+(c>0?'+':'')+c.toFixed(1)+'%')+'</span>';
 }
@@ -7560,13 +7563,13 @@ function mhPick(lg){
 }
 function mhFind(lg,id){ return (mhGames(lg)||[]).find(g=>g.id===id) || null; }
 /* ---- view ---- */
-function mhTeamLine(t,win){ return '<span class="mh-ab'+(win?' w':'')+'">'+(t.rank?'<i>'+t.rank+'</i>':'')+cmpEsc(t.ab||t.nm)+'</span><span class="mh-sc'+(win?' w':'')+'">'+(t.sc!=null&&t.sc!==''?cmpEsc(t.sc):'')+'</span>'; }
+function mhTeamLine(t,win,pre){ return '<span class="mh-ab'+(win?' w':'')+'">'+(t.rank?'<i>'+t.rank+'</i>':'')+cmpEsc(t.ab||t.nm)+'</span><span class="mh-sc'+(win?' w':'')+'">'+(!pre&&t.sc!=null&&t.sc!==''?cmpEsc(t.sc):'')+'</span>'; }
 function mhTile(g,on){
   const a=+g.a.sc||0, h=+g.h.sc||0, fin=g.state==='post';
   const st=g.state==='in' ? '<b class="mh-live"><i></i>'+cmpEsc(g.sd)+'</b>' : g.state==='pre' ? cmpEsc(obTip(g.date)) : 'FINAL'+(/OT/.test(g.sd)?' / '+cmpEsc(g.sd.replace(/^Final\/?/,'')):'');
   const S=MH.sum[g.id], n=S?mhBoardPlayers(S).length:(g.lg==='college'?obColPlayers(g).length:null);
   return '<button type="button" class="mh-tile'+(on?' on':'')+(g.state==='in'?' is-live':'')+'" data-mhg="'+g.id+'">'+
-    '<div class="r">'+mhTeamLine(g.a,fin&&a>h)+'</div><div class="r">'+mhTeamLine(g.h,fin&&h>a)+'</div>'+
+    '<div class="r">'+mhTeamLine(g.a,fin&&a>h,g.state==='pre')+'</div><div class="r">'+mhTeamLine(g.h,fin&&h>a,g.state==='pre')+'</div>'+
     '<div class="s">'+st+(n?' <span class="mh-n">'+n+' BOARD</span>':'')+'</div></button>';
 }
 function mhStripHtml(lg){
