@@ -7872,13 +7872,14 @@ function mhBoxHtml(g,S){
   team.forEach(x=>{ Object.keys(tot).forEach(k=>tot[k]+=x.line[k]||0); });
   const tr=(x)=>{ const L=x.line;
     return '<tr class="'+(x.r?'bd':'')+'"><td class="nm">'+(x.r?mhName(x.r)+'<span class="sub">'+cmpEsc(x.r.y==='2027'?'2027':x.r.y+' CLASS')+'</span>':cmpEsc(x.name))+'</td>'+
-      '<td class="b">'+L.pts+'</td><td>'+L.reb+'</td><td>'+L.ast+'</td><td class="gs">'+mhGmSc(L).toFixed(1)+'</td><td class="ip">'+(x.r?mhIntraCell(x.r):'')+'</td>'+
-      '<td>'+L.min+'</td><td>'+L.fgm+'-'+L.fga+'</td><td>'+L.tpm+'-'+L.tpa+'</td><td>'+L.ftm+'-'+L.fta+'</td><td>'+L.stl+'</td><td>'+L.blk+'</td><td>'+L.to+'</td><td>'+cmpEsc(L.pm||'')+'</td></tr>'; };
+      '<td>'+L.min+'</td><td class="b">'+L.pts+'</td><td>'+L.reb+'</td><td>'+L.ast+'</td><td>'+L.stl+'</td><td>'+L.blk+'</td><td>'+L.to+'</td>'+
+      '<td>'+L.fgm+'-'+L.fga+'</td><td>'+L.tpm+'-'+L.tpa+'</td><td>'+L.ftm+'-'+L.fta+'</td><td>'+cmpEsc(L.pm||'')+'</td>'+
+      '<td class="gs">'+mhGmSc(L).toFixed(1)+'</td><td class="ip">'+(x.r?mhIntraCell(x.r):'')+'</td></tr>'; };
   const grp=(lab,list)=>list.length?'<tr class="grp"><td colspan="14">'+lab+'</td></tr>'+list.map(tr).join(''):'';
   const body=grp('STARTERS',st)+grp('BENCH',bn)+
-    (MH.all?'<tr class="tot"><td class="nm">TEAM</td><td class="b">'+tot.pts+'</td><td>'+tot.reb+'</td><td>'+tot.ast+'</td><td></td><td></td><td></td><td>'+tot.fgm+'-'+tot.fga+'</td><td>'+tot.tpm+'-'+tot.tpa+'</td><td>'+tot.ftm+'-'+tot.fta+'</td><td>'+tot.stl+'</td><td>'+tot.blk+'</td><td>'+tot.to+'</td><td></td></tr>':'');
+    (MH.all?'<tr class="tot"><td class="nm">TEAM</td><td></td><td class="b">'+tot.pts+'</td><td>'+tot.reb+'</td><td>'+tot.ast+'</td><td>'+tot.stl+'</td><td>'+tot.blk+'</td><td>'+tot.to+'</td><td>'+tot.fgm+'-'+tot.fga+'</td><td>'+tot.tpm+'-'+tot.tpa+'</td><td>'+tot.ftm+'-'+tot.fta+'</td><td></td><td></td><td></td></tr>':'');
   const empty = !rows.length ? '<div class="mh-empty">'+(MH.all?'No box score for this team yet.':(counts[side]?'No board player on this side has checked in yet.':'No board players on this side.'))+'</div>' : '';
-  return mhTabs(g,S,side,counts)+(empty||'<div class="ldb-wrap"><table class="mh-box"><thead><tr><th class="nm">PLAYER</th><th>PTS</th><th>REB</th><th>AST</th><th>GMSC</th><th class="ip">INTRADAY</th><th>MIN</th><th>FG</th><th>3PT</th><th>FT</th><th>STL</th><th>BLK</th><th>TO</th><th>+/-</th></tr></thead><tbody>'+body+'</tbody></table></div>')+
+  return mhTabs(g,S,side,counts)+(empty||'<div class="ldb-wrap"><table class="mh-box"><thead><tr><th class="nm">PLAYER</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>TO</th><th>FG</th><th>3PT</th><th>FT</th><th>+/-</th><th>GMSC</th><th class="ip">INTRADAY</th></tr></thead><tbody>'+body+'</tbody></table></div>')+
     (MH.all && dnp.length?'<p class="mh-note">Did not play: '+dnp.map(x=>cmpEsc(x.name)).join(', ')+'</p>':'');
 }
 function mhShotsHtml(S){
