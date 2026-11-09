@@ -6836,10 +6836,10 @@ function closingBell(){
       else if(L.slate<last) note = `<div class="bl-note">No ${lg==='nba'?'NBA':'college'} games on ${bellDay(last)} involving the board. This is the most recent ${lg==='nba'?'NBA':'college'} slate, ${bellDay(L.slate)}.</div>`;
       const since = L.since ? (L.since===L.slate ? 'VS THE '+bellDay(L.since)+' MORNING PRICE' : 'SINCE THE '+bellDay(L.since)+' MORNING PRICE') : 'NO SNAPSHOT';
       const mv=bellMovers(L);
-      body = tabs+bar+note+bellTiles(L)+
+      body = tabs+bar+note+bellTiles(L)+ /* bellorder: games first */
+        `<div class="card"><h3><span>SCOREBOARD <em>${lg==='nba'?'EVERY NBA FINAL':'EVERY GAME WITH A 2027 PROSPECT'} &middot; ${bellDay(L.slate)} &middot; CLICK A GAME FOR THE BOX SCORE</em></span></h3>${bellGames(L,lg)}</div>`+
         `<div class="card"><h3><span>TOP PERFORMANCES <em>BOARD PLAYERS &middot; RANKED BY GAME SCORE</em></span>${bellPerfSel(L)}</h3>${bellPerf(L)}</div>`+
         (L.np?'':`<div class="card"><h3><span>MOVERS <em>${S.past?'PRICE':'LIVE PRICE'} ${since}</em></span>${mv.sel}</h3>${mv.body}</div>`)+
-        `<div class="card"><h3><span>SCOREBOARD <em>${lg==='nba'?'EVERY NBA FINAL':'EVERY GAME WITH A 2027 PROSPECT'} &middot; ${bellDay(L.slate)} &middot; CLICK A GAME FOR THE BOX SCORE</em></span></h3>${bellGames(L,lg)}</div>`+
         bellFilm(L)+bellTape(L);
     }
     body += `<p class="bl-foot">Live prices re-rank each class on this season so far and price it on the class's own ladder, so the class index barely moves while players trade places; early in the season one game can move a player several rungs. Game Score is John Hollinger's one-number box-score rating for a single game. Possessions in the box score are estimated (FGA &minus; OREB + TO + 0.44 &times; FTA, averaged for the two teams). NBA box scores and finals from NBA.com; 2027 college box scores from ESPN; clips are matched on YouTube automatically each morning. Past nights keep the last ${Math.max(bellNights(R,'nba').length,bellNights(R,'college').length,1)} slates. Built ${cmpEsc(new Date(R.builtAt).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'}))} CT.</p>`;
@@ -7459,7 +7459,7 @@ function openingBell(){
   if(sb && sb.state==='ok') obAfterSB(lg,d);
   const head=`<div class="cmp-title"><button type="button" id="obBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>OPENING BELL PREVIEW</h1>${secShareBtn('opening-bell')}
     <p>The pre-game preview of tonight&rsquo;s slate, the morning mirror of the Closing Bell. Every board player scheduled to play with his DSX projected line next to the sportsbook&rsquo;s player props, the line on every game (spread, total, moneyline and projected team points), ESPN&rsquo;s win probability, the injury report and the latest tape. Lines are pulled live when you open this page. Click any game for the full preview.</p></div>`;
-  const S={tabs:obTabs(), bar:'', note:'', tiles:'', watch:'', board:'', tape:'', sheet:'', foot:''};
+  const S={tabs:obTabs(), bar:'', note:'', tiles:'', board:'', watch:'', tape:'', sheet:'', foot:''}; /* bellorder: games first */
   if(!sb || sb.state==='loading'){ S.bar=obBar(lg,d); S.watch='<div class="card"><div class="bl-load">LOADING THE SLATE&hellip;</div></div>'; }
   else if(sb.state==='err'){ S.bar=obBar(lg,d); S.watch=`<div class="card"><div class="bl-empty" style="padding:22px 14px">The ${lg==='nba'?'NBA':'college'} schedule could not be loaded right now. <button type="button" class="bl-lk" id="obRetry" style="color:var(--amber);text-decoration:underline">Try again</button>.</div></div>`; }
   else {
