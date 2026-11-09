@@ -7791,7 +7791,8 @@ function mhDot(){
 }
 function mhDotPaint(){ const d=document.getElementById('mhBtn'), n=MH.liveN||0; if(!d) return;
   d.classList.toggle('live',n>0); const s=d.querySelector('.mh-dotn'); if(s) s.textContent=n?n+' LIVE':''; }
-setTimeout(function(){ try{ mhLoadHash(); }catch(e){ console.error(e); } },0);
+/* synchronous, like trLoadHash/uniLoadHash: the deep-link boot (later in the file) must find route MH already set or it drops the hash */
+try{ mhLoadHash(); }catch(e){ console.error(e); }
 setTimeout(function(){ try{ mhDot(); setInterval(()=>{ if(!document.hidden && currentRouteKey==='MKT') mhDot(); },180000); }catch(e){} },3500);
 /*MH-JS-END*/
 
