@@ -1079,6 +1079,70 @@ html.bl-lock,html.bl-lock body{overflow:hidden}
   .hero>div[style*="text-align:right"]{margin-left:auto}
 }
 /*DOCK-CSS-END*/
+/*COMPS-CSS-START*/
+.cmpsum{padding:11px 14px;font-size:12px;color:var(--lbl-g);letter-spacing:.03em;border-bottom:1px solid var(--line);line-height:1.6}
+.cmpsum b{color:var(--ink)}
+.cmpsum .uniq{display:inline-block;color:var(--amber);border:1px solid var(--amber-d);padding:1px 7px;font-size:10px;letter-spacing:.14em;margin-right:8px}
+.cmprow{display:grid;grid-template-columns:62px minmax(0,1.2fr) minmax(0,1.5fr) 200px;gap:0 14px;align-items:center;padding:11px 14px;border-bottom:1px solid #171A21}
+.cmprow:last-child{border-bottom:0}
+.cmprow .sim{font-family:var(--cond);font-size:24px;font-weight:700;color:var(--amber);line-height:1}
+.cmprow .sim small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--mute);font-weight:400;margin-top:3px}
+.cmprow .nm{font-family:var(--cond);font-size:17px;font-weight:700;letter-spacing:.03em;line-height:1.2}
+.cmprow .nm button{background:none;border:0;padding:0;font:inherit;color:var(--amber);cursor:pointer;border-bottom:1px dotted var(--amber-d);text-align:left}
+.cmprow .nm button:hover{color:var(--gold)}
+.cmprow .ps{font-size:11px;color:var(--lbl-g);margin-top:3px}
+.cmprow .why{font-size:11.5px;color:#B4B1AA;line-height:1.55}
+.cmprow .why b{color:var(--lbl);font-weight:600;letter-spacing:.06em;font-size:10px}
+.cmprow .out{text-align:right;font-size:12px;line-height:1.6;white-space:nowrap}
+.cmprow .out .rk{color:var(--ink);font-weight:700}
+.cmprow .out .k{font-size:9px;letter-spacing:.12em;color:var(--mute)}
+.cmprow .out .gone{color:var(--down);font-size:10px;letter-spacing:.1em;font-weight:700}
+@media (max-width:760px){
+  .cmprow{grid-template-columns:52px minmax(0,1fr);row-gap:7px}
+  .cmprow .why{grid-column:2}
+  .cmprow .out{grid-column:2;text-align:left}
+}
+/*COMPS-CSS-END*/
+/*TR-CSS-START*/
+.herotools #trackBtn{grid-column:1 / -1}
+@media (min-width:1340px){.hero .herotools #trackBtn{grid-column:1 / span 2;grid-row:4}}
+.tr .tr-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:0 0 14px}
+.tr .tr-tile{border:1px solid var(--line);background:var(--panel);padding:13px 15px}
+.tr .tr-tile .k{font-size:9.5px;letter-spacing:.14em;color:var(--lbl)}
+.tr .tr-tile .v{font-family:var(--cond);font-size:30px;font-weight:700;color:var(--ink);line-height:1.1;margin-top:6px}
+.tr .tr-tile .v small{font-size:15px;color:var(--mute);font-weight:400}
+.tr .tr-tile .s{font-size:11px;color:#B4B1AA;margin-top:5px;line-height:1.5}
+.tr .tr-tile .s b{color:var(--ink)}
+.tr .card>h3 em{font-style:normal}
+.tr-legend{display:flex;flex-wrap:wrap;gap:16px;padding:10px 14px 0;font-size:10.5px;letter-spacing:.1em;color:#B4B1AA}
+.tr-legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:7px;vertical-align:-1px}
+.tr-chart{position:relative;padding:4px 10px 8px}
+.tr-chart svg{display:block;width:100%;height:auto}
+.tr-chart .ax{font-family:var(--mono);font-size:10px;fill:var(--mute)}
+.tr-chart .axx{font-family:var(--mono);font-size:10.5px;fill:#B4B1AA}
+.tr-chart .gl{stroke:#1C1F27;stroke-width:1}
+.tr-chart .bl{stroke:var(--line2);stroke-width:1}
+.tr-chart .hit{fill:transparent;cursor:pointer}
+.tr-chart .hit:hover,.tr-chart .hit.on{fill:rgba(255,255,255,.035)}
+.tr-tip{position:absolute;pointer-events:none;background:var(--panel2);border:1px solid var(--line2);padding:8px 10px;font-size:11px;line-height:1.6;color:var(--ink);white-space:nowrap;z-index:5;display:none}
+.tr-tip b{color:var(--amber)}
+.tr-tip i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+table.ldbt.trt{min-width:720px}
+table.ldbt.trt th{padding:9px 8px}
+table.ldbt.trt.lst{min-width:0}
+table.ldbt.trt.lst td.c-name{min-width:150px}
+table.ldbt.trt.lst th,table.ldbt.trt.lst td{padding-left:6px;padding-right:6px}
+table.ldbt.trt td.n{text-align:right}
+table.ldbt.trt th.n{text-align:right}
+table.ldbt.trt .grp{color:var(--amber);letter-spacing:.14em}
+table.ldbt.trt td.sep,table.ldbt.trt th.sep{border-left:1px solid var(--line2)}
+.tr .pn button{background:none;border:0;padding:0;font:inherit;color:var(--amber);cursor:pointer;border-bottom:1px dotted var(--amber-d);text-align:left}
+.tr .pn button:hover{color:var(--gold)}
+.tr .gone{color:var(--down);font-size:10px;letter-spacing:.1em;font-weight:700}
+.tr .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:0 14px}
+@media (max-width:640px){.tr .grid2{grid-template-columns:minmax(0,1fr)}.tr .tr-tile .v{font-size:26px}}
+/*TR-CSS-END*/
+
 /* ===== WELCOME TOUR: button + floating video window ===== */
 .modebtn.tourbtn{position:relative;background:var(--amber);border-color:var(--amber);color:#14100A;font-weight:700;letter-spacing:.14em}
 .modebtn.tourbtn:hover{background:#EDC45E}
@@ -2566,6 +2630,160 @@ function csPaint(){
   document.querySelectorAll('[data-cs]').forEach(el=>{
     const p=(typeof D!=='undefined'?D:[]).find(x=>x.tkr===el.getAttribute('data-cs')); if(p) el.innerHTML=csInner(p); });
 }
+/*COMPS-JS-START*/
+/* COMPARABLE IPOs (Nov 8 2026). The five drafted players (2013-2025 classes) whose draft-day profile is
+   closest to this one: age, body, position and the final pre-draft season. Consensus rank and draft slot
+   are NOT inputs, so the comps are blind to where the market priced him. College players are matched only
+   against college players, international / G League / OTE only against non-college players; every stat is
+   scaled (z-score) against all 2013-2026 listed players at that level. Distance = weighted RMS of the
+   z-gaps over the stats both players have (needs enough shared weight). Similarity = 100*exp(-d^2/1.5). */
+var COMPS_FIRST=2013, COMPS_LAST=2025, COMPS_N=5;
+var COMPS_W={age:1.5,ht:1.25,wt:0.5,ape:0.75,pos:1.0,pts40:1.0,reb40:1.0,ast40:1.0,stl40:0.9,blk40:0.9,tpm40:1.0,to40:0.4,
+  ft:1.0,fg:0.4,ts:1.0,usg:1.0,per:0.6,astp:0.5,stlp:0.5,blkp:0.5,orb:0.4,drb:0.4,obpm:0.75,dbpm:0.75,tpar:0.75,ftar:0.5};
+var COMPS_LAB={age:'age at the draft',ht:'height',wt:'weight',ape:'wingspan over height',pos:'position',pts40:'scoring per 40',
+  reb40:'rebounding per 40',ast40:'passing per 40',stl40:'steals per 40',blk40:'blocks per 40',tpm40:'threes per 40',to40:'turnovers per 40',
+  ft:'FT%',fg:'FG%',ts:'true shooting',usg:'usage',per:'PER',astp:'assist rate',stlp:'steal rate',blkp:'block rate',
+  orb:'offensive rebounding',drb:'defensive rebounding',obpm:'OBPM',dbpm:'DBPM',tpar:'3PA rate',ftar:'FTA rate'};
+/* gaps worth naming (body + skill signals, not filler like FG% or weight) */
+var COMPS_SAY=['age','ht','ape','pts40','reb40','ast40','stl40','blk40','tpm40','ft','ts','usg','astp','stlp','blkp','obpm','dbpm','tpar','ftar'];
+var COMPS_FAM={blk40:'blk',blkp:'blk',stl40:'stl',stlp:'stl',ast40:'ast',astp:'ast',tpm40:'three',tpar:'three',reb40:'reb'};
+var COMPS_FLAB={blk:'shot blocking',stl:'steals',ast:'passing',three:'three-point volume',reb:'rebounding'};
+var COMPS=null, COMPS_FROM=null;
+function compsPos(s){
+  if(!s) return null;
+  var M={PG:1,SG:2,SF:3,PF:4,C:5,G:1.5,F:3.5,GF:2.5,FC:4.5,W:2.5}, v=String(s).replace(/-/g,'/').split('/').map(function(x){ return M[x.trim()]; }).filter(function(x){ return x!=null; });
+  return v.length ? v.reduce(function(a,b){ return a+b; },0)/v.length : null;
+}
+function compsFeat(p){
+  var a=p.adv||{}, L=p.line||{}, m=p.meas||{}, mp=p.mp, f={};
+  function put(k,v){ if(v!=null && isFinite(+v)) f[k]=+v; }
+  put('age',p.age); put('ht',m.ht); put('wt',m.wt);
+  if(m.ws && m.ht) put('ape',m.ws-m.ht);
+  put('pos',compsPos(p.pos));
+  if(mp && mp>=8) ['pts','reb','ast','stl','blk','tpm','to'].forEach(function(k){ if(L[k]!=null) put(k+'40',L[k]*40/mp); });
+  put('ft',L.ft); put('fg',L.fg);
+  put('ts',a.ts); put('usg',a.usg); put('per',a.per); put('astp',a.astp); put('stlp',a.stl); put('blkp',a.blk);
+  put('orb',a.orb); put('drb',a.drb); put('obpm',a.obpm); put('dbpm',a.dbpm); put('tpar',a.tpar); put('ftar',a.ftar);
+  return f;
+}
+var COMPS_MINGP=8;   /* fewer pre-draft games than this = no fair statistical profile (in or out of the pool) */
+function compsLv(p){ return !p || !p.adv || (p.gp!=null && p.gp<COMPS_MINGP) ? null : (p.adv.ncaa ? 'ncaa' : 'intl'); }
+function compsBuild(){
+  if(COMPS) return COMPS;
+  var all=[], Z={ncaa:{},intl:{}}, by=new Map();
+  for(var y=COMPS_FIRST; y<=2026; y++){
+    var C=CLASSES[String(y)]; if(!C || !C.top) continue;
+    C.top.forEach(function(p){ var lv=compsLv(p); if(!lv) return; var e={y:String(y),p:p,lv:lv,f:compsFeat(p)}; all.push(e); by.set(p,e); });
+  }
+  ['ncaa','intl'].forEach(function(lv){
+    var g=all.filter(function(e){ return e.lv===lv; });
+    Object.keys(COMPS_W).forEach(function(k){
+      var v=g.map(function(e){ return e.f[k]; }).filter(function(x){ return x!=null; });
+      if(v.length<6) return;
+      var mu=v.reduce(function(a,b){ return a+b; },0)/v.length;
+      var sd=Math.sqrt(v.reduce(function(a,b){ return a+(b-mu)*(b-mu); },0)/v.length)||1;
+      Z[lv][k]=[mu,sd];
+    });
+  });
+  COMPS={all:all, Z:Z, by:by, pool:all.filter(function(e){ return +e.y<=COMPS_LAST; })};
+  return COMPS;
+}
+function compsFor(p){
+  var C=compsBuild(), e=C.by.get(p); if(!e) return null;
+  var Z=C.Z[e.lv], out=[];
+  C.pool.forEach(function(q){
+    if(q.lv!==e.lv || q.y===e.y || q.p===p) return;
+    var num=0, den=0, df={};
+    for(var k in COMPS_W){
+      if(e.f[k]==null || q.f[k]==null || !Z[k]) continue;
+      var d=(e.f[k]-q.f[k])/Z[k][1], w=COMPS_W[k]; num+=w*d*d; den+=w; df[k]=d;
+    }
+    if(den<9) return;
+    var dist=Math.sqrt(num/den);
+    out.push({q:q, d:dist, sim:Math.round(100*Math.exp(-dist*dist/1.5)), df:df});
+  });
+  out.sort(function(a,b){ return a.d-b.d; });
+  return {e:e, list:out.slice(0,COMPS_N)};
+}
+function compsWhy(e,c){
+  var Z=compsBuild().Z[e.lv], say=COMPS_SAY.filter(function(k){ return c.df[k]!=null; });
+  /* closest on: where HE stands out (big |z|) and the comp matches him (small gap); one stat per family */
+  var zt=function(k){ return (e.f[k]-Z[k][0])/Z[k][1]; };
+  var score=function(k){ return Math.min(Math.abs(zt(k)),2.5)-1.6*Math.abs(c.df[k]); };
+  var close=[], fams={};
+  say.filter(function(k){ return Math.abs(c.df[k])<0.5; }).sort(function(a,b){ return score(b)-score(a); }).forEach(function(k){
+    var f=COMPS_FAM[k]||k; if(close.length<3 && !fams[f]){ fams[f]=1; close.push(k); } });
+  var gap=say.filter(function(k){ return !fams[COMPS_FAM[k]||k]; }).sort(function(a,b){ return Math.abs(c.df[b])-Math.abs(c.df[a]); })[0];
+  var s='<b>CLOSEST ON</b> '+(close.length?close.map(function(k){ return COMPS_FLAB[COMPS_FAM[k]]||COMPS_LAB[k]; }).join(', '):'overall profile');
+  if(gap && Math.abs(c.df[gap])>=0.75){
+    var hi=c.df[gap]>0;
+    s+='<br><b>BIGGEST GAP</b> '+(COMPS_FLAB[COMPS_FAM[gap]]&&gap!=='tpar'&&gap!=='tpm40'?COMPS_FLAB[COMPS_FAM[gap]]:COMPS_LAB[gap])+' ('+(gap==='age'?(hi?'he was older':'he was younger'):(hi?'his is higher':'his is lower'))+')';
+  }
+  return s;
+}
+function compsOutCell(q){
+  var S=lastS(q.p); if(!S) return '<span class="mut">&mdash;</span>';
+  var gone=/NO LONGER IN THE NBA/i.test(S.badge||''), r=sret(q.p,S);
+  return '<div><span class="k">IPO</span> <span class="rk">#'+q.p.crank+'</span> &rarr; <span class="k">NOW</span> '+
+    (gone?'<span class="gone">OUT OF NBA</span>':'<span class="rk">#'+S.crank+'</span>')+'</div>'+
+    '<div>'+(r==null?((px(q.p)<=0&&spx(q.p,S)>0)?'<span class="up">\u25B2 FROM UNLISTED</span>':'<span class="mut">&mdash;</span>'):'<span class="'+cls(r)+'">'+arw(r)+' '+pct(r)+'</span>')+
+    ' <span class="k">THROUGH '+(S.label||'')+'</span></div>';
+}
+function compsCard(p){
+  var head='<h3>COMPARABLE IPOs <em>CLOSEST DRAFT-DAY PROFILES &middot; '+COMPS_FIRST+'&ndash;'+COMPS_LAST+' CLASSES</em></h3>';
+  if(!p.adv){
+    return '<div class="card" data-comps="'+p.tkr+'">'+head+'<div class="advn"><b>Comparable IPOs are matched on a finished pre-draft season.</b> '+
+      'They open for this class once the '+(CM().season||'current')+' season is in the books.</div></div>';
+  }
+  if(p.gp!=null && p.gp<COMPS_MINGP){
+    return '<div class="card" data-comps="'+p.tkr+'">'+head+'<div class="advn"><b>Only '+p.gp+' pre-draft game'+(p.gp===1?'':'s')+' on record.</b> '+
+      'That is too few to build a fair statistical profile, so he has no comps. The market priced him on scouting, not production.</div></div>';
+  }
+  var R=compsFor(p);
+  if(!R || !R.list.length){
+    return '<div class="card" data-comps="'+p.tkr+'">'+head+'<div class="advn"><b>No full pre-draft season to match on.</b> '+
+      'He came into the draft without a college or pro stat line deep enough to compare, so he has no comps. The market priced him on scouting, not production.</div></div>';
+  }
+  var L=R.list, top=L[0].sim;
+  var up=L.filter(function(c){ var S=lastS(c.q.p); return S && !/NO LONGER IN THE NBA/i.test(S.badge||'') && S.crank<c.q.p.crank; }).length;
+  var gone=L.filter(function(c){ var S=lastS(c.q.p); return S && /NO LONGER IN THE NBA/i.test(S.badge||''); }).length;
+  var t10=L.filter(function(c){ var S=lastS(c.q.p); return S && !/NO LONGER IN THE NBA/i.test(S.badge||'') && S.crank<=10; }).length;
+  var lvl=R.e.lv==='ncaa'?'college':'non-college (international, G League, OTE)';
+  var sum='<div class="cmpsum">'+(top<55?'<span class="uniq">UNIQUE OFFERING</span>No close precedent in '+(COMPS_LAST-COMPS_FIRST+1)+' classes; these are the nearest, and they are loose. ':'')+
+    'Of his '+L.length+' comps, <b>'+t10+'</b> '+(t10===1?'ranks':'rank')+' in his class&rsquo;s top 10 today, <b>'+up+'</b> '+(up===1?'has':'have')+' climbed past his IPO rank'+
+    (gone?', and <b>'+gone+'</b> '+(gone===1?'is':'are')+' out of the NBA':'')+'.</div>';
+  var rows=L.map(function(c){
+    var q=c.q, P=q.p, slot=P.slot!=null?('PICK '+P.slot):'UNDRAFTED';
+    var team=(P.adv&&P.adv.team)?P.adv.team:'';
+    return '<div class="cmprow"><div class="sim">'+c.sim+'<small>MATCH</small></div>'+
+      '<div><div class="nm"><button type="button" data-compsopen="'+q.y+'|'+P.tkr+'">'+P.name+'</button></div>'+
+      '<div class="ps">'+q.y+' &middot; '+slot+' &middot; '+(P.pos||'')+(team?' &middot; '+team:'')+'</div></div>'+
+      '<div class="why">'+compsWhy(R.e,c)+'</div>'+
+      '<div class="out">'+compsOutCell(q)+'</div></div>';
+  }).join('');
+  return '<div class="card" data-comps="'+p.tkr+'">'+head+sum+rows+
+    '<div class="pad"><div class="legend">Matched only on what was known on draft day: <b>age, height, weight, wingspan, position</b> and the '+
+    '<b>final pre-draft season</b> (per-40 production, FT% and FG%, true shooting, usage, PER, and the Sports-Reference rates and BPM split where both players have them). '+
+    '<b>Consensus rank and draft slot are not used</b>, so the comps never see where the market priced him. He is matched against '+lvl+' players only, '+
+    'each stat scaled against every listed 2013&ndash;2026 player at that level. MATCH 100 is an identical profile; under 55 is a loose comp. '+
+    'Outcomes are each comp&rsquo;s class rank and return after his most recent NBA season. Heights mix combine and listed measurements.</div></div></div>';
+}
+function compsOpen(y,tkr,ret){
+  var C=CLASSES[y]; if(!C || !C.top.some(function(p){ return p.tkr===tkr; })) return;
+  COMPS_FROM=ret||null;
+  if(CURCLASS!==y){ CURCLASS=y; reindex(); renderTape(); }
+  route(tkr); window.scrollTo({top:0,behavior:'instant'});
+  var m=document.getElementById('main');
+  if(m && COMPS_FROM && COMPS_FROM.name) m.insertAdjacentHTML('afterbegin','<button type="button" id="compsBack" class="cmp-back">&larr; BACK TO '+COMPS_FROM.name.toUpperCase()+'</button>');
+}
+document.addEventListener('click',function(ev){
+  var t=ev.target; if(!t.closest) return;
+  var o=t.closest('[data-compsopen]');
+  if(o){ var a=o.dataset.compsopen.split('|'), me=byT[currentRouteKey];
+    compsOpen(a[0],a[1], me?{y:CURCLASS,tkr:me.tkr,name:me.name}:null); return; }
+  if(t.closest('#compsBack') && COMPS_FROM){ var f=COMPS_FROM; COMPS_FROM=null; compsOpen(f.y,f.tkr,null); }
+});
+/*COMPS-JS-END*/
 function player(p){
   const L=p.line;
   const cats=['pts','reb','ast','stl','blk','tpm','fg','ft','to'];
@@ -2743,6 +2961,7 @@ ${p.adv.ncaa===false?`<div class="advn"><b>No college stats &mdash; thus no adva
   its offensive and defensive halves; <b>PER</b> is per-minute production rated against a league mean of 15.
   These describe the player the market was pricing at IPO &mdash; not what he has done since.</div></div>`}
 </div>`:''}
+${typeof compsCard==='function'?compsCard(p):''}
 
 
 ${(p.seasons||[]).map((S,si)=>{const L2=S.line||{}, r=sret(p,S);
@@ -3291,7 +3510,7 @@ function market(){
   const rtot=D.reduce((a,p)=>a+rpx(p),0);
   const h=`
   <div class="hero">
-    <div class="hero-l"><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
+    <div class="hero-l"><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="trackBtn" class="cmpcta" title="Track Record: how every class was priced, and how it turned out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 16l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">TRACK RECORD<em>EVERY CLASS &middot; BOARDS VS TEAMS &middot; STEALS &amp; BUSTS</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
       <div class="sub">${D.length} LISTED OFFERINGS &middot; PRICED OFF A ${CM().nbw.split(' ')[0]}-BOARD COMPOSITE &middot; ${SETTLED()?(NSEAS()===1?'ROOKIE SEASON SETTLED':NSEAS()+' SEASONS SETTLED'):'POST-SUMMER-LEAGUE'}</div></div>
     <div class="hero-idx" style="text-align:right">
       <div style="font-family:var(--cond);font-size:30px;font-weight:700">${f2(tot)}</div>
@@ -4240,7 +4459,7 @@ function wireClassSel(k){
   const hero=document.getElementById('classSelHero');
   if(hero){ hero.value=CURCLASS; hero.onchange=function(){ setClass(this.value); }; }
   const pill=document.getElementById('classPill');
-  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK') ? 'none' : '';
+  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK'||k==='TRACK') ? 'none' : '';
   const top=document.getElementById('classSel');
   if(top) top.value=CURCLASS;
 }
@@ -4259,7 +4478,8 @@ function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteK
   if(k!=='BELL' && typeof bellClearHash==='function') bellClearHash();
   if(k!=='OPEN' && typeof obClearHash==='function') obClearHash();
   if(k!=='DESK' && typeof deskClearHash==='function') deskClearHash();
-  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else player(byT[k]);
+  if(k!=='TRACK' && typeof trClearHash==='function') trClearHash();
+  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else if(k==='TRACK') trackRecord(); else player(byT[k]);
   annotateTerms(); wireClassSel(k); if(typeof obBackFix==='function') obBackFix(k); }
 route('MKT');
 
@@ -4270,7 +4490,7 @@ route('MKT');
    have. Escape closes it the same way. */
 let aboutReturnKey='MKT';
 function closeAbout(){
-  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || aboutReturnKey==='DESK' || byT[aboutReturnKey]))
+  const back = (aboutReturnKey!=='ABOUT' && (aboutReturnKey==='MKT' || aboutReturnKey==='CMP' || aboutReturnKey==='UNI' || aboutReturnKey==='FIND' || aboutReturnKey==='BELL' || aboutReturnKey==='OPEN' || aboutReturnKey==='NEW' || aboutReturnKey==='DESK' || aboutReturnKey==='TRACK' || byT[aboutReturnKey]))
     ? aboutReturnKey : 'MKT';
   route(back);
 }
@@ -4891,7 +5111,7 @@ function glInner(tkr,si){
 }
 /*GAMELOG-JS-END*/</script>
 <script>/*COMPARE-JS-START*//*SECSHARE*/
-const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings'};
+const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings','track-record':'Track Record'};
 function secShareBtn(sec){ return '<div class="secshare"><button type="button" class="sharebtn" data-share-sec="'+sec+'" title="Copy a link to this page">SHARE LINK</button></div>'; }
 function secShareHash(sec){
   const h=String(location.hash||'');
@@ -4904,9 +5124,10 @@ function secShareHash(sec){
   if(sec==='opening-bell') return /^#openingbell(\/|$)/.test(h)?h:'#openingbell';
   if(sec==='compare'){ try{ if(CMP_SEL.length) return '#compare='+CMP_SEL.join(','); }catch(_){} return '#compare'; }
   if(sec==='one-universe') return /^#league(=|$)/.test(h)?h:'#league';
+  if(sec==='track-record') return /^#trackrecord(=|$)/.test(h)?h:'#trackrecord';
   return '';
 }
-function secShareUrl(sec){ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
+function secShareUrl(sec){ if(sec==='track-record') return 'https://thedraftstockexchange.com/'+secShareHash(sec); /*TR-SHARE-ROOT*/ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
 document.addEventListener('click',function(ev){
   const b=ev.target.closest && ev.target.closest('[data-share-sec]'); if(!b) return;
   const sec=b.dataset.shareSec, u=secShareUrl(sec);
@@ -5687,7 +5908,246 @@ function uniLoadHash(){
 }
 window.addEventListener('hashchange',uniLoadHash);
 uniLoadHash();
-/*UNI-JS-END*/</script>
+/*UNI-JS-END*/</script><script>/*TR-JS-START*/
+/* ================= TRACK RECORD (Nov 8 2026) ==================================
+   How every settled class (2013-2025) was priced and how it turned out. Two predictors of the class's
+   current order (class rank after the most recent NBA season, the board's close):
+     BOARDS = the consensus IPO rank (crank), TEAMS = the actual draft slot.
+   Players out of the NBA are TIED at the bottom: the board's own order breaks their tie by draft slot,
+   which would hand the teams free agreement. Spearman rank correlation with average ranks for ties.
+   Returns here are season closes (sret), the same marks as the season cards, so an injured or retired
+   player is still graded; live in-season returns stay on each class board. */
+var TR_FIRST=2013, TR_LAST=2025, TR={y:'ALL'}, TR_DATA=null, trReturnKey='MKT';
+var TR_CB='#B38828', TR_CT='#2E9FD6';   /* boards / teams -- validated pair on the panel surface (dark) */
+var TR_TIERS=[[1,5,'1&ndash;5'],[6,10,'6&ndash;10'],[11,20,'11&ndash;20'],[21,30,'21&ndash;30'],[31,99,'31+']];
+function trOut(p){ var S=lastS(p); return !!(S && /NO LONGER IN THE NBA/i.test(S.badge||'')); }
+function trRanks(v){
+  var n=v.length, o=v.map(function(x,i){ return i; }).sort(function(a,b){ return v[a]-v[b]; }), r=new Array(n);
+  for(var i=0;i<n;){ var j=i; while(j+1<n && v[o[j+1]]===v[o[i]]) j++; for(var t=i;t<=j;t++) r[o[t]]=(i+j)/2+1; i=j+1; }
+  return r;
+}
+function trSpear(a,b){
+  var ra=trRanks(a), rb=trRanks(b), n=a.length; if(n<3) return null;
+  var ma=ra.reduce(function(s,x){ return s+x; },0)/n, mb=rb.reduce(function(s,x){ return s+x; },0)/n, num=0, da=0, db=0;
+  for(var i=0;i<n;i++){ var x=ra[i]-ma, y=rb[i]-mb; num+=x*y; da+=x*x; db+=y*y; }
+  return (da && db) ? num/Math.sqrt(da*db) : null;
+}
+function trBuild(){
+  if(TR_DATA) return TR_DATA;
+  var cls={}, all=[];
+  for(var y=TR_FIRST;y<=TR_LAST;y++){
+    var C=CLASSES[String(y)]; if(!C) continue;
+    var rows=[];
+    [['top',C.top||[]],['otc',C.otc||[]]].forEach(function(gL){ gL[1].forEach(function(p){
+      var S=lastS(p); if(!S || p.crank==null || S.crank==null) return;
+      rows.push({y:String(y), p:p, g:gL[0], ipo:p.crank, slot:p.slot, now:S.crank, out:trOut(p), ret:sret(p,S), label:S.label});
+    }); });
+    var n=rows.length; if(!n) continue;
+    rows.forEach(function(r){ r.eff = r.out ? n+1 : r.now; r.gain = r.ipo - r.eff; });
+    var eff=rows.map(function(r){ return r.eff; }), hasSlot=rows.every(function(r){ return r.slot!=null; });
+    var c={y:String(y), n:n, rows:rows, label:rows[0].label,
+      active:rows.filter(function(r){ return !r.out; }).length,
+      rb:trSpear(rows.map(function(r){ return r.ipo; }),eff),
+      rt:hasSlot?trSpear(rows.map(function(r){ return r.slot; }),eff):null,
+      hb:rows.filter(function(r){ return r.ipo<=10 && !r.out && r.now<=10; }).length,
+      ht:rows.filter(function(r){ return r.slot!=null && r.slot<=10 && !r.out && r.now<=10; }).length};
+    cls[c.y]=c; rows.forEach(function(r){ all.push(r); });
+  }
+  TR_DATA={cls:cls, all:all, years:Object.keys(cls).sort()};
+  return TR_DATA;
+}
+function trF2(v){ return v==null ? '&mdash;' : v.toFixed(2); }
+function trPctS(a,b){ return b ? Math.round(a/b*100)+'%' : '&mdash;'; }
+function trName(r){
+  var P=r.p, link = r.g==='top' ? '<button type="button" data-tropen="'+r.y+'|'+P.tkr+'">'+P.name+'</button>' : P.name;
+  var team=(P.adv&&P.adv.team)?P.adv.team:'';
+  return '<div class="pn">'+link+(r.g==='otc'?' <span class="otc">OTC</span>':'')+'</div><div class="ps">'+r.y+' &middot; '+
+    (r.slot!=null?'PICK '+r.slot:'UNDRAFTED')+(team?' &middot; '+team:'')+'</div>';
+}
+function trNowCell(r){ return r.out ? '<span class="gone">OUT OF NBA</span>' : '#'+r.now; }
+function trRet(r){
+  if(r.ret==null){ var S=lastS(r.p); return (px(r.p)<=0 && S && spx(r.p,S)>0) ? '<span class="up">\u25B2 FROM UNLISTED</span>' : '<span class="mut">&mdash;</span>'; }
+  return '<span class="'+cls(r.ret)+'">'+arw(r.ret)+' '+pct(r.ret)+'</span>'; }
+function trDelta(a,b){ /* rank a (then) -> b (now); positive = climbed */
+  var d=a-b; if(!d) return '<span class="mut">0</span>';
+  return '<span class="'+(d>0?'up':'down')+'">'+(d>0?'▲ ':'▼ ')+Math.abs(d)+'</span>';
+}
+function trRowsTable(rows, mode){
+  /* mode 'steal' | 'bust' | 'class' -- the two lists drop VS PICK so they fit side by side */
+  var full=(mode==='class');
+  var head='<tr><th>PLAYER</th><th class="n">IPO</th><th class="n">PICK</th><th class="n">NOW</th><th class="n">VS IPO</th>'+(full?'<th class="n">VS PICK</th>':'')+'<th class="n">RETURN</th></tr>';
+  var body=rows.map(function(r){
+    var vs=r.out?'<span class="mut">&mdash;</span>':trDelta(r.ipo,r.now), vp=(r.out||r.slot==null)?'<span class="mut">&mdash;</span>':trDelta(r.slot,r.now);
+    if(mode==='bust' && r.out){ vs=trDelta(r.ipo,r.eff); }
+    return '<tr'+(r.out?' class="ool"':'')+'><td class="c-name">'+trName(r)+'</td><td class="n">#'+r.ipo+'</td><td class="n">'+(r.slot!=null?r.slot:'&mdash;')+
+      '</td><td class="n c-cur">'+trNowCell(r)+'</td><td class="n">'+vs+'</td>'+(full?'<td class="n">'+vp+'</td>':'')+'<td class="n">'+trRet(r)+'</td></tr>';
+  }).join('');
+  return '<div class="ldb-wrap"><table class="ldbt trt'+(full?'':' lst')+'"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
+}
+function trSteals(rows,n){ return rows.filter(function(r){ return !r.out; }).sort(function(a,b){ return (b.ipo-b.now)-(a.ipo-a.now) || a.now-b.now; }).slice(0,n); }
+function trBusts(rows,n){ return rows.slice().sort(function(a,b){ return (b.eff-b.ipo)-(a.eff-a.ipo) || a.ipo-b.ipo; }).slice(0,n); }
+function trTier(rows,key,lo,hi){
+  var t=rows.filter(function(r){ return r[key]!=null && r[key]>=lo && r[key]<=hi; }), n=t.length;
+  return {n:n, act:t.filter(function(r){ return !r.out; }).length, t10:t.filter(function(r){ return !r.out && r.now<=10; }).length};
+}
+function trChartH(T){
+  /* phones: one row per class, two horizontal bars, so labels stay readable at 390px */
+  var ys=T.years, W=360, L=40, R=10, Tp=22, rh=30, bh=10, iw=W-L-R, H=Tp+rh*ys.length+6;
+  var xv=function(v){ return L+Math.max(0,v||0)*iw; };
+  var g='';
+  [0,0.25,0.5,0.75,1].forEach(function(t){ g+='<line class="'+(t?'gl':'bl')+'" x1="'+xv(t)+'" x2="'+xv(t)+'" y1="'+(Tp-4)+'" y2="'+(H-4)+'"/>'+
+    (t*4%2===0?'<text class="ax" x="'+xv(t)+'" y="'+(Tp-9)+'" text-anchor="middle">'+t.toFixed(2).replace(/0$/,'')+'</text>':''); });
+  ys.forEach(function(y,i){
+    var c=T.cls[y], y0=Tp+rh*i+4;
+    var bar=function(yy,v,col){ if(v==null) return ''; var w=xv(v)-L; if(w<1) return ''; var r=Math.min(4,w,bh/2);
+      return '<path d="M'+L+' '+yy+'H'+(L+w-r)+'Q'+(L+w)+' '+yy+' '+(L+w)+' '+(yy+r)+'V'+(yy+bh-r)+'Q'+(L+w)+' '+(yy+bh)+' '+(L+w-r)+' '+(yy+bh)+'H'+L+'Z" fill="'+col+'"/>'; };
+    g+='<rect class="hit'+(TR.y===y?' on':'')+'" data-try="'+y+'" x="0" y="'+(Tp+rh*i)+'" width="'+W+'" height="'+rh+'"/>';
+    g+=bar(y0,c.rb,TR_CB)+bar(y0+bh+2,c.rt,TR_CT);
+    g+='<text class="axx" x="'+(L-8)+'" y="'+(y0+bh+5)+'" text-anchor="end">'+y+'</text>';
+  });
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Rank agreement with how each class turned out, boards versus teams, by class">'+g+'</svg>';
+}
+function trChart(T){
+  var phone=window.matchMedia && window.matchMedia('(max-width:640px)').matches;
+  var ys=T.years, W=760, H=230, L=34, R=8, Tp=12, B=26, iw=W-L-R, ih=H-Tp-B, gw=iw/ys.length, bw=Math.min(16,gw*0.3);
+  var yv=function(v){ return Tp+ih-(Math.max(0,v||0))*ih; };
+  var g='';
+  [0,0.25,0.5,0.75,1].forEach(function(t){ g+='<line class="'+(t?'gl':'bl')+'" x1="'+L+'" x2="'+(W-R)+'" y1="'+yv(t)+'" y2="'+yv(t)+'"/>'+
+    '<text class="ax" x="'+(L-6)+'" y="'+(yv(t)+3.5)+'" text-anchor="end">'+t.toFixed(2).replace(/0$/,'')+'</text>'; });
+  ys.forEach(function(y,i){
+    var c=T.cls[y], cx=L+gw*i+gw/2, x1=cx-bw-1, x2=cx+1;
+    var bar=function(x,v,col){ if(v==null) return ''; var top=yv(v), hgt=Math.max(0,Tp+ih-top); if(hgt<1) return '';
+      var r=Math.min(4,hgt,bw/2); return '<path d="M'+x+' '+(Tp+ih)+'V'+(top+r)+'Q'+x+' '+top+' '+(x+r)+' '+top+'H'+(x+bw-r)+'Q'+(x+bw)+' '+top+' '+(x+bw)+' '+(top+r)+'V'+(Tp+ih)+'Z" fill="'+col+'"/>'; };
+    g+='<rect class="hit'+(TR.y===y?' on':'')+'" data-try="'+y+'" x="'+(L+gw*i)+'" y="'+Tp+'" width="'+gw+'" height="'+(ih+B)+'"/>';
+    g+=bar(x1,c.rb,TR_CB)+bar(x2,c.rt,TR_CT);
+    g+='<text class="axx" x="'+cx+'" y="'+(H-8)+'" text-anchor="middle">'+(ys.length>9?"'"+y.slice(2):y)+'</text>';
+  });
+  return '<div class="tr-legend"><span><i style="background:'+TR_CB+'"></i>BOARDS &middot; CONSENSUS IPO RANK</span><span><i style="background:'+TR_CT+'"></i>TEAMS &middot; ACTUAL DRAFT SLOT</span></div>'+
+    '<div class="tr-chart" id="trChart">'+(phone?trChartH(T):'<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Rank agreement with how each class turned out, boards versus teams, by class">'+g+'</svg>')+'<div class="tr-tip" id="trTip"></div></div>';
+}
+function trTip(ev){
+  var tip=document.getElementById('trTip'), box=document.getElementById('trChart'); if(!tip || !box) return;
+  var hit=ev.target.closest && ev.target.closest('[data-try]');
+  if(!hit){ tip.style.display='none'; return; }
+  var c=trBuild().cls[hit.dataset.try], b=box.getBoundingClientRect();
+  var win=(c.rb!=null && c.rt!=null) ? (c.rb>c.rt?'Boards closer':c.rt>c.rb?'Teams closer':'Dead even') : '';
+  tip.innerHTML='<b>'+c.y+' CLASS</b> &middot; '+win+'<br><i style="background:'+TR_CB+'"></i>Boards '+trF2(c.rb)+'<br><i style="background:'+TR_CT+'"></i>Teams '+trF2(c.rt)+
+    '<br><span class="mut">'+c.active+' of '+c.n+' still in the NBA &middot; click to open</span>';
+  tip.style.display='block';
+  var x=ev.clientX-b.left+14, y=ev.clientY-b.top-10;
+  if(x+tip.offsetWidth>b.width) x=ev.clientX-b.left-tip.offsetWidth-14;
+  tip.style.left=Math.max(0,x)+'px'; tip.style.top=Math.max(0,y)+'px';
+}
+function trackRecord(){
+  var T=trBuild(), ys=T.years, sel=(TR.y!=='ALL' && T.cls[TR.y]) ? TR.y : 'ALL'; TR.y=sel;
+  var rows = sel==='ALL' ? T.all : T.cls[sel].rows;
+  var C = sel==='ALL' ? null : T.cls[sel];
+  var lastLabel = (T.cls[ys[ys.length-1]]||{}).label || '';
+  var chips='<button type="button" class="ldb-chip" data-trc="ALL" aria-pressed="'+(sel==='ALL')+'">ALL</button>'+
+    ys.map(function(y){ return '<button type="button" class="ldb-chip" data-trc="'+y+'" aria-pressed="'+(sel===y)+'">'+y+'</button>'; }).join('');
+  var tiles='';
+  if(!C){
+    var wb=0, wt=0, sb=0, st=0, nb=0, hb=0, ht=0;
+    ys.forEach(function(y){ var c=T.cls[y]; if(c.rb!=null && c.rt!=null){ if(c.rb>c.rt) wb++; else if(c.rt>c.rb) wt++; sb+=c.rb; st+=c.rt; nb++; } hb+=c.hb; ht+=c.ht; });
+    var act=T.all.filter(function(r){ return !r.out; }).length;
+    tiles='<div class="tr-tile"><div class="k">BOARDS VS TEAMS</div><div class="v">'+wb+'<small> &ndash; </small>'+wt+'</div>'+
+        '<div class="s">Classes where the consensus boards (IPO rank) came closer to how the class turned out than the actual draft order did'+(wb+wt<nb?', '+(nb-wb-wt)+' tied':'')+'.</div></div>'+
+      '<div class="tr-tile"><div class="k">AVERAGE RANK AGREEMENT</div><div class="v">'+(sb/nb).toFixed(3)+'<small> vs </small>'+(st/nb).toFixed(3)+'</div>'+
+        '<div class="s">Boards vs teams, Spearman: <b>1.00</b> means the class finished exactly in that order, <b>0</b> means no relationship.</div></div>'+
+      '<div class="tr-tile"><div class="k">TOP-10 HIT RATE</div><div class="v">'+trPctS(hb,nb*10)+'<small> vs </small>'+trPctS(ht,nb*10)+'</div>'+
+        '<div class="s">Share of IPO top-10s (boards) and top-10 picks (teams) who rank in their class&rsquo;s top 10 today.</div></div>'+
+      '<div class="tr-tile"><div class="k">STILL IN THE NBA</div><div class="v">'+act+'<small> / '+T.all.length+'</small></div>'+
+        '<div class="s">Drafted players from '+ys[0]+'&ndash;'+ys[ys.length-1]+' who played in '+lastLabel+'.</div></div>';
+  } else {
+    var w=(C.rb!=null&&C.rt!=null)?(C.rb>C.rt?'BOARDS':C.rt>C.rb?'TEAMS':'EVEN'):'&mdash;';
+    var s1=trSteals(C.rows,1)[0], b1=trBusts(C.rows,1)[0];
+    tiles='<div class="tr-tile"><div class="k">CLOSER CALL</div><div class="v">'+w+'</div><div class="s">Rank agreement with how the class turned out: boards <b>'+trF2(C.rb)+'</b>, teams <b>'+trF2(C.rt)+'</b>.</div></div>'+
+      '<div class="tr-tile"><div class="k">TOP-10 HITS</div><div class="v">'+C.hb+'<small> vs </small>'+C.ht+'</div><div class="s">IPO top-10s (boards) and top-10 picks (teams) who rank in the class&rsquo;s top 10 today.</div></div>'+
+      '<div class="tr-tile"><div class="k">BEST STEAL</div><div class="v" style="font-size:22px">'+(s1?s1.p.name:'&mdash;')+'</div><div class="s">'+(s1?'IPO #'+s1.ipo+' &rarr; #'+s1.now+' now &middot; pick '+(s1.slot!=null?s1.slot:'&mdash;'):'')+'</div></div>'+
+      '<div class="tr-tile"><div class="k">BIGGEST BUST</div><div class="v" style="font-size:22px">'+(b1?b1.p.name:'&mdash;')+'</div><div class="s">'+(b1?'IPO #'+b1.ipo+' &rarr; '+(b1.out?'out of the NBA':'#'+b1.now+' now')+' &middot; pick '+(b1.slot!=null?b1.slot:'&mdash;'):'')+'</div></div>'+
+      '<div class="tr-tile"><div class="k">STILL IN THE NBA</div><div class="v">'+C.active+'<small> / '+C.n+'</small></div><div class="s">Played in '+C.label+'.</div></div>';
+  }
+  var tierRows=TR_TIERS.map(function(t){
+    var b=trTier(rows,'ipo',t[0],t[1]), m=trTier(rows,'slot',t[0],t[1]);
+    return '<tr><td class="grp">'+t[2]+'</td><td class="n">'+b.n+'</td><td class="n">'+trPctS(b.act,b.n)+'</td><td class="n">'+trPctS(b.t10,b.n)+'</td>'+
+      '<td class="n sep">'+m.n+'</td><td class="n">'+trPctS(m.act,m.n)+'</td><td class="n">'+trPctS(m.t10,m.n)+'</td></tr>';
+  }).join('');
+  var tier='<div class="card"><h3>BY TIER <em>WHERE THEY WERE RANKED VS WHERE THEY WERE PICKED</em></h3><div class="ldb-wrap"><table class="ldbt trt"><thead>'+
+    '<tr><th></th><th class="n" colspan="3" style="color:'+TR_CB+'">RANKED HERE BY THE BOARDS</th><th class="n sep" colspan="3" style="color:'+TR_CT+'">PICKED HERE BY TEAMS</th></tr>'+
+    '<tr><th>TIER</th><th class="n">PLAYERS</th><th class="n">STILL IN NBA</th><th class="n">NOW TOP 10</th><th class="n sep">PLAYERS</th><th class="n">STILL IN NBA</th><th class="n">NOW TOP 10</th></tr>'+
+    '</thead><tbody>'+tierRows+'</tbody></table></div></div>';
+  var n=C?5:12;
+  var lists='<div class="grid2"><div class="card"><h3>BIGGEST STEALS <em>CLIMBED THE MOST VS IPO RANK</em></h3>'+trRowsTable(trSteals(rows,n),'steal')+'</div>'+
+    '<div class="card"><h3>BIGGEST BUSTS <em>FELL THE MOST VS IPO RANK</em></h3>'+trRowsTable(trBusts(rows,n),'bust')+'</div></div>';
+  var full='';
+  if(C){
+    var ord=C.rows.slice().sort(function(a,b){ return (a.out-b.out) || (a.out ? a.ipo-b.ipo : a.now-b.now); });
+    full='<div class="card"><h3>THE WHOLE CLASS <em>'+C.y+' &middot; ORDERED BY CLASS RANK AFTER '+C.label+'</em></h3>'+trRowsTable(ord,'class')+'</div>';
+  }
+  document.getElementById('main').innerHTML=
+  '<div class="cmp ldb tr">'+
+    '<div class="cmp-title"><button type="button" id="trBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>TRACK RECORD</h1>'+secShareBtn('track-record')+
+    '<p>How the market priced every class from '+ys[0]+' through '+ys[ys.length-1]+', and how it turned out. The <b>boards</b> are the consensus big boards '+
+    'behind each IPO price; the <b>teams</b> are the order players were actually drafted. Both are graded against where every drafted player ranks in his class '+
+    'after the '+lastLabel+' season.</p></div>'+
+    '<div class="cmp-bar ldb-bar"><div class="ldb-row"><span class="ldb-lab">CLASS</span><div class="ldb-chips" id="trChips">'+chips+'</div></div></div>'+
+    '<div class="tr-tiles">'+tiles+'</div>'+
+    '<div class="card"><h3>BOARDS VS TEAMS <em>RANK AGREEMENT WITH HOW EACH CLASS TURNED OUT</em></h3>'+trChart(T)+'</div>'+
+    tier+lists+full+
+    '<p class="cmp-legend ldb-legend"><b>How to read this.</b> <em>NOW</em> is a player&rsquo;s rank inside his own draft class after the '+lastLabel+' season, the board&rsquo;s close '+
+    '(production, availability and honors), so for older classes it says who is the better asset today, not who had the better career. '+
+    'Players <b>out of the NBA</b> are treated as tied at the bottom of their class. <em>Rank agreement</em> is a Spearman rank correlation between each predictor '+
+    'and NOW across every drafted player in the class, listed and OTC. <em>VS IPO</em> and <em>VS PICK</em> are places gained or lost. '+
+    '<em>RETURN</em> runs from the frozen IPO price to the close after '+lastLabel+'; live in-season returns are on each class board. '+
+    'Teams carry a built-in edge here: a higher pick gets more minutes and more patience, which feeds back into how he ranks now. '+
+    'The '+(TR_LAST+1)+' class joins once its rookie season is complete. Click a listed player for his page; OTC players have no page.</p>'+
+  '</div>';
+  trHash();
+  var $=function(id){ return document.getElementById(id); };
+  $('trChips').addEventListener('click',function(ev){ var b=ev.target.closest('[data-trc]'); if(!b) return; TR.y=b.dataset.trc; trackRecord(); });
+  var ch=$('trChart');
+  if(ch){
+    ch.addEventListener('mousemove',trTip); ch.addEventListener('mouseleave',function(){ var t=$('trTip'); if(t) t.style.display='none'; });
+    ch.addEventListener('click',function(ev){ var hit=ev.target.closest && ev.target.closest('[data-try]'); if(!hit) return; TR.y=(TR.y===hit.dataset.try)?'ALL':hit.dataset.try; trackRecord(); });
+  }
+}
+function trHash(){
+  try{ var h=TR.y==='ALL' ? '#trackrecord' : '#trackrecord='+TR.y;
+    if(location.hash!==h) history.replaceState(history.state,'',location.pathname+location.search+h); }catch(_){}
+}
+function trClearHash(){
+  try{ if(/^#trackrecord/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){}
+}
+function trOpen(y,tkr){
+  var C=CLASSES[y]; if(!C || !C.top.some(function(p){ return p.tkr===tkr; })) return;
+  if(CURCLASS!==y){ CURCLASS=y; reindex(); renderTape(); }
+  route(tkr); window.scrollTo({top:0,behavior:'instant'});
+  var m=document.getElementById('main');
+  if(m) m.insertAdjacentHTML('afterbegin','<button type="button" id="trToTr" class="cmp-back">&larr; BACK TO THE TRACK RECORD</button>');
+}
+function trBackKey(){ return (trReturnKey==='MKT'||trReturnKey==='CMP'||trReturnKey==='UNI'||trReturnKey==='FIND'||trReturnKey==='BELL'||trReturnKey==='OPEN'||trReturnKey==='NEW'||trReturnKey==='DESK'||byT[trReturnKey])?trReturnKey:'MKT'; }
+document.addEventListener('click',function(ev){
+  var t=ev.target; if(!t.closest) return;
+  if(t.closest('#trackBtn')){
+    if(currentRouteKey==='TRACK'){ route(trBackKey()); return; }
+    trReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('TRACK'); window.scrollTo({top:0,behavior:'instant'}); return;
+  }
+  if(t.closest('#trToTr')){ route('TRACK'); window.scrollTo({top:0,behavior:'instant'}); return; }
+  if(currentRouteKey!=='TRACK') return;
+  if(t.closest('#trBack')){ route(trBackKey()); return; }
+  var o=t.closest('[data-tropen]'); if(o){ var a=o.dataset.tropen.split('|'); trOpen(a[0],a[1]); }
+});
+function trLoadHash(){
+  try{
+    var m=/^#trackrecord(?:=(\d{4}|ALL))?$/i.exec(location.hash); if(!m) return;
+    var T=trBuild(); TR.y=(m[1] && T.cls[m[1]]) ? m[1] : 'ALL';
+    if(currentRouteKey!=='TRACK'){ trReturnKey=(currentRouteKey==='ABOUT')?'MKT':currentRouteKey; route('TRACK'); } else trackRecord();
+  }catch(e){ console.error(e); }
+}
+window.addEventListener('hashchange',trLoadHash);
+trLoadHash();
+/*TR-JS-END*/</script>
+
 <script>/*FIND-JS-START*/
 /* ================= PLAYER SEARCH ==============================================
    A quick way to a profile. It reuses the Compare page's player index (cmpBuild), its
@@ -6915,7 +7375,7 @@ function whatsNew(){
   try{ if(location.hash!=='#whatsnew') history.replaceState(history.state,'',location.pathname+location.search+'#whatsnew'); }catch(_){}
 }
 function wnClearHash(){ try{ if(/^#whatsnew/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
-function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||wnReturnKey==='DESK'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
+function wnBackKey(){ return (wnReturnKey==='MKT'||wnReturnKey==='CMP'||wnReturnKey==='UNI'||wnReturnKey==='FIND'||wnReturnKey==='BELL'||wnReturnKey==='OPEN'||wnReturnKey==='DESK'||wnReturnKey==='TRACK'||byT[wnReturnKey])?wnReturnKey:'MKT'; }
 function wnAct(a){
   if(a.indexOf('CLASS:')===0){ const y=a.slice(6); if(CURCLASS!==y){ if(!setClass(y)) return; } else route('MKT'); }
   else if(a==='TOUR'){ route('MKT'); const t=document.getElementById('tourBtn'); if(t) t.click(); }
@@ -7721,7 +8181,7 @@ function deskQuote(picks, bname, cmpPicks){
   document.addEventListener('pointerup',end); document.addEventListener('pointercancel',end);
 })();
 window.addEventListener('beforeunload',function(e){ if(DESK.saveState==='saving'||DESK.saveState==='error'){ e.preventDefault(); e.returnValue=''; } });
-function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
+function deskBackKey(){ return (deskReturnKey==='MKT'||deskReturnKey==='CMP'||deskReturnKey==='UNI'||deskReturnKey==='FIND'||deskReturnKey==='BELL'||deskReturnKey==='OPEN'||deskReturnKey==='NEW'||deskReturnKey==='TRACK'||byT[deskReturnKey])?deskReturnKey:'MKT'; }
 function deskClearHash(){ try{ if(/^#desk/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} }
 function deskLoadHash(){ if(!/^#desk/.test(location.hash)){ deskPopHide(true); return; } if(currentRouteKey!=='DESK'){ deskReturnKey='MKT'; route('DESK'); } else desk(); }
 document.addEventListener('keydown',function(e){
@@ -7754,8 +8214,8 @@ deskLoadHash();
    Every replaceState in the page now passes history.state, so the views that
    write their own hash never wipe the entry's state. */
 var NAV={pop:false, tick:false, boot:true, home:'2026'};
-var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1};
-var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/};
+var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1,TRACK:1};
+var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/,TRACK:/^#trackrecord/};
 function navKey(k){ return (k==='MKT') ? CURCLASS+'/MKT' : (NAV_VIEWS[k] ? k : CURCLASS+'/'+k); }
 function navUrl(k){
   const base=location.pathname+location.search;
