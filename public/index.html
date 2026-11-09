@@ -1279,6 +1279,55 @@ table.mh-box td.ip,table.mh-box th.ip{min-width:150px}
   .mh .mh-upd{flex-basis:100%;margin-left:0}
 }
 /*MH-CSS-END*/
+/*STATSPLUS-CSS-START*/
+.tv-bar{display:flex;gap:2px;height:14px;margin:12px 14px 4px}
+.tv-bar span{display:block;height:100%}
+.tv-bar span:first-child{border-radius:4px 0 0 4px}.tv-bar span:last-child{border-radius:0 4px 4px 0}
+.tv-bar span:only-child{border-radius:4px}
+table.tv-t{width:100%;border-collapse:separate;border-spacing:0;min-width:520px;font-size:12.5px}
+table.tv-t th{font-size:9.5px;letter-spacing:.1em;color:var(--lbl);text-align:right;padding:9px 10px;border-bottom:1px solid var(--line2);font-weight:600;white-space:nowrap}
+table.tv-t td{text-align:right;padding:8px 10px;border-bottom:1px solid #171A21;color:var(--ink);white-space:nowrap}
+table.tv-t th.z,table.tv-t td.z{text-align:left;letter-spacing:.06em;font-size:11px;color:#B4B1AA}
+table.tv-t td.z i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;vertical-align:-1px}
+table.tv-t tr.hi td{background:var(--amber-g)}
+.tv-pc{display:inline-block;margin-left:6px;font-size:9.5px;color:var(--lbl-g);min-width:28px;text-align:left}
+.tv-pc i{font-style:normal;font-size:8px}
+.tv-foot{display:flex;flex-wrap:wrap;gap:8px 22px;padding:10px 14px 0;font-size:11.5px;color:var(--ink)}
+.tv-foot b{font-size:9.5px;letter-spacing:.12em;color:var(--lbl);font-weight:600;margin-right:6px}
+.tv-say{padding:12px 14px 4px;font-family:var(--serif);font-size:14px;color:#C9C3B5;line-height:1.55}
+.nadv-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));border-bottom:1px solid var(--line)}
+.nadv-c{padding:10px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nadv-c .k{font-size:9.5px;letter-spacing:.12em;color:var(--lbl)}
+.nadv-c .v{font-family:var(--cond);font-size:21px;font-weight:700;color:var(--ink);margin-top:3px}
+.nadv-b{height:4px;background:#1B1E26;border-radius:2px;margin-top:6px;overflow:hidden}
+.nadv-b i{display:block;height:100%;background:var(--amber);border-radius:2px}
+.nadv-c .p{font-size:10px;color:var(--lbl-g);margin-top:3px}
+.nadv-c .p span{font-size:8px}
+@media (max-width:640px){.nadv-g{grid-template-columns:repeat(3,minmax(0,1fr))}.nadv-c .v{font-size:18px}}
+/* percentiles vs every draftee */
+.pc-bar{padding:10px 14px 0}
+.pc-bar .ldb-chip{min-width:0;padding:5px 10px;font-size:11px}
+.pc-g{display:grid;grid-template-columns:340px minmax(0,1fr);gap:8px 22px;padding:10px 14px 4px;align-items:start}
+.pc-rad svg{display:block;width:100%;max-width:340px;height:auto}
+.pc-rad .pr-ring{fill:none;stroke:#1E2129;stroke-width:1}
+.pc-rad .pr-mid{fill:none;stroke:#3A3E4A;stroke-width:1;stroke-dasharray:3 3}
+.pc-rad .pr-ax{stroke:#1E2129;stroke-width:1}
+.pc-rad .pr-l{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;fill:#B4B1AA}
+.pc-rad .pr-shape{fill:rgba(224,178,74,.18);stroke:var(--amber);stroke-width:2;stroke-linejoin:round}
+.pc-rad .pr-dot{fill:var(--amber);stroke:var(--panel);stroke-width:2}
+.pc-cap{font-size:10px;color:var(--mute);line-height:1.5;margin-top:4px}
+.pc-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 22px}
+.pc-r{display:grid;grid-template-columns:minmax(0,1fr) 56px 90px 40px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid #171A21;font-size:11.5px}
+.pc-r .l{color:#B4B1AA}.pc-r .l i{font-style:normal;color:var(--mute);font-size:10px}
+.pc-r .v{text-align:right;color:var(--ink)}
+.pc-r .b{position:relative;height:6px;background:#1B1E26;border-radius:3px}
+.pc-r .b i{position:absolute;left:0;top:0;bottom:0;background:var(--amber);border-radius:3px}
+.pc-r .b em{position:absolute;top:-2px;bottom:-2px;width:1px;background:#4A4E5A}
+.pc-r .p{text-align:right;color:var(--gold);font-weight:700}
+.pc-r .p small{font-size:8px;font-weight:400}
+@media (max-width:760px){.pc-g{grid-template-columns:minmax(0,1fr)}.pc-rad svg{margin:0 auto}}
+/*STATSPLUS-CSS-END*/
+
 
 
 /* ===== WELCOME TOUR: button + floating video window ===== */
@@ -2768,6 +2817,163 @@ function csPaint(){
   document.querySelectorAll('[data-cs]').forEach(el=>{
     const p=(typeof D!=='undefined'?D:[]).find(x=>x.tkr===el.getAttribute('data-cs')); if(p) el.innerHTML=csInner(p); });
 }
+/*STATSPLUS-JS-START*/
+/* SHOT PROFILE + VS QUALITY COMPETITION (pre-draft, Bart Torvik) and NBA ADVANCED (current season, NBA.com). Nov 8 2026.
+   p.tv (DATA blobs, from dsx-live/torvik.json via merge_torvik.py):
+     shot = [rimM, rimA, midM, midA, 3PM, 3PA, dunkM, dunkA, FTM, FTA, rimAst%, midAst%, 3PAst%]
+     qoc  = {all, conf, t100, t50}: [G, BPM, ORtg, USG, eFG, TS, AST%, TO%, BLK%, STL%, FTM, FTA, 2PM, 2PA, 3PM, 3PA]
+   "Rim" = Torvik's at-the-rim attempts (dunks included); "mid" = every other two. Percentiles are against every listed
+   college prospect 2013-2026 with a Torvik line. NBA advanced rides in the nightly games file as players[TKR].nadv. */
+var TV_PCT=null, TV_C={rim:'#B38828', mid:'#C2577A', three:'#2E9FD6'};
+function tvShotNums(s){
+  if(!s) return null;
+  const rA=s[1]||0, mA=s[3]||0, tA=s[5]||0, fga=rA+mA+tA; if(!fga) return null;
+  const pc=(m,a)=>a?m/a*100:null;
+  return {fga, rimSh:rA/fga*100, midSh:mA/fga*100, tSh:tA/fga*100, rimP:pc(s[0],rA), midP:pc(s[2],mA), tP:pc(s[4],tA), dk:s[6], dkA:s[7],
+    ftP:pc(s[8],s[9]), ftr:s[9]/fga*100, rimU:rA&&s[10]!=null?100-s[10]:null, midU:mA&&s[11]!=null?100-s[11]:null, tU:tA&&s[12]!=null?100-s[12]:null};
+}
+function tvPctBase(){
+  if(TV_PCT) return TV_PCT;
+  const v={rimSh:[],rimP:[],midP:[],tSh:[],tP:[],ftr:[],rimU:[]};
+  Object.keys(CLASSES).forEach(y=>{ if(+y>2026) return; (CLASSES[y].top||[]).forEach(p=>{ const n=p.tv&&tvShotNums(p.tv.shot); if(!n || n.fga<80) return;
+    Object.keys(v).forEach(k=>{ if(n[k]!=null && isFinite(n[k])) v[k].push(n[k]); }); }); });
+  Object.keys(v).forEach(k=>v[k].sort((a,b)=>a-b));
+  return TV_PCT=v;
+}
+function tvPct(k,x){ const a=tvPctBase()[k]; if(!a || a.length<20 || x==null) return null; let i=0; while(i<a.length && a[i]<x) i++; return Math.round(i/a.length*100); }
+function tvOrd(n){ const t=n%100, u=n%10; return (t>=11&&t<=13)?'th':u===1?'st':u===2?'nd':u===3?'rd':'th'; }
+function tvF(v,d){ return v==null||!isFinite(v)?'&mdash;':v.toFixed(d==null?1:d); }
+function tvPcCell(k,x){ const p=tvPct(k,x); return p==null?'':'<span class="tv-pc" title="Percentile among listed college prospects 2013&ndash;2026">'+p+'<i>'+tvOrd(p)+'</i></span>'; }
+function tvShotCard(p){
+  const T=p.tv, n=T&&tvShotNums(T.shot);
+  if(!n) return '';
+  const s=T.shot, live=CM().predraft;
+  const seg=(w,c,lab)=>w>0?'<span style="width:'+w.toFixed(1)+'%;background:'+c+'" title="'+lab+' '+w.toFixed(1)+'%"></span>':'';
+  const row=(lab,c,m,a,fg,sh,u,kP,kS)=>'<tr><td class="z"><i style="background:'+c+'"></i>'+lab+'</td><td>'+(a?m+'-'+a:'&mdash;')+'</td><td>'+tvF(fg)+(fg!=null&&kP?tvPcCell(kP,fg):'')+'</td><td>'+tvF(sh)+'%'+(kS?tvPcCell(kS,sh):'')+'</td><td>'+(u==null?'&mdash;':tvF(u)+'%')+'</td></tr>';
+  return '<div class="card tv"><h3>SHOT PROFILE <em>'+(live?CM().season+' &middot; ':'PRE-DRAFT &middot; ')+cmpEsc(T.team||'')+' &middot; BART TORVIK</em></h3>'+
+    '<div class="tv-bar" role="img" aria-label="Shot diet: '+n.rimSh.toFixed(0)+'% at the rim, '+n.midSh.toFixed(0)+'% other twos, '+n.tSh.toFixed(0)+'% threes">'+seg(n.rimSh,TV_C.rim,'At the rim')+seg(n.midSh,TV_C.mid,'Other twos')+seg(n.tSh,TV_C.three,'Threes')+'</div>'+
+    '<div class="ldb-wrap"><table class="tv-t"><thead><tr><th class="z">ZONE</th><th>MADE-ATT</th><th>FG%</th><th>SHARE OF SHOTS</th><th>UNASSISTED</th></tr></thead><tbody>'+
+      row('AT THE RIM',TV_C.rim,s[0],s[1],n.rimP,n.rimSh,n.rimU,'rimP','rimSh')+
+      row('OTHER TWOS',TV_C.mid,s[2],s[3],n.midP,n.midSh,n.midU,'midP',null)+
+      row('THREES',TV_C.three,s[4],s[5],n.tP,n.tSh,n.tU,'tP','tSh')+
+    '</tbody></table></div>'+
+    '<div class="tv-foot"><span><b>DUNKS</b> '+(n.dkA?n.dk+'-'+n.dkA:'0')+'</span><span><b>FREE THROWS</b> '+(s[9]?s[8]+'-'+s[9]+' ('+tvF(n.ftP)+'%)':'&mdash;')+'</span><span><b>FT RATE</b> '+tvF(n.ftr)+(tvPcCell('ftr',n.ftr))+'</span></div>'+
+    '<div class="pad"><div class="legend"><b>At the rim</b> includes dunks and layups; <b>other twos</b> are every other two-point shot. <b>Unassisted</b> is the share of his makes from that zone that nobody assisted, a sign he created the shot himself. '+
+    'FT rate is free-throw attempts per 100 field-goal attempts. Small numbers are his percentile among listed college prospects 2013&ndash;2026 (80+ shots). Play-by-play data via <b>Bart Torvik</b> (barttorvik.com).</div></div></div>';
+}
+function tvQocCard(p){
+  const T=p.tv, Q=T&&T.qoc; if(!Q || !Q.all) return '';
+  const rows=[['ALL GAMES','all'],['CONFERENCE','conf'],['VS TOP 100','t100'],['VS TOP 50','t50']].filter(r=>Q[r[1]]);
+  const pc=(m,a)=>a?(m/a*100).toFixed(1):'&mdash;';
+  const body=rows.map(([lab,k])=>{ const q=Q[k]; return '<tr'+(k==='t50'?' class="hi"':'')+'><td class="z">'+lab+'</td><td>'+q[0]+'</td><td>'+(q[1]>0?'+':'')+tvF(q[1])+'</td><td>'+tvF(q[2])+'</td><td>'+tvF(q[3])+'</td><td>'+tvF(q[5])+'</td><td>'+tvF(q[6])+'</td><td>'+tvF(q[7])+'</td><td>'+(q[15]?q[14]+'-'+q[15]+' <span class="mut">'+pc(q[14],q[15])+'</span>':'&mdash;')+'</td></tr>'; }).join('');
+  const a=Q.all, t=Q.t50||Q.t100, tl=Q.t50?'top-50':'top-100';
+  let say='';
+  if(t && t[0]>=3){ const d=(i)=>t[i]-a[i]; const ts=d(5), bp=d(1), us=d(3);
+    say='<div class="tv-say">Against '+tl+' opponents ('+t[0]+' games) his true shooting '+(Math.abs(ts)<1?'held steady':(ts<0?'dropped ':'rose ')+Math.abs(ts).toFixed(1)+' points')+
+      ', his BPM went '+(bp<0?'down ':'up ')+Math.abs(bp).toFixed(1)+' and his usage '+(Math.abs(us)<1?'stayed level':(us<0?'fell ':'rose ')+Math.abs(us).toFixed(1))+'.</div>'; }
+  else if(!Q.t100 && !Q.t50) say='<div class="tv-say">No games against top-100 opposition on record.</div>';
+  return '<div class="card tv"><h3>VS QUALITY COMPETITION <em>'+(CM().predraft?CM().season:'PRE-DRAFT')+' &middot; BART TORVIK</em></h3>'+say+
+    '<div class="ldb-wrap"><table class="tv-t"><thead><tr><th class="z">SPLIT</th><th>G</th><th>BPM</th><th>ORTG</th><th>USG</th><th>TS%</th><th>AST%</th><th>TO%</th><th>3P</th></tr></thead><tbody>'+body+'</tbody></table></div>'+
+    '<div class="pad"><div class="legend">Opponent quality is Bart Torvik&rsquo;s venue-adjusted T-Rank: <b>top 100 / top 50</b> count only games against teams ranked that high after adjusting for where the game was played. '+
+    'BPM is points per 100 possessions above an average player; ORTG is points produced per 100 possessions; USG is the share of team possessions he used. Via <b>Bart Torvik</b> (barttorvik.com).</div></div></div>';
+}
+
+/* ---- PERCENTILES VS EVERY DRAFTEE (Nov 8 2026): his final pre-draft season against every listed player drafted
+   2013-2026 at his position group (guards / wings / bigs) and level (college vs non-college); radar of 8 composites.
+   Uses the Comparable IPOs feature table (compsBuild / compsFeat) so the two cards always agree. */
+var PCT_MODE='pos', PCT_LAB={G:'GUARDS',W:'WINGS',B:'BIGS'};
+var PCT_ROWS=[['age','Age at the draft',1,1],['ht','Height',0,0],['ape','Wingspan over height',2,0],['pts40','Points per 40',1,0],['reb40','Rebounds per 40',1,0],
+  ['ast40','Assists per 40',1,0],['stl40','Steals per 40',1,0],['blk40','Blocks per 40',1,0],['tpm40','Threes per 40',1,0],['to40','Turnovers per 40',1,1],
+  ['ft','Free-throw %',1,0],['ts','True shooting %',1,0],['usg','Usage %',1,0],['astp','Assist rate',1,0],['stlp','Steal rate',1,0],['blkp','Block rate',1,0],
+  ['orb','Off. rebound rate',1,0],['drb','Def. rebound rate',1,0],['obpm','Offensive BPM',1,0],['dbpm','Defensive BPM',1,0]];
+var PCT_AX=[['SCORING',['pts40']],['SHOOTING',['ft','tpm40']],['EFFICIENCY',['ts']],['PLAYMAKING',['ast40','astp']],
+  ['REBOUNDING',['reb40','orb','drb']],['DEFENSE',['stl40','blk40','stlp','blkp','dbpm']],['IMPACT',['obpm','dbpm']],['YOUTH',['age']]];
+function pctGroup(pos){ const v=compsPos(pos); return v==null?null:(v<2.5?'G':v<=3.75?'W':'B'); }
+function pctPool(e,mode){
+  const C=compsBuild(), g=pctGroup(e.p.pos);
+  return C.all.filter(q=>q.lv===e.lv && +q.y<=2026 && (mode==='all' || pctGroup(q.p.pos)===g));
+}
+function pctOf(pool,k,v,inv){
+  const a=pool.map(q=>q.f[k]).filter(x=>x!=null); if(a.length<15 || v==null) return null;
+  let lo=0, eq=0; a.forEach(x=>{ if(x<v) lo++; else if(x===v) eq++; });
+  const p=Math.round((lo+eq/2)/a.length*100); return inv?100-p:p;
+}
+function pctFmt(k,v,d){
+  if(v==null) return '&mdash;';
+  if(k==='ht'){ const r=Math.round(v*4)/4, ft=Math.floor(r/12), i=r-ft*12; return ft+"'"+(i%1?i.toFixed(i*4%2?2:1):i)+'"'; }
+  if(k==='ape') return (v>=0?'+':'')+v.toFixed(2)+'"';
+  if(k==='ts') return (v*100).toFixed(1);
+  if(k==='obpm'||k==='dbpm') return (v>0?'+':'')+v.toFixed(1);
+  return v.toFixed(d==null?1:d);
+}
+function pctRadar(ax){
+  const R=112, cx=150, cy=146, n=ax.length, pt=(i,r)=>{ const a=-Math.PI/2+i*2*Math.PI/n; return [cx+Math.cos(a)*r, cy+Math.sin(a)*r]; };
+  let g='';
+  [25,50,75,100].forEach(l=>{ g+='<polygon class="'+(l===50?'pr-mid':'pr-ring')+'" points="'+ax.map((_,i)=>pt(i,R*l/100).map(x=>x.toFixed(1)).join(',')).join(' ')+'"/>'; });
+  ax.forEach((a,i)=>{ const e=pt(i,R), t=pt(i,R+18); g+='<line class="pr-ax" x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'"/>'+
+    '<text class="pr-l" x="'+t[0].toFixed(1)+'" y="'+(t[1]+3).toFixed(1)+'" text-anchor="'+(Math.abs(t[0]-cx)<8?'middle':t[0]<cx?'end':'start')+'">'+a.lab+'</text>'; });
+  const has=ax.filter(a=>a.v!=null);
+  if(has.length>=3){
+    g+='<polygon class="pr-shape" points="'+ax.map((a,i)=>pt(i,R*(a.v==null?0:a.v)/100).map(x=>x.toFixed(1)).join(',')).join(' ')+'"/>';
+    ax.forEach((a,i)=>{ if(a.v==null) return; const p=pt(i,R*a.v/100); g+='<circle class="pr-dot" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4"><title>'+a.lab+': '+a.v+tvOrd(a.v)+' percentile</title></circle>'; });
+  }
+  return '<svg viewBox="-46 0 392 292" role="img" aria-label="Percentile radar: '+ax.map(a=>a.lab+' '+(a.v==null?'n/a':a.v)).join(', ')+'">'+g+'</svg>';
+}
+function pctCard(p){
+  if(!p.adv || typeof compsBuild!=='function') return '';
+  const C=compsBuild(), e=C.by.get(p); if(!e) return '';
+  const pool=pctPool(e,PCT_MODE), grp=pctGroup(p.pos);
+  const rows=PCT_ROWS.map(([k,lab,d,inv])=>({k,lab,v:e.f[k],pc:pctOf(pool,k,e.f[k],inv),d,inv})).filter(r=>r.v!=null);
+  if(rows.length<6) return '';
+  const pcK={}; rows.forEach(r=>pcK[r.k]=r.pc);
+  /* spokes with no data (e.g. 2013-15 seasons have no Sports-Reference rates) are left off, not drawn at zero */
+  const ax=PCT_AX.map(([lab,ks])=>{ const v=ks.map(k=>pcK[k]).filter(x=>x!=null); return {lab, v:v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null}; }).filter(a=>a.v!=null);
+  const lvl=e.lv==='ncaa'?'COLLEGE':'NON-COLLEGE', who=PCT_MODE==='all'?'ALL '+lvl+' DRAFTEES':lvl+' '+(PCT_LAB[grp]||'DRAFTEES');
+  const bar=r=>'<div class="pc-r"><span class="l">'+r.lab+(r.inv?' <i title="Lower is better, so the bar is flipped">&#8597;</i>':'')+'</span><span class="v">'+pctFmt(r.k,r.v,r.d)+'</span>'+
+    '<span class="b"><i style="width:'+(r.pc==null?0:r.pc)+'%"></i><em style="left:50%"></em></span><span class="p">'+(r.pc==null?'&mdash;':r.pc+'<small>'+tvOrd(r.pc)+'</small>')+'</span></div>';
+  return '<div class="card pct" data-pct="'+p.tkr+'"><h3>PERCENTILES VS EVERY DRAFTEE <em>2013&ndash;2026 &middot; '+who+' &middot; '+pool.length+' PLAYERS</em></h3>'+
+    '<div class="pc-bar"><div class="ldb-chips"><button type="button" class="ldb-chip" data-pctm="pos" aria-pressed="'+(PCT_MODE==='pos')+'">'+(PCT_LAB[grp]||'POSITION')+'</button>'+
+    '<button type="button" class="ldb-chip" data-pctm="all" aria-pressed="'+(PCT_MODE==='all')+'">ALL POSITIONS</button></div></div>'+
+    '<div class="pc-g"><div class="pc-rad">'+pctRadar(ax)+'<div class="pc-cap">Each spoke averages his percentiles in that area. The dashed ring is the 50th percentile.</div></div>'+
+    '<div class="pc-list">'+rows.map(bar).join('')+'</div></div>'+
+    '<div class="pad"><div class="legend">His final pre-draft season against every listed player drafted 2013&ndash;2026 '+(PCT_MODE==='all'?'':'at his position group ('+(PCT_LAB[grp]||'').toLowerCase()+') ')+
+    'and level ('+(e.lv==='ncaa'?'college players only':'international, G League and other non-college players only')+'). 50th is the typical draftee, not the typical college player. '+
+    'Age and turnovers are flipped: younger and fewer turnovers score higher. The rates and BPM come from Sports-Reference, where both exist; the measurements mix combine and listed heights.</div></div></div>';
+}
+document.addEventListener('click',function(ev){
+  const b=ev.target.closest && ev.target.closest('[data-pctm]'); if(!b) return;
+  PCT_MODE=b.dataset.pctm; const card=b.closest('[data-pct]'); const p=card && byT[card.dataset.pct];
+  if(p) card.outerHTML=pctCard(p);
+});
+function tvCards(p){ let o=''; try{ o+=pctCard(p); }catch(e){ console.error(e); } try{ o+=tvShotCard(p)+tvQocCard(p); }catch(e){ console.error(e); } return o; }
+/* ---- NBA ADVANCED (under Current Season) ---- */
+var NADV_L=[['TS%','ts',1],['eFG%','efg',1],['USG%','usg',1],['AST%','ast',1],['AST/TO','ato',2],['REB%','reb',1],['OREB%','oreb',1],['DREB%','dreb',1],['TOV%','tov',1],['ORTG','ortg',1],['DRTG','drtg',1],['NET','net',1],['PIE','pie',1],['PACE','pace',1]];
+function nadvCard(p){
+  if(CM().predraft || typeof glLive!=='function') return '';
+  setTimeout(function(){ nadvFill(p); },0);
+  return '<div class="card nadv" data-nadv="'+p.tkr+'" hidden></div>';
+}
+function nadvFill(p){
+  const y=CURCLASS;
+  glLive(y).then(G=>{
+    const el=document.querySelector('[data-nadv="'+p.tkr+'"]'); if(!el || CURCLASS!==y) return;
+    const e=G && G.players && (G.players[p.tkr] || G.players[LV.key(p)]);
+    if(!e || !e.rows || !e.rows.length){ el.hidden=true; return; }
+    const A=e.nadv;
+    el.hidden=false;
+    if(!A){ el.innerHTML='<h3>NBA ADVANCED <em>'+(G.season||'')+' &middot; NBA.COM</em></h3><div class="advn"><b>NBA advanced stats arrive with the next morning update.</b></div>'; return; }
+    const cell=([lab,k,d])=>{ const v=A[k], pc=A.pc&&A.pc[k];
+      return '<div class="nadv-c"><div class="k">'+lab+'</div><div class="v">'+(v==null?'&mdash;':(k==='net'&&v>0?'+':'')+v.toFixed(d===2?2:1))+'</div>'+
+        (pc!=null&&A.q?'<div class="nadv-b"><i style="width:'+pc+'%"></i></div><div class="p">'+pc+'<span>'+tvOrd(pc)+'</span></div>':'')+'</div>'; };
+    el.innerHTML='<h3>NBA ADVANCED <em>'+(G.season||'')+' &middot; '+A.gp+' GP &middot; '+tvF(A.min)+' MPG &middot; NBA.COM</em></h3>'+
+      '<div class="nadv-g">'+NADV_L.map(cell).join('')+'</div>'+
+      '<div class="pad"><div class="legend">'+(A.q?'Bars are his percentile against the <b>'+A.n+' qualified NBA players</b> this season (enough games and at least 10 minutes a night); for TOV% and DRTG, lower is better, so the bar is flipped. '
+        :'<b>Not enough minutes yet to rank him against the league</b>, so no percentiles. ')+
+      '<b>TS%</b> true shooting &middot; <b>USG%</b> share of team plays he finishes &middot; <b>AST% / REB%</b> share of teammates&rsquo; baskets he assisted / available rebounds he grabbed while on the floor &middot; '+
+      '<b>ORTG / DRTG / NET</b> team points scored / allowed per 100 possessions with him on the floor &middot; <b>PIE</b> NBA.com&rsquo;s Player Impact Estimate. Official NBA.com numbers, updated every morning.</div></div>';
+  }).catch(()=>{});
+}
+/*STATSPLUS-JS-END*/
 /*COMPS-JS-START*/
 /* COMPARABLE IPOs (Nov 8 2026). The five drafted players (2013-2025 classes) whose draft-day profile is
    closest to this one: age, body, position and the final pre-draft season. Consensus rank and draft slot
@@ -2967,6 +3173,7 @@ function player(p){
 
 ${CM().predraft ? `
   <div class="card" data-cs="${p.tkr}">${csInner(p)}</div>
+${typeof nadvCard==='function'?nadvCard(p):''}
   ${typeof glCard==='function'?glCard(p):''}
   ${CM().liveSrc?`<div class="card" data-lvc="${p.tkr}"><h3>CATEGORY YIELD <em>${CM().season} &middot; LIVE PERCENTILE VS CLASS</em></h3>
     <div class="pad"><div class="advn"><b>Live category yield appears once his ${CM().season} games are tracked.</b> Per-game averages and his percentile versus the class, updated every morning.</div></div></div>`:''}
@@ -3017,6 +3224,7 @@ ${CM().predraft ? `
   </div>
 ` : `
   <div class="card" data-cs="${p.tkr}">${csInner(p)}</div>
+${typeof nadvCard==='function'?nadvCard(p):''}
   ${typeof glCard==='function'?glCard(p):''}
   <div class="card" data-lvc="${p.tkr}"><h3>CATEGORY YIELD <em>PERCENTILE VS CLASS</em></h3>
       <div class="cats">${cats.map(c=>`<div class="crow">
@@ -3110,7 +3318,7 @@ ${p.adv.ncaa===false?`<div class="advn"><b>No college stats &mdash; thus no adva
   its offensive and defensive halves; <b>PER</b> is per-minute production rated against a league mean of 15.
   These describe the player the market was pricing at IPO &mdash; not what he has done since.</div></div>`}
 </div>`:''}
-${typeof compsCard==='function'?compsCard(p):''}
+${typeof tvCards==='function'?tvCards(p):''}${typeof compsCard==='function'?compsCard(p):''}
 
 
 ${(p.seasons||[]).map((S,si)=>{const L2=S.line||{}, r=sret(p,S);
@@ -5278,7 +5486,7 @@ function secShareHash(sec){
   if(sec==='market-hours') return /^#markethours(\/|$)/.test(h)?h:'#markethours';
   return '';
 }
-function secShareUrl(sec){ if(sec==='track-record' || sec==='market-hours') return 'https://thedraftstockexchange.com/'+secShareHash(sec); /*TR-SHARE-ROOT*/ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
+function secShareUrl(sec){ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
 document.addEventListener('click',function(ev){
   const b=ev.target.closest && ev.target.closest('[data-share-sec]'); if(!b) return;
   const sec=b.dataset.shareSec, u=secShareUrl(sec);
