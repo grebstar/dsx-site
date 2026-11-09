@@ -1597,6 +1597,74 @@ td.lv .lvtags .lvt{margin-left:0}
   }
 }
 /*HEROFIT-CSS-END*/
+/*CLASSSTRIP-CSS-START*/
+/* classstrip Nov 9: a visible "switch class" row under the board headline.
+   Next draft (2027) gets its own green LIVE chip; the current rookie class and
+   two prior classes are one tap away; everything older sits in MORE CLASSES. */
+.clstrip{display:flex;flex-direction:column;gap:6px;flex:1 1 100%;min-width:0}
+.clstrip .cs-lbl{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.2em;color:var(--lbl)}
+.clstrip .cs-row{display:flex;flex-wrap:wrap;gap:5px;align-items:stretch}
+.cs-chip,.cs-more{position:relative;display:inline-flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  min-height:40px;padding:5px 9px 5px 9px;border:1px solid var(--line2);background:var(--panel);color:var(--ink);
+  font-family:var(--mono);cursor:pointer;text-align:left;border-radius:0;line-height:1.15;transition:border-color .12s,background .12s}
+.cs-chip b{font-family:var(--cond);font-size:15px;font-weight:700;letter-spacing:.05em}
+.cs-chip em{font-style:normal;font-size:8.5px;font-weight:600;letter-spacing:.14em;color:var(--mute);margin-top:2px;white-space:nowrap}
+.cs-chip:hover,.cs-more:hover{border-color:var(--amber-d);background:var(--panel2)}
+.cs-chip:focus-visible,.cs-more select:focus-visible{outline:1px solid var(--amber);outline-offset:2px}
+.cs-chip.on{border-color:var(--amber);background:var(--amber-g);box-shadow:inset 0 -2px 0 var(--amber)}
+.cs-chip.on b{color:var(--gold)}
+.cs-chip.on em{color:var(--lbl-g)}
+/* the next draft: green, with a pulsing dot while its live prices are switched on */
+.cs-chip.cs-next{border-color:rgba(47,174,114,.55);background:rgba(47,174,114,.08)}
+.cs-chip.cs-next em{color:var(--up)}
+.cs-chip.cs-next:hover{border-color:var(--up);background:rgba(47,174,114,.14)}
+.cs-chip.cs-next.on{border-color:var(--up);background:rgba(47,174,114,.16);box-shadow:inset 0 -2px 0 var(--up)}
+.cs-chip.cs-next.on b{color:#7EE2AE}
+.cs-chip .cs-hd{display:inline-flex;align-items:center;gap:6px}
+.cs-dot{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 0 0 rgba(47,174,114,.6);animation:csPulse 1.8s ease-out infinite;flex:0 0 auto}
+@keyframes csPulse{0%{box-shadow:0 0 0 0 rgba(47,174,114,.55)}70%{box-shadow:0 0 0 7px rgba(47,174,114,0)}100%{box-shadow:0 0 0 0 rgba(47,174,114,0)}}
+@media (prefers-reduced-motion:reduce){.cs-dot{animation:none}}
+/* older classes: one native select dressed as a chip */
+.cs-more{flex-direction:row;align-items:center;gap:7px;padding:0 9px}
+.cs-more select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background:transparent;border:0;outline:none;
+  color:var(--ink);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;cursor:pointer;padding:12px 22px 12px 0;margin:0;position:relative;z-index:1;max-width:100%}
+.cs-more select option{background:var(--panel);color:var(--ink);font-weight:600;letter-spacing:.06em}
+.cs-more .cv{position:absolute;right:9px;top:50%;margin-top:-3px;width:9px;height:6px;color:var(--amber);pointer-events:none;z-index:2}
+.cs-more.on{border-color:var(--amber);background:var(--amber-g);box-shadow:inset 0 -2px 0 var(--amber)}
+.cs-more.on select{color:var(--gold)}
+/* desktop board hero (herofit grid): the strip gets its own row under the headline,
+   its width may widen the headline column slightly so all chips sit on one row */
+@media (min-width:1100px){
+  .hero{grid-template-rows:auto auto auto auto}
+  .hero .clstrip{grid-column:1;grid-row:2;align-self:start;margin-top:12px}
+  .hero .herotools{grid-row:1 / span 3}
+  .hero>div.hero-idx{grid-row:3}
+  .hero .sub{grid-row:4}
+  @container hero (min-width:1190px){
+    .hero h1{grid-row:1;align-self:end}
+    .hero .clstrip{grid-row:2}
+    .hero .herotools{grid-row:1 / span 2}
+    .hero>div.hero-idx{grid-row:1}
+    .hero .sub{grid-row:3}
+  }
+}
+/* phones: one swipeable row, no page-level sideways scroll */
+@media (max-width:640px){
+  .clstrip .cs-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-right:-2px;padding-bottom:2px}
+  .clstrip .cs-row::-webkit-scrollbar{display:none}
+  .cs-chip,.cs-more{flex:0 0 auto;min-height:44px;padding-left:7px;padding-right:7px}
+  .cs-chip em{letter-spacing:.08em}
+  .clstrip .cs-row{gap:4px;display:grid;grid-template-columns:auto auto auto auto minmax(64px,1fr);overflow:visible;margin-right:0}
+  .cs-more{min-width:0;padding:0 6px}
+  .cs-more select{width:100%;padding-right:14px;text-overflow:ellipsis;overflow:hidden}
+  .cs-more .cv{right:6px}
+  .cs-more{gap:4px}
+  .cs-chip b{font-size:14px}
+  .cs-more select{letter-spacing:.06em}
+  .hero>.hero-l{min-width:0;max-width:100%}
+  .clstrip{max-width:100%}
+}
+/*CLASSSTRIP-CSS-END*/
 /*RAILTOG-CSS-START*/
 .railtogw{display:none}
 @media (min-width:861px){
@@ -3871,7 +3939,7 @@ function market(){
   const rtot=D.reduce((a,p)=>a+rpx(p),0);
   const h=`
   <div class="hero">
-    <div class="hero-l"><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1><div class="herotools"><button type="button" id="mhBtn" class="cmpcta mhcta" title="Market Hours: live games with board players, ESPN highlights as they post, and intraday prices"><span class="mh-dotn" aria-live="polite"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3.5l2.5-6 4 12 2.5-6H21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">MARKET HOURS<em>LIVE GAMES &middot; HIGHLIGHTS &middot; INTRADAY PRICES</em></span></button><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="trackBtn" class="cmpcta" title="Track Record: how every class was priced, and how it turned out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 16l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">TRACK RECORD<em>EVERY CLASS &middot; BOARDS VS TEAMS &middot; STEALS &amp; BUSTS</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
+    <div class="hero-l"><div class="herorow"><h1><span class="selwrap"><select id="classSelHero" aria-label="Select draft class">${classOpts(CURCLASS)}</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><br><span style="color:var(--amber)">IPO BOARD</span></h1>${typeof classStrip==='function'?classStrip():''}<div class="herotools"><button type="button" id="mhBtn" class="cmpcta mhcta" title="Market Hours: live games with board players, ESPN highlights as they post, and intraday prices"><span class="mh-dotn" aria-live="polite"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3.5l2.5-6 4 12 2.5-6H21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">MARKET HOURS<em>LIVE GAMES &middot; HIGHLIGHTS &middot; INTRADAY PRICES</em></span></button><button type="button" id="bellBtn" class="cmpcta bellcta" title="Last night's recap: every board player who played, the movers, the finals and the film"><span class="bl-dot" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a1.4 1.4 0 0 1 1.4 1.4v.6a5.6 5.6 0 0 1 4.2 5.4v3.6l1.8 2.6H4.6l1.8-2.6v-3.6a5.6 5.6 0 0 1 4.2-5.4v-.6A1.4 1.4 0 0 1 12 3.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.8 19.2a2.3 2.3 0 0 0 4.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">THE CLOSING BELL<em>LAST NIGHT &middot; BOARD PLAYERS &middot; MOVERS &middot; FILM</em></span></button><button type="button" id="openBtn" class="cmpcta bellcta obcta" title="Tonight's preview: the line on every game, projected team points, win probability, injuries and projected lines for every board player in action"><span class="ob-sun" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.5h18M6.5 17.5a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 4.5v3M4.6 8.6l2.1 2.1M19.4 8.6l-2.1 2.1M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="cc-t">OPENING BELL PREVIEW<em>TONIGHT &middot; LINES &middot; PROJECTIONS &middot; INJURIES</em></span></button><button type="button" id="deskBtn" class="cmpcta" title="Analyst Desk: sign in, rank the class your way, and get graded against the market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14.5 6.5l2.5-2.5 2.5 2.5M17 4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">ANALYST DESK<em>FILE YOUR OWN BOARD &middot; BEAT THE MARKET</em></span></button><button type="button" id="trackBtn" class="cmpcta" title="Track Record: how every class was priced, and how it turned out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 16l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">TRACK RECORD<em>EVERY CLASS &middot; BOARDS VS TEAMS &middot; STEALS &amp; BUSTS</em></span></button><button type="button" id="cmpBtn" class="cmpcta" title="Compare prospects from any class side by side"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3.2M20 16H7l3 3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="cc-t">COMPARE PROSPECTS<em>ANY CLASS &middot; SIDE BY SIDE</em></span></button><button type="button" id="uniBtn" class="cmpcta" title="Dump every class into one pool and re-rank everyone on a single score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span class="cc-t">ONE-UNIVERSE RANKINGS<em>ALL CLASSES &middot; ONE LIST &middot; RE-RANKED</em></span></button><button type="button" id="psBtn" class="cmpcta" title="Search every player and jump to the profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.2 15.2L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="cc-t">PLAYER SEARCH<em>ANY PLAYER &middot; ANY CLASS &middot; OPEN PROFILE</em></span></button></div></div>
       <div class="sub">${D.length} LISTED OFFERINGS &middot; PRICED OFF A ${CM().nbw.split(' ')[0]}-BOARD COMPOSITE &middot; ${SETTLED()?(NSEAS()===1?'ROOKIE SEASON SETTLED':NSEAS()+' SEASONS SETTLED'):'POST-SUMMER-LEAGUE'}</div></div>
     <div class="hero-idx" style="text-align:right">
       <div style="font-family:var(--cond);font-size:30px;font-weight:700">${f2(tot)}</div>
@@ -4825,6 +4893,54 @@ function wireClassSel(k){
   if(top) top.value=CURCLASS;
 }
 
+/*CLASSSTRIP-JS-START*/
+/* classstrip Nov 9: the visible class switcher under the board headline.
+   Years come from the topbar #classSel (still the one place the list lives).
+   Chips: every class newer than the home class (the next draft), the home class,
+   and the two before it; the rest go in the OLDER select. Clicks are delegated from
+   document because market() is re-drawn from several places. */
+function classStrip(){
+  try{
+    const ys=[...document.querySelectorAll('#classSel option')].map(o=>o.value);
+    if(!ys.length) return '';
+    const home=(typeof NAV!=='undefined' && NAV.home) ? NAV.home : '2026';
+    const hi=ys.indexOf(home);
+    const chips=ys.filter((y,i)=> hi<0 ? i<4 : i<=hi+2);
+    const more=ys.filter(y=>chips.indexOf(y)<0);
+    const live=y=>{ try{ return typeof lvOn==='function' && lvOn(y); }catch(_){ return false; } };
+    const sub=y=>{
+      if(+y>+home) return 'NEXT DRAFT'+(live(y)?' &middot; LIVE':'');
+      if(y===home) return 'ROOKIES';
+      return 'YEAR '+(+home-(+y)+1);
+    };
+    let h='<div class="clstrip" role="group" aria-label="Switch draft class"><span class="cs-lbl">SWITCH CLASS</span><div class="cs-row">';
+    chips.forEach(y=>{
+      const nx=(+y>+home), on=(y===CURCLASS);
+      h+=`<button type="button" class="cs-chip${nx?' cs-next':''}${on?' on':''}" data-y="${y}" aria-pressed="${on}" title="${nx?'The '+y+' draft class: college and overseas prospects, priced live from this season':'The '+y+' draft class'}"><span class="cs-hd">${nx&&live(y)?'<i class="cs-dot" aria-hidden="true"></i>':''}<b>${y}</b></span><em>${sub(y)}</em></button>`;
+    });
+    if(more.length){
+      const inMore=more.indexOf(CURCLASS)>=0;
+      h+=`<span class="cs-more${inMore?' on':''}"><select id="classSelMore" aria-label="Older draft classes">`+
+        (inMore?'':'<option value="" selected>OLDER</option>')+
+        more.map(y=>`<option value="${y}"${y===CURCLASS?' selected':''}>${y}</option>`).join('')+
+        `</select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+    }
+    return h+'</div></div>';
+  }catch(_){ return ''; }
+}
+document.addEventListener('click',function(e){
+  const b=e.target && e.target.closest ? e.target.closest('.clstrip .cs-chip') : null;
+  if(!b) return;
+  e.preventDefault();
+  const y=b.dataset.y;
+  if(y && y!==CURCLASS) setClass(y);
+});
+document.addEventListener('change',function(e){
+  const s=e.target;
+  if(!s || s.id!=='classSelMore' || !s.value) return;
+  if(s.value!==CURCLASS && !setClass(s.value)) s.value=CURCLASS;
+});
+/*CLASSSTRIP-JS-END*/
 let currentRouteKey='MKT';
 function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteKey=k; rail(k);
   const ab=document.getElementById('aboutBtn'), onAbout=(k==='ABOUT');
