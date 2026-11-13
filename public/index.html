@@ -2001,6 +2001,18 @@ td.lv .lvtags .lvt{margin-left:0}
 @media (max-width:560px){.dk .dk-vsw{width:100%}.dk .dk-vsw button{flex:1;padding:8px 6px}.dk .dk-vsw button em{display:none}
   .dk .dk-qt td.pl,.dk .dk-qt th.pl{min-width:120px;max-width:140px}}
 /*DESK-CSS-END*/
+/*PF-CSS*/
+.pf-sel{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--lbl)}.pf-sel select{background:var(--panel);color:var(--ink);border:1px solid var(--line2);font-family:var(--mono);padding:5px 8px}
+.pf .pf-reset{margin:0 0 0 10px}.pf-note{color:var(--lbl-g);font-size:12px;margin:10px 0}
+.pf-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0 4px}
+.pf-t{background:var(--panel);border:1px solid var(--line);padding:10px 12px}.pf-t i{display:block;font-style:normal;font-size:9.5px;letter-spacing:.14em;color:var(--lbl);margin-bottom:4px}.pf-t b{font-family:var(--mono);font-size:19px;color:var(--ink)}.pf-t b.up{color:var(--up)}.pf-t b.down{color:var(--down)}.pf-t b.mut{color:var(--mute)}
+.pf-h{font-family:var(--cond);letter-spacing:.1em;color:var(--amber);font-size:15px;margin:22px 0 8px}
+.pf-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+.pf-tb{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}.pf-tb th{font-size:9.5px;letter-spacing:.12em;color:var(--lbl);text-align:right;padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}.pf-tb td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.pf-tb th.pl,.pf-tb td.pl{text-align:left}.pf-tb td.pl small{display:block;color:var(--mute);font-size:10px}.pf-tb td.r,.pf-tb th.r{text-align:center;color:var(--mute)}.pf-tb .up{color:var(--up)}.pf-tb .down{color:var(--down)}.pf-tb .mut{color:var(--mute)}.pf-tb td.al{min-width:150px}.pf-empty{text-align:center!important;padding:16px!important}
+.pf-b{width:26px;height:26px;background:transparent;border:1px solid var(--amber-d);color:var(--amber);cursor:pointer;font-family:var(--mono);font-size:14px}.pf-b:hover:not(:disabled){background:var(--amber-g)}.pf-b:disabled{opacity:.3;cursor:default}.pf-d{display:inline-block;min-width:58px;text-align:center;color:var(--ink)}
+.pf-q{width:100%;max-width:360px;margin:0 0 8px;background:var(--panel);color:var(--ink);border:1px solid var(--line2);font-family:var(--mono);font-size:12px;padding:7px 10px}
+/*PF-CSS-END*/
 </style>
 </head>
 <body>
@@ -2009,6 +2021,8 @@ td.lv .lvtags .lvt{margin-left:0}
   <button id="aboutBtn" class="modebtn abt" aria-pressed="false" title="About the board and the analyst">ABOUT</button>
   <button id="tourBtn" class="modebtn tourbtn" aria-pressed="false" title="Watch the welcome tour video - it floats, so you can click around the site while it plays"><span class="tl-full">&#9654; WELCOME TOUR</span><span class="tl-short">&#9654; TOUR</span></button>
   <button id="newBtn" class="modebtn abt wnbtn" aria-pressed="false" title="What's new: the latest upgrades to the site"><span class="wn-full">WHAT&rsquo;S NEW</span><span class="wn-short">NEW</span></button>
+  <button id="pfBtn" class="modebtn abt" type="button" aria-pressed="false" title="Build a portfolio of rookies on a set budget and see how it returns">PORTFOLIO</button>
+  <button id="deskTop" class="modebtn abt signbtn" type="button" title="Analyst Desk: sign in and file your own big board"><span class="sg-full">SIGN IN / CREATE ACCOUNT</span><span class="sg-short">SIGN IN</span></button>
   <div class="sep"></div>
   <div class="live"><span class="dot"></span>OPEN</div>
   <div class="sep"></div>
@@ -2016,7 +2030,6 @@ td.lv .lvtags .lvt{margin-left:0}
   <div class="sep"></div>
   <div class="pill" id="hdrCounts">30 LISTED &middot; 39 OTC</div>
   <div class="spacer"></div>
-  <button id="deskTop" class="modebtn abt signbtn" type="button" title="Analyst Desk: sign in and file your own big board"><span class="sg-full">SIGN IN / CREATE ACCOUNT</span><span class="sg-short">SIGN IN</span></button>
   <div id="clock">--:--:--</div>
 </div>
 <div class="tape"><div class="tape-track" id="tape"></div><button type="button" class="tapetog" id="tapeTog" onclick="event.stopPropagation();tapeTog()" title="Hide the ticker tape" aria-label="Hide the ticker tape" aria-controls="tape" aria-expanded="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M1.5 6h13"/><path class="chev" d="M6.2 10.4 8 8.6l1.8 1.8"/></svg></button></div>
@@ -2416,6 +2429,7 @@ function heroNow(tot,rtot){
 }
 /* called by LV when a new live file (or a definite failure) arrives */
 function liveRetRefresh(){
+  if(currentRouteKey==='PF' && typeof pfRefresh==='function'){ try{ renderTape(); }catch(e){} pfRefresh(); return; }
   try{ renderTape(); }catch(e){ console.error(e); }
   try{ rail(currentRouteKey); }catch(e){ console.error(e); }
   if(currentRouteKey==='MKT'){
@@ -4938,7 +4952,7 @@ function wireClassSel(k){
   const hero=document.getElementById('classSelHero');
   if(hero){ hero.value=CURCLASS; hero.onchange=function(){ setClass(this.value); }; }
   const pill=document.getElementById('classPill');
-  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK'||k==='TRACK'||k==='MH') ? 'none' : '';
+  if(pill) pill.style.display = (k==='MKT'||k==='CMP'||k==='UNI'||k==='FIND'||k==='BELL'||k==='OPEN'||k==='NEW'||k==='DESK'||k==='TRACK'||k==='MH'||k==='PF') ? 'none' : '';
   const top=document.getElementById('classSel');
   if(top) top.value=CURCLASS;
 }
@@ -4998,6 +5012,7 @@ function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteK
   ab.setAttribute('aria-pressed', String(onAbout));
   ab.title = onAbout ? 'Close About and go back to the board'
                      : 'About the board and the analyst';
+  { const pb=document.getElementById('pfBtn'); if(pb){ pb.classList.toggle('on', k==='PF'); pb.setAttribute('aria-pressed', String(k==='PF')); } }
   { const nb=document.getElementById('newBtn'); if(nb){ nb.classList.toggle('on', k==='NEW'); nb.setAttribute('aria-pressed', String(k==='NEW')); } }
   if(k!=='NEW' && typeof wnClearHash==='function') wnClearHash();
   if(k!=='CMP' && typeof cmpClearHash==='function') cmpClearHash();
@@ -5007,7 +5022,8 @@ function route(k){ if(typeof navBefore==='function') navBefore(k); currentRouteK
   if(k!=='DESK' && typeof deskClearHash==='function') deskClearHash();
   if(k!=='TRACK' && typeof trClearHash==='function') trClearHash();
   if(k!=='MH' && typeof mhClearHash==='function') mhClearHash();
-  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else if(k==='TRACK') trackRecord(); else if(k==='MH') marketHours(); else player(byT[k]);
+  if(k!=='PF' && typeof pfClearHash==='function') pfClearHash();
+  if(onAbout) about(); else if(k==='MKT') market(); else if(k==='CMP') compare(); else if(k==='UNI') leagueRankings(); else if(k==='FIND') playerSearch(); else if(k==='BELL') closingBell(); else if(k==='OPEN') openingBell(); else if(k==='NEW') whatsNew(); else if(k==='DESK') desk(); else if(k==='TRACK') trackRecord(); else if(k==='MH') marketHours(); else if(k==='PF') portfolio(); else player(byT[k]);
   annotateTerms(); wireClassSel(k); if(typeof obBackFix==='function') obBackFix(k); if(k==='MKT' && typeof mhDotPaint==='function') mhDotPaint(); }
 route('MKT');
 
@@ -9172,8 +9188,8 @@ deskLoadHash();
    Every replaceState in the page now passes history.state, so the views that
    write their own hash never wipe the entry's state. */
 var NAV={pop:false, tick:false, boot:true, home:'2026'};
-var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1,TRACK:1,MH:1};
-var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/,TRACK:/^#trackrecord/,MH:/^#markethours/};
+var NAV_VIEWS={MKT:1,ABOUT:1,CMP:1,UNI:1,FIND:1,BELL:1,OPEN:1,NEW:1,DESK:1,TRACK:1,MH:1,PF:1};
+var NAV_OWN={CMP:/^#compare/,UNI:/^#league/,BELL:/^#closingbell/,OPEN:/^#openingbell/,NEW:/^#whatsnew/,DESK:/^#desk/,TRACK:/^#trackrecord/,MH:/^#markethours/,PF:/^#portfolio/};
 function navKey(k){ return (k==='MKT') ? CURCLASS+'/MKT' : (NAV_VIEWS[k] ? k : CURCLASS+'/'+k); }
 function navUrl(k){
   const base=location.pathname+location.search;
@@ -9275,6 +9291,95 @@ document.addEventListener('click',function(ev){
 })();
 /*DEEPLINK-JS-END*/</script>
 
+<script>
+/*PF-JS*/
+(function(){
+var BUDGET=10000, CAP=2500, STEP=250, KEY='dsx_pf_v1';
+var PF={year:null,auto:true,q:'',hold:{}}; window.PF=PF;
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function store(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(_){ return {}; } }
+function save(){ try{ var a=store(); a[PF.year]=PF.hold; localStorage.setItem(KEY,JSON.stringify(a)); }catch(_){} }
+function years(){ return Object.keys(CLASSES).filter(function(y){ return CLASSES[y]&&CLASSES[y].top&&CLASSES[y].top.length; }).sort(function(a,b){ return b-a; }); }
+function pickYear(){ var ys=years(); for(var i=0;i<ys.length;i++){ try{ if(LV.classOn(ys[i])) return ys[i]; }catch(_){} } return CLASSES['2026']?'2026':ys[0]; }
+function pool(){ return CLASSES[PF.year].top.filter(function(p){ return p&&p.tkr&&p.price>0; }); }
+function live(p){ var e=null; try{ if(!LV.classOn(PF.year)) return null; e=LV.entry(p.tkr,PF.year); }catch(_){} return (e&&e.gp&&e.price!=null&&!e.intl)?e.price:null; }
+function usd(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+function pc(r){ return r==null?'—':(r>=0?'+':'')+(r*100).toFixed(1)+'%'; }
+function rc(r){ return r==null?'mut':(r>=0?'up':'down'); }
+function calc(){
+  var P={}, pl=pool(); pl.forEach(function(p){ P[p.tkr]=p; });
+  var inv=0, val=0, rows=[];
+  Object.keys(PF.hold).forEach(function(t){
+    var d=PF.hold[t], p=P[t]; if(!p||!(d>0)) return;
+    var l=live(p), r=l==null?null:l/p.price-1, v=d*(1+(r||0));
+    inv+=d; val+=v; rows.push({p:p,d:d,l:l,r:r,v:v});
+  });
+  rows.sort(function(a,b){ return b.v-a.v; });
+  var rs=[]; pl.forEach(function(p){ var l=live(p); if(l!=null) rs.push(l/p.price-1); });
+  var idx=rs.length?rs.reduce(function(a,b){ return a+b; },0)/rs.length:null;
+  return {inv:inv,val:val,rows:rows,idx:idx,nlive:rs.length};
+}
+function render(keep){
+  var y=window.scrollY, c=calc(), cash=BUDGET-c.inv, ret=c.inv>0?c.val/c.inv-1:null;
+  var vs=(ret!=null&&c.idx!=null)?ret-c.idx:null, q=PF.q.toLowerCase();
+  function btns(p,d){
+    return '<button type="button" class="pf-b" data-pf="sub" data-t="'+p.tkr+'" aria-label="Sell $'+STEP+' of '+esc(p.name)+'"'+(d>0?'':' disabled')+'>&minus;</button>'+
+      '<span class="pf-d">'+(d>0?usd(d):'&mdash;')+'</span>'+
+      '<button type="button" class="pf-b" data-pf="add" data-t="'+p.tkr+'" aria-label="Buy $'+STEP+' of '+esc(p.name)+'"'+((d+STEP>CAP||cash<STEP)?' disabled':'')+'>+</button>';
+  }
+  function tile(l,v,k){ return '<div class="pf-t"><i>'+l+'</i><b class="'+(k||'')+'">'+v+'</b></div>'; }
+  var hold=c.rows.length?c.rows.map(function(r){
+    return '<tr><td class="pl"><b>'+r.p.tkr+'</b> '+esc(r.p.name)+'</td><td>'+usd(r.d)+'</td><td>'+(r.l==null?'<span class="mut">NO LIVE PRICE</span>':usd(r.v))+'</td><td class="'+rc(r.r)+'">'+pc(r.r)+'</td><td class="al">'+btns(r.p,r.d)+'</td></tr>';
+  }).join(''):'<tr><td colspan="5" class="mut pf-empty">Nothing yet. Add players from the market below, $'+STEP+' at a time.</td></tr>';
+  var mk=pool().filter(function(p){ return !q||(p.name+' '+p.tkr+' '+(p.school||'')).toLowerCase().indexOf(q)>=0; })
+    .sort(function(a,b){ return (a.crank||999)-(b.crank||999); }).map(function(p){
+      var l=live(p), r=l==null?null:l/p.price-1;
+      return '<tr><td class="r">'+(p.crank||'')+'</td><td class="pl"><b>'+p.tkr+'</b> '+esc(p.name)+'<small>'+esc((p.pos||'')+(p.school?' · '+p.school:''))+'</small></td><td>'+f2(p.price)+'</td><td>'+(l==null?'—':f2(l))+'</td><td class="'+rc(r)+'">'+pc(r)+'</td><td class="al">'+btns(p,PF.hold[p.tkr]||0)+'</td></tr>';
+    }).join('');
+  var opts=years().map(function(yy){ return '<option value="'+yy+'"'+(yy===PF.year?' selected':'')+'>'+yy+' CLASS</option>'; }).join('');
+  document.getElementById('main').innerHTML=
+  '<div class="cmp pf">'+
+    '<div class="cmp-title"><button type="button" id="pfBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>PORTFOLIO BUILDER</h1>'+
+    '<p>You have <b>'+usd(BUDGET)+'</b> to invest. Put up to <b>'+usd(CAP)+'</b> on any one player, in '+usd(STEP)+' steps. You buy at the frozen IPO price, and your portfolio is marked to each player&rsquo;s live price. The benchmark is the class index: every listed player, equal-weighted. Saved on this browser; account-synced portfolios and a leaderboard are next.</p></div>'+
+    '<div class="cmp-bar"><label class="pf-sel">CLASS <select id="pfYear" aria-label="Portfolio class">'+opts+'</select></label> <button type="button" id="pfReset" class="cmp-back pf-reset">RESET PORTFOLIO</button></div>'+
+    (c.nlive?'':'<p class="pf-note">No live prices for the '+PF.year+' class yet, so every return shows flat. Returns appear once the season is underway.</p>')+
+    '<div class="pf-tiles">'+tile('BUDGET',usd(BUDGET))+tile('INVESTED',usd(c.inv))+tile('CASH',usd(cash))+tile('VALUE OF HOLDINGS',usd(c.val))+tile('RETURN',pc(ret),rc(ret))+tile('CLASS INDEX',pc(c.idx),rc(c.idx))+tile('VS INDEX',vs==null?'—':(vs>=0?'+':'')+(vs*100).toFixed(1)+' pts',rc(vs))+'</div>'+
+    '<h3 class="pf-h">YOUR HOLDINGS</h3><div class="pf-wrap"><table class="pf-tb"><thead><tr><th class="pl">PLAYER</th><th>INVESTED</th><th>VALUE NOW</th><th>RETURN</th><th></th></tr></thead><tbody>'+hold+'</tbody></table></div>'+
+    '<h3 class="pf-h">THE MARKET &middot; '+PF.year+' CLASS</h3><input id="pfQ" class="pf-q" type="search" placeholder="Search player, ticker or school" value="'+esc(PF.q)+'" aria-label="Search players">'+
+    '<div class="pf-wrap"><table class="pf-tb"><thead><tr><th class="r">#</th><th class="pl">PLAYER</th><th>IPO</th><th>LIVE</th><th>RETURN</th><th></th></tr></thead><tbody>'+(mk||'<tr><td colspan="6" class="mut pf-empty">No match.</td></tr>')+'</tbody></table></div>'+
+  '</div>';
+  if(keep) window.scrollTo({top:y,behavior:'instant'});
+}
+function setYear(y){ PF.year=y; PF.hold=store()[y]||{}; }
+window.portfolio=function(){
+  if(!PF.year||PF.auto){ setYear(pickYear()); PF.auto=true; }
+  try{ if(location.hash!=='#portfolio') history.replaceState(history.state,'',location.pathname+location.search+'#portfolio'); }catch(_){}
+  render(false);
+};
+window.pfRefresh=function(){ if(currentRouteKey!=='PF') return; if(PF.auto){ var y=pickYear(); if(y!==PF.year) setYear(y); } render(true); };
+window.pfClearHash=function(){ try{ if(/^#portfolio/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} };
+function loadHash(){ if(!/^#portfolio/.test(location.hash)) return; if(currentRouteKey!=='PF') route('PF'); else window.portfolio(); }
+function act(t,dir){
+  var d=PF.hold[t]||0;
+  if(dir>0){ if(d+STEP>CAP||calc().inv+STEP>BUDGET) return; d+=STEP; } else d=Math.max(0,d-STEP);
+  if(d>0) PF.hold[t]=d; else delete PF.hold[t];
+  save(); render(true);
+}
+document.addEventListener('click',function(e){
+  var t=e.target; if(!t.closest) return;
+  if(t.closest('#pfBtn')){ if(currentRouteKey==='PF') route('MKT'); else { route('PF'); window.scrollTo({top:0,behavior:'instant'}); } return; }
+  if(currentRouteKey!=='PF') return;
+  if(t.closest('#pfBack')){ route('MKT'); return; }
+  if(t.closest('#pfReset')){ PF.hold={}; save(); render(true); return; }
+  var b=t.closest('[data-pf]'); if(b&&!b.disabled) act(b.dataset.t,b.dataset.pf==='add'?1:-1);
+});
+document.addEventListener('change',function(e){ if(e.target&&e.target.id==='pfYear'&&currentRouteKey==='PF'){ PF.auto=false; setYear(e.target.value); PF.q=''; render(true); } });
+document.addEventListener('input',function(e){ if(e.target&&e.target.id==='pfQ'&&currentRouteKey==='PF'){ PF.q=e.target.value; render(true); var i=document.getElementById('pfQ'); if(i){ i.focus(); try{ i.setSelectionRange(PF.q.length,PF.q.length); }catch(_){} } } });
+window.addEventListener('hashchange',loadHash);
+try{ loadHash(); }catch(err){ console.error(err); }
+})();
+/*PF-JS-END*/
+</script>
 </body>
 </html>
 
