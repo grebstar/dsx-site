@@ -2013,6 +2013,7 @@ td.lv .lvtags .lvt{margin-left:0}
 .pf-b{width:26px;height:26px;background:transparent;border:1px solid var(--amber-d);color:var(--amber);cursor:pointer;font-family:var(--mono);font-size:14px}.pf-b:hover:not(:disabled){background:var(--amber-g)}.pf-b:disabled{opacity:.3;cursor:default}.pf-d{display:inline-block;min-width:58px;text-align:center;color:var(--ink)}
 .pf-q{width:100%;max-width:360px;margin:0 0 8px;background:var(--panel);color:var(--ink);border:1px solid var(--line2);font-family:var(--mono);font-size:12px;padding:7px 10px}
 .pf-short{display:none}@media (max-width:640px){#pfBtn .pf-full{display:none}#pfBtn .pf-short{display:inline}}
+.pf-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.pf-tabs button{background:transparent;border:1px solid var(--amber-d);color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.12em;padding:8px 14px;cursor:pointer}.pf-tabs button[aria-pressed="true"]{background:var(--amber);color:#14100A;font-weight:700}
 /*PF-CSS-END*/
 </style>
 </head>
@@ -9295,75 +9296,92 @@ document.addEventListener('click',function(ev){
 <script>
 /*PF-JS*/
 (function(){
-var BUDGET=10000, CAP=2500, STEP=250, KEY='dsx_pf_v1';
-var PF={year:null,auto:true,q:'',hold:{}}; window.PF=PF;
+var STEP=250, KEY='dsx_pf_v1', ALLN=150;
+var PF={year:null,auto:true,mode:'class',q:'',hold:{}}; window.PF=PF;
+function isAll(){ return PF.mode==='all'; }
+function budget(){ return isAll()?25000:5000; }
+function cap(){ return isAll()?2500:3000; }
+function sk(){ return isAll()?'ALL':PF.year; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function store(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(_){ return {}; } }
-function save(){ try{ var a=store(); a[PF.year]=PF.hold; localStorage.setItem(KEY,JSON.stringify(a)); }catch(_){} }
+function save(){ try{ var a=store(); a[sk()]=PF.hold; localStorage.setItem(KEY,JSON.stringify(a)); }catch(_){} }
 function years(){ return Object.keys(CLASSES).filter(function(y){ return CLASSES[y]&&CLASSES[y].top&&CLASSES[y].top.length; }).sort(function(a,b){ return b-a; }); }
 function pickYear(){ var ys=years(); for(var i=0;i<ys.length;i++){ try{ if(LV.classOn(ys[i])) return ys[i]; }catch(_){} } return CLASSES['2026']?'2026':ys[0]; }
-function pool(){ return CLASSES[PF.year].top.filter(function(p){ return p&&p.tkr&&p.price>0; }); }
-function live(p){ var e=null; try{ if(!LV.classOn(PF.year)) return null; e=LV.entry(p.tkr,PF.year); }catch(_){} return (e&&e.gp&&e.price!=null&&!e.intl)?e.price:null; }
+function items(){
+  var out=[]; (isAll()?years():[PF.year]).forEach(function(y){
+    CLASSES[y].top.forEach(function(p){ if(p&&p.tkr&&p.price>0) out.push({p:p,y:y,k:isAll()?y+'|'+p.tkr:p.tkr}); });
+  }); return out;
+}
+function live(it){ var e=null; try{ if(!LV.classOn(it.y)) return null; e=LV.entry(it.p.tkr,it.y); }catch(_){} return (e&&e.gp&&e.price!=null&&!e.intl)?e.price:null; }
 function usd(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
 function pc(r){ return r==null?'—':(r>=0?'+':'')+(r*100).toFixed(1)+'%'; }
 function rc(r){ return r==null?'mut':(r>=0?'up':'down'); }
 function calc(){
-  var P={}, pl=pool(); pl.forEach(function(p){ P[p.tkr]=p; });
+  var all=items(), P={}; all.forEach(function(it){ P[it.k]=it; });
   var inv=0, val=0, rows=[];
-  Object.keys(PF.hold).forEach(function(t){
-    var d=PF.hold[t], p=P[t]; if(!p||!(d>0)) return;
-    var l=live(p), r=l==null?null:l/p.price-1, v=d*(1+(r||0));
-    inv+=d; val+=v; rows.push({p:p,d:d,l:l,r:r,v:v});
+  Object.keys(PF.hold).forEach(function(k){
+    var d=PF.hold[k], it=P[k]; if(!it||!(d>0)) return;
+    var l=live(it), r=l==null?null:l/it.p.price-1, v=d*(1+(r||0));
+    inv+=d; val+=v; rows.push({it:it,d:d,l:l,r:r,v:v});
   });
   rows.sort(function(a,b){ return b.v-a.v; });
-  var rs=[]; pl.forEach(function(p){ var l=live(p); if(l!=null) rs.push(l/p.price-1); });
+  var rs=[]; all.forEach(function(it){ var l=live(it); if(l!=null) rs.push(l/it.p.price-1); });
   var idx=rs.length?rs.reduce(function(a,b){ return a+b; },0)/rs.length:null;
-  return {inv:inv,val:val,rows:rows,idx:idx,nlive:rs.length};
+  return {inv:inv,val:val,rows:rows,idx:idx,nlive:rs.length,all:all};
 }
 function render(keep){
-  var y=window.scrollY, c=calc(), cash=BUDGET-c.inv, ret=c.inv>0?c.val/c.inv-1:null;
-  var vs=(ret!=null&&c.idx!=null)?ret-c.idx:null, q=PF.q.toLowerCase();
-  function btns(p,d){
-    return '<button type="button" class="pf-b" data-pf="sub" data-t="'+p.tkr+'" aria-label="Sell $'+STEP+' of '+esc(p.name)+'"'+(d>0?'':' disabled')+'>&minus;</button>'+
+  var y=window.scrollY, c=calc(), B=budget(), CAP=cap(), cash=B-c.inv, ret=c.inv>0?c.val/c.inv-1:null;
+  var vs=(ret!=null&&c.idx!=null)?ret-c.idx:null, q=PF.q.toLowerCase(), ALL=isAll();
+  function btns(it,d){
+    return '<button type="button" class="pf-b" data-pf="sub" data-t="'+esc(it.k)+'" aria-label="Sell $'+STEP+' of '+esc(it.p.name)+'"'+(d>0?'':' disabled')+'>&minus;</button>'+
       '<span class="pf-d">'+(d>0?usd(d):'&mdash;')+'</span>'+
-      '<button type="button" class="pf-b" data-pf="add" data-t="'+p.tkr+'" aria-label="Buy $'+STEP+' of '+esc(p.name)+'"'+((d+STEP>CAP||cash<STEP)?' disabled':'')+'>+</button>';
+      '<button type="button" class="pf-b" data-pf="add" data-t="'+esc(it.k)+'" aria-label="Buy $'+STEP+' of '+esc(it.p.name)+'"'+((d+STEP>CAP||cash<STEP)?' disabled':'')+'>+</button>';
   }
+  function sub(it){ return esc((ALL?it.y+' · ':'')+(it.p.pos||'')+(it.p.school?' · '+it.p.school:'')); }
   function tile(l,v,k){ return '<div class="pf-t"><i>'+l+'</i><b class="'+(k||'')+'">'+v+'</b></div>'; }
   var hold=c.rows.length?c.rows.map(function(r){
-    return '<tr><td class="pl"><b>'+r.p.tkr+'</b> '+esc(r.p.name)+'</td><td>'+usd(r.d)+'</td><td>'+(r.l==null?'<span class="mut">NO LIVE PRICE</span>':usd(r.v))+'</td><td class="'+rc(r.r)+'">'+pc(r.r)+'</td><td class="al">'+btns(r.p,r.d)+'</td></tr>';
+    return '<tr><td class="pl"><b>'+r.it.p.tkr+'</b> '+esc(r.it.p.name)+'<small>'+sub(r.it)+'</small></td><td>'+usd(r.d)+'</td><td>'+(r.l==null?'<span class="mut">NO LIVE PRICE</span>':usd(r.v))+'</td><td class="'+rc(r.r)+'">'+pc(r.r)+'</td><td class="al">'+btns(r.it,r.d)+'</td></tr>';
   }).join(''):'<tr><td colspan="5" class="mut pf-empty">Nothing yet. Add players from the market below, $'+STEP+' at a time.</td></tr>';
-  var mk=pool().filter(function(p){ return !q||(p.name+' '+p.tkr+' '+(p.school||'')).toLowerCase().indexOf(q)>=0; })
-    .sort(function(a,b){ return (a.crank||999)-(b.crank||999); }).map(function(p){
-      var l=live(p), r=l==null?null:l/p.price-1;
-      return '<tr><td class="r">'+(p.crank||'')+'</td><td class="pl"><b>'+p.tkr+'</b> '+esc(p.name)+'<small>'+esc((p.pos||'')+(p.school?' · '+p.school:''))+'</small></td><td>'+f2(p.price)+'</td><td>'+(l==null?'—':f2(l))+'</td><td class="'+rc(r)+'">'+pc(r)+'</td><td class="al">'+btns(p,PF.hold[p.tkr]||0)+'</td></tr>';
-    }).join('');
+  var list=c.all.filter(function(it){ return !q||(it.p.name+' '+it.p.tkr+' '+(it.p.school||'')+' '+it.y).toLowerCase().indexOf(q)>=0; });
+  list.sort(ALL?function(a,b){ return b.p.price-a.p.price; }:function(a,b){ return (a.p.crank||999)-(b.p.crank||999); });
+  var total=list.length, cut=(ALL&&!q&&total>ALLN); if(cut) list=list.slice(0,ALLN);
+  var mk=list.map(function(it,i){
+    var l=live(it), r=l==null?null:l/it.p.price-1;
+    return '<tr><td class="r">'+(ALL?i+1:(it.p.crank||''))+'</td><td class="pl"><b>'+it.p.tkr+'</b> '+esc(it.p.name)+'<small>'+sub(it)+'</small></td><td>'+f2(it.p.price)+'</td><td>'+(l==null?'—':f2(l))+'</td><td class="'+rc(r)+'">'+pc(r)+'</td><td class="al">'+btns(it,PF.hold[it.k]||0)+'</td></tr>';
+  }).join('');
   var opts=years().map(function(yy){ return '<option value="'+yy+'"'+(yy===PF.year?' selected':'')+'>'+yy+' CLASS</option>'; }).join('');
+  var scope=ALL?'every listed player in every class (<b>'+c.all.length+'</b> players)':'the '+PF.year+' class';
   document.getElementById('main').innerHTML=
   '<div class="cmp pf">'+
     '<div class="cmp-title"><button type="button" id="pfBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>PORTFOLIO BUILDER</h1>'+
-    '<p>You have <b>'+usd(BUDGET)+'</b> to invest. Put up to <b>'+usd(CAP)+'</b> on any one player, in '+usd(STEP)+' steps. You buy at the frozen IPO price, and your portfolio is marked to each player&rsquo;s live price. The benchmark is the class index: every listed player, equal-weighted. Saved on this browser; account-synced portfolios and a leaderboard are next.</p></div>'+
-    '<div class="cmp-bar"><label class="pf-sel">CLASS <select id="pfYear" aria-label="Portfolio class">'+opts+'</select></label> <button type="button" id="pfReset" class="cmp-back pf-reset">RESET PORTFOLIO</button></div>'+
+    '<p>You have <b>'+usd(B)+'</b> to invest in '+scope+'. Put up to <b>'+usd(CAP)+'</b> on any one player, in '+usd(STEP)+' steps. You buy at the frozen IPO price, and your portfolio is marked to each player&rsquo;s live price. The benchmark is the '+(ALL?'DSX index: every listed player in every class':'class index: every listed player in the class')+', equal-weighted. Saved on this browser; account-synced portfolios and a leaderboard are next.</p></div>'+
+    '<div class="pf-tabs" role="group" aria-label="Portfolio type"><button type="button" data-pfmode="class" aria-pressed="'+(!ALL)+'">BY CLASS &middot; $5,000</button><button type="button" data-pfmode="all" aria-pressed="'+ALL+'">ALL DSX &middot; $25,000</button></div>'+
+    '<div class="cmp-bar">'+(ALL?'':'<label class="pf-sel">CLASS <select id="pfYear" aria-label="Portfolio class">'+opts+'</select></label> ')+'<button type="button" id="pfReset" class="cmp-back pf-reset">RESET PORTFOLIO</button></div>'+
     (c.nlive?'':'<p class="pf-note">No live prices for the '+PF.year+' class yet, so every return shows flat. Returns appear once the season is underway.</p>')+
-    '<div class="pf-tiles">'+tile('BUDGET',usd(BUDGET))+tile('INVESTED',usd(c.inv))+tile('CASH',usd(cash))+tile('VALUE OF HOLDINGS',usd(c.val))+tile('RETURN',pc(ret),rc(ret))+tile('CLASS INDEX',pc(c.idx),rc(c.idx))+tile('VS INDEX',vs==null?'—':(vs>=0?'+':'')+(vs*100).toFixed(1)+' pts',rc(vs))+'</div>'+
+    '<div class="pf-tiles">'+tile('BUDGET',usd(B))+tile('INVESTED',usd(c.inv))+tile('CASH',usd(cash))+tile('VALUE OF HOLDINGS',usd(c.val))+tile('RETURN',pc(ret),rc(ret))+tile(ALL?'DSX INDEX':'CLASS INDEX',pc(c.idx),rc(c.idx))+tile('VS INDEX',vs==null?'—':(vs>=0?'+':'')+(vs*100).toFixed(1)+' pts',rc(vs))+'</div>'+
     '<h3 class="pf-h">YOUR HOLDINGS</h3><div class="pf-wrap"><table class="pf-tb"><thead><tr><th class="pl">PLAYER</th><th>INVESTED</th><th>VALUE NOW</th><th>RETURN</th><th></th></tr></thead><tbody>'+hold+'</tbody></table></div>'+
-    '<h3 class="pf-h">THE MARKET &middot; '+PF.year+' CLASS</h3><input id="pfQ" class="pf-q" type="search" placeholder="Search player, ticker or school" value="'+esc(PF.q)+'" aria-label="Search players">'+
+    '<h3 class="pf-h">THE MARKET &middot; '+(ALL?'ALL CLASSES':PF.year+' CLASS')+'</h3><input id="pfQ" class="pf-q" type="search" placeholder="Search player, ticker, school'+(ALL?' or class year':'')+'" value="'+esc(PF.q)+'" aria-label="Search players">'+
+    (cut?'<p class="pf-note">Showing the '+ALLN+' highest IPO prices of '+total+'. Search to find any other player.</p>':'')+
     '<div class="pf-wrap"><table class="pf-tb"><thead><tr><th class="r">#</th><th class="pl">PLAYER</th><th>IPO</th><th>LIVE</th><th>RETURN</th><th></th></tr></thead><tbody>'+(mk||'<tr><td colspan="6" class="mut pf-empty">No match.</td></tr>')+'</tbody></table></div>'+
   '</div>';
   if(keep) window.scrollTo({top:y,behavior:'instant'});
 }
-function setYear(y){ PF.year=y; PF.hold=store()[y]||{}; }
+function setYear(y){ PF.year=y; if(!isAll()) PF.hold=store()[y]||{}; }
+function setMode(m){ PF.mode=m; PF.q=''; if(m==='all') PF.hold=store().ALL||{}; else { if(!PF.year) PF.year=pickYear(); PF.hold=store()[PF.year]||{}; } }
 window.portfolio=function(){
-  if(!PF.year||PF.auto){ setYear(pickYear()); PF.auto=true; }
+  if(!PF.year) PF.year=pickYear();
+  if(PF.auto&&!isAll()) setYear(pickYear()); else if(!isAll()&&!PF.hold) PF.hold={};
+  if(isAll()) PF.hold=store().ALL||{}; else PF.hold=store()[PF.year]||{};
   try{ if(location.hash!=='#portfolio') history.replaceState(history.state,'',location.pathname+location.search+'#portfolio'); }catch(_){}
   render(false);
 };
-window.pfRefresh=function(){ if(currentRouteKey!=='PF') return; if(PF.auto){ var y=pickYear(); if(y!==PF.year) setYear(y); } render(true); };
+window.pfRefresh=function(){ if(currentRouteKey!=='PF') return; if(PF.auto&&!isAll()){ var y=pickYear(); if(y!==PF.year) setYear(y); } render(true); };
 window.pfClearHash=function(){ try{ if(/^#portfolio/.test(location.hash)) history.replaceState(history.state,'',location.pathname+location.search); }catch(_){} };
 function loadHash(){ if(!/^#portfolio/.test(location.hash)) return; if(currentRouteKey!=='PF') route('PF'); else window.portfolio(); }
-function act(t,dir){
-  var d=PF.hold[t]||0;
-  if(dir>0){ if(d+STEP>CAP||calc().inv+STEP>BUDGET) return; d+=STEP; } else d=Math.max(0,d-STEP);
-  if(d>0) PF.hold[t]=d; else delete PF.hold[t];
+function act(k,dir){
+  var d=PF.hold[k]||0;
+  if(dir>0){ if(d+STEP>cap()||calc().inv+STEP>budget()) return; d+=STEP; } else d=Math.max(0,d-STEP);
+  if(d>0) PF.hold[k]=d; else delete PF.hold[k];
   save(); render(true);
 }
 document.addEventListener('click',function(e){
@@ -9372,6 +9390,7 @@ document.addEventListener('click',function(e){
   if(currentRouteKey!=='PF') return;
   if(t.closest('#pfBack')){ route('MKT'); return; }
   if(t.closest('#pfReset')){ PF.hold={}; save(); render(true); return; }
+  var m=t.closest('[data-pfmode]'); if(m){ if(m.dataset.pfmode!==PF.mode){ setMode(m.dataset.pfmode); render(true); } return; }
   var b=t.closest('[data-pf]'); if(b&&!b.disabled) act(b.dataset.t,b.dataset.pf==='add'?1:-1);
 });
 document.addEventListener('change',function(e){ if(e.target&&e.target.id==='pfYear'&&currentRouteKey==='PF'){ PF.auto=false; setYear(e.target.value); PF.q=''; render(true); } });
