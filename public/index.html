@@ -164,7 +164,7 @@ tbody tr:last-child td{border-bottom:0}
 .advh div{padding:10px 13px;border-right:1px solid var(--line);background:var(--amber-g)}
 .advh .k{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--lbl-g)}
 .advh .v{font-family:var(--cond);font-size:25px;font-weight:700;color:var(--amber);line-height:1;margin-top:4px}
-.advs{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr))}
+.advs{display:grid;grid-template-columns:repeat(8,minmax(0,1fr))}.advs.c5{grid-template-columns:repeat(5,minmax(0,1fr))}@media (min-width:861px) and (max-width:1299px){.advs{grid-template-columns:repeat(4,minmax(0,1fr))}}@media (min-width:861px) and (max-width:1099px){.advs.c5{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .advs div{padding:8px 11px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .advs .k{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--lbl)}
 .advs .v{font-size:13.5px;margin-top:3px}
@@ -289,7 +289,7 @@ tbody tr:last-child td{border-bottom:0}
   .qpx{margin-left:0}
   .qid .tkr{font-size:34px}.qpx .p{font-size:30px}
   .pic{width:72px;height:72px}
-  .strip,.advh,.advs{grid-template-columns:1fr 1fr}
+  .strip,.advh,.advs,.advs.c5{grid-template-columns:1fr 1fr}
 }
 
 /* ================= ABOUT TAB =================================================
@@ -3431,7 +3431,7 @@ ${p.adv.ncaa===false?`<div class="advn"><b>No college stats &mdash; thus no adva
     <div><div class="k">DBPM</div><div class="v">${aPM(p.adv.dbpm)}</div></div>
     <div><div class="k">PER</div><div class="v">${aN1(p.adv.per)}</div></div>
   </div>
-  <div class="advs">
+  <div class="advs${p.adv.orb==null&&(p.adv.ortg!=null||p.adv.drtg!=null)?' c5':''}">
     <div><div class="k">TRUE SHOOTING</div><div class="v">${aPC(p.adv.ts)}</div></div>
     <div><div class="k">EFFECTIVE FG</div><div class="v">${aPC(p.adv.efg)}</div></div>
     <div><div class="k">3PA RATE</div><div class="v">${aR3(p.adv.tpar)}</div></div>
@@ -3440,8 +3440,8 @@ ${p.adv.ncaa===false?`<div class="advn"><b>No college stats &mdash; thus no adva
     <div><div class="k">AST / TO</div><div class="v">${aN2(p.adv.astto)}</div></div>
     <div><div class="k">OWS / 40</div><div class="v">${aR3(p.adv.ows40)}</div></div>
     <div><div class="k">DWS / 40</div><div class="v">${aR3(p.adv.dws40)}</div></div>
-    ${p.adv.ortg==null?'':`<div><div class="k">ORTG</div><div class="v">${aN1(p.adv.ortg)}</div></div>`}
-    ${p.adv.drtg==null?'':`<div><div class="k">DRTG</div><div class="v">${aN1(p.adv.drtg)}</div></div>`}
+    ${p.adv.orb!=null||p.adv.ortg==null?'':`<div><div class="k">ORTG</div><div class="v">${aN1(p.adv.ortg)}</div></div>`}
+    ${p.adv.orb!=null||p.adv.drtg==null?'':`<div><div class="k">DRTG</div><div class="v">${aN1(p.adv.drtg)}</div></div>`}
   </div>
   ${p.adv.orb==null?'':`<div class="advs">
     <div><div class="k">ORB %</div><div class="v">${aN1(p.adv.orb)}</div></div>
@@ -3450,6 +3450,8 @@ ${p.adv.ncaa===false?`<div class="advn"><b>No college stats &mdash; thus no adva
     <div><div class="k">STL %</div><div class="v">${aN1(p.adv.stl)}</div></div>
     <div><div class="k">BLK %</div><div class="v">${aN1(p.adv.blk)}</div></div>
     <div><div class="k">TOV %</div><div class="v">${aN1(p.adv.tov)}</div></div>
+    ${p.adv.ortg==null?'':`<div><div class="k">ORTG</div><div class="v">${aN1(p.adv.ortg)}</div></div>`}
+    ${p.adv.drtg==null?'':`<div><div class="k">DRTG</div><div class="v">${aN1(p.adv.drtg)}</div></div>`}
   </div>`}
   <div class="pad"><div class="legend">Pre-draft advanced metrics from the same season as the statistical line above,
   via ${p.adv.src==='sr'?'<b>Sports-Reference</b> (BPM, PER, shooting rates, rebound/assist/steal/block/turnover rates, win shares, usage) and <b>Tankathon</b> (effective FG, AST/TO, offensive and defensive ratings)':'<b>Tankathon</b>'}. <b>BPM</b> estimates points contributed per 100 possessions above an average player, split into
