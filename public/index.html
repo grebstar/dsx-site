@@ -842,7 +842,7 @@ table.ldbt td.c-now .ps{font-size:10px}
 .bell .bl-pc .ln{font-size:12.5px;margin-top:8px;color:var(--ink)}
 .bell .bl-pc .ln span{margin-right:10px;white-space:nowrap}
 .bell .bl-pc .ln em{font-style:normal;color:var(--mute);font-size:10px;margin-left:2px}
-.bell .bl-pc .sh{font-size:10.5px;color:var(--mute);margin-top:4px}
+.bell .bl-pc .sh{font-size:10.5px;color:var(--ink);margin-top:4px} /* bellsh Nov 17: shooting splits white (was lavender) */
 .bell .bl-pc .px{display:flex;align-items:baseline;gap:6px;margin-top:9px;padding-top:8px;border-top:1px dashed var(--line2);font-size:10.5px}
 .bell .bl-pc .px .fr{white-space:nowrap}
 .bell .bl-pc .px>span:last-child{white-space:nowrap}
@@ -8243,6 +8243,10 @@ setTimeout(function(){ try{ mhDot(); setInterval(()=>{ if(!document.hidden && cu
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-17',tag:'PROSPECT PAGES',t:'A tidier Advanced Stats card',
+  b:'The Advanced Stats card on prospect pages no longer leaves a row of empty tiles. Offensive and defensive rating now sit in the second row with the rebounding, assist, steal, block and turnover rates, so both rows are full.'},
+ {d:'2026-11-16',tag:'TOOLS',t:'Portfolio Builder now buys at today&rsquo;s live price',
+  b:'In the Portfolio Builder a player now costs what he trades at today, as of last night&rsquo;s games, instead of his IPO price. Your entry price is recorded when you add him, your return runs from that entry, and sells pay out at the current live price. The index you are measured against starts from your first buy. Players without a live price yet are marked NO LIVE PRICE and cannot be bought, and the market table shows PRICE TODAY.'},
  {d:'2026-11-13',tag:'NEW FEATURE',t:'Portfolio Builder: invest a budget in the prospects',
   b:'The new PORTFOLIO button in the top bar opens a game where you build a portfolio of prospects and watch it move. BY CLASS gives you $5,000 for one class, with up to $3,000 on any one player. ALL DSX gives you $25,000 across every listed player in every class, with up to $2,500 on any one player. Add or sell in $250 steps. You buy at a player&rsquo;s frozen IPO price and your holdings are marked to his live price, and the tiles show your value, your return and how you stand against the class or DSX index (every listed player, equal-weighted). Portfolios are saved on this browser for now.'},
  {d:'2026-11-13',tag:'TOOLS',t:'Sign in from the top bar',
