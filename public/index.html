@@ -5659,7 +5659,7 @@ function glInner(tkr,si){
 }
 /*GAMELOG-JS-END*/</script>
 <script>/*COMPARE-JS-START*//*SECSHARE*/
-const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings','track-record':'Track Record','market-hours':'Market Hours'};
+const SEC_SHARE={'opening-bell':'Opening Bell Preview','closing-bell':'The Closing Bell','compare':'Compare Prospects','one-universe':'One-Universe Rankings','track-record':'Track Record','market-hours':'Market Hours','analyst-desk':'Analyst Desk'};
 function secShareBtn(sec){ return '<div class="secshare"><button type="button" class="sharebtn" data-share-sec="'+sec+'" title="Copy a link to this page">SHARE LINK</button></div>'; }
 function secShareHash(sec){
   const h=String(location.hash||'');
@@ -5674,6 +5674,7 @@ function secShareHash(sec){
   if(sec==='one-universe') return /^#league(=|$)/.test(h)?h:'#league';
   if(sec==='track-record') return /^#trackrecord(=|$)/.test(h)?h:'#trackrecord';
   if(sec==='market-hours') return /^#markethours(\/|$)/.test(h)?h:'#markethours';
+  if(sec==='analyst-desk'){ const d=h.replace(/\?.*$/,''); return /^#desk(\/|$)/.test(d)?d:'#desk'; } /*DESKSHARE*/
   return '';
 }
 function secShareUrl(sec){ return 'https://thedraftstockexchange.com/'+sec+secShareHash(sec); }
@@ -8483,7 +8484,7 @@ function desk(){
   if(DESK.me===undefined && !DESK.err){ deskLoadMe(); }
   deskGames(); deskPopHide(true);
   const V=deskView();
-  const head=`<div class="cmp-title"><button type="button" id="deskBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>ANALYST DESK</h1>
+  const head=`<div class="cmp-title"><button type="button" id="deskBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>ANALYST DESK</h1>${secShareBtn('analyst-desk')}
     <p>File your own big board. Rank the ${DESK_YEAR} class your way; it locks when the draft starts, then gets graded against the market every season after.</p></div>`;
   const flash=DESK.flash?`<div class="dk-note bad">${DESK.flash}</div>`:'';
   let body;
