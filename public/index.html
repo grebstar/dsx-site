@@ -751,6 +751,27 @@ table.cmpt tr.seas td{background:var(--panel)}
   table.cmpt th.lab{width:104px;min-width:104px;padding:8px}
   .cmp-list .y{margin-left:0;flex-basis:100%}
 }
+/*CMPLIVE-CSS*/
+table.cmpt tr.sec.lvsec td{color:var(--amber);background:#0F0D08;border-top:1px solid var(--amber-d);border-bottom:1px solid var(--amber-d)}
+table.cmpt tr.sec.lvsec td .ls{color:var(--lbl-g);font-weight:400;letter-spacing:.1em;font-size:10px;margin-left:8px}
+.cmp-mode{display:inline-flex;margin-left:14px;vertical-align:1px}
+.cmp-mode button{background:transparent;border:1px solid var(--line2);color:var(--lbl);font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;padding:3px 9px;cursor:pointer;margin-left:-1px}
+.cmp-mode button:hover{color:var(--amber)}
+.cmp-mode button[aria-pressed="true"]{background:var(--amber-g);border-color:var(--amber-d);color:var(--amber);position:relative}
+table.cmpt tr.lvrow td{background:#0D0F14}
+.cmp-lv{font-size:11px;color:var(--lbl-g);margin-top:7px;letter-spacing:.03em;line-height:1.5}
+.cmp-lv b{color:var(--ink)}
+.cmp-lv .s{color:var(--amber);font-size:9px;letter-spacing:.14em;margin-right:5px}
+.cmp-lv .px{color:var(--gold);font-weight:700}
+.cmp-pc{font-size:9.5px;color:var(--lbl-g);margin-left:6px;font-weight:400}
+.cmp-pc small{font-size:7.5px}
+.cmp-sm{display:block;font-size:10.5px;color:var(--mute);margin-top:2px;letter-spacing:.03em;font-weight:400}
+.cmp-st{font-size:10.5px;letter-spacing:.1em;color:var(--mute)}
+.cmp-spk{display:block;max-width:100%;height:auto}
+.cmp-spk rect{fill:#4A4535}
+.cmp-spk rect.l5{fill:var(--amber)}
+.cmp-spk rect.hi{fill:var(--gold)}
+.cmp-spk line{stroke:#8B8271;stroke-width:1;stroke-dasharray:3 3}
 /*COMPARE-CSS-END*/
 /*LDB-CSS-START*/
 .herorow{row-gap:14px}
@@ -2434,6 +2455,7 @@ function liveRetRefresh(){
   if(currentRouteKey==='PF' && typeof pfRefresh==='function'){ try{ renderTape(); }catch(e){} pfRefresh(); return; }
   try{ renderTape(); }catch(e){ console.error(e); }
   try{ rail(currentRouteKey); }catch(e){ console.error(e); }
+  if(currentRouteKey==='CMP' && typeof cmpRefresh==='function'){ try{ cmpRefresh(); }catch(e){ console.error(e); } return; }/*CMPLIVE*/
   if(currentRouteKey==='MKT'){
     const y=window.scrollY;
     try{ market(); }catch(e){ console.error(e); }
@@ -5825,18 +5847,19 @@ function cmpMoveActive(d){
 
 /* ---------- page ---------- */
 const CMP_EXAMPLES=[
+  ['This year’s top rookies',[['AJ Dybantsa','2026'],['Cameron Boozer','2026'],['Darryn Peterson','2026']]],
   ['Wembanyama vs Flagg',[['Victor Wembanyama','2023'],['Cooper Flagg','2025']]],
-  ['Three No. 1 picks',[['Victor Wembanyama','2023'],['Cooper Flagg','2025'],['Cameron Boozer','2026']]],
-  ['Stokes (2027) vs Boozer (2026)',[['Tyran Stokes','2027'],['Cameron Boozer','2026']]],
-  ['The two Justin Jacksons',[['Justin Jackson','2017'],['Justin Jackson','2018']]]
+  ['Flagg vs Harper (sophomores)',[['Cooper Flagg','2025'],['Dylan Harper','2025']]],
+  ['Stokes (2027) vs Boozer (2026)',[['Tyran Stokes','2027'],['Cameron Boozer','2026']]]
 ];
 function compare(){
   cmpBuild();
   document.getElementById('main').innerHTML=`
   <div class="cmp">
     <div class="cmp-title"><button type="button" id="cmpBack" class="cmp-back">&larr; BACK TO THE BOARD</button><h1>COMPARE PROSPECTS</h1>${secShareBtn('compare')}
-      <p>Pick two to four players from any class, 2013 through 2027, and read them side by side. Each player&rsquo;s own
-      first, second and third NBA seasons line up with each other, so a 2016 rookie year sits next to a 2025 one.</p></div>
+      <p>Pick two to four players from any class, 2013 through 2027, and read their <b>${LV.season()} seasons side by side</b> &mdash;
+      live, updated every morning, per game or per 36 minutes. Below that: the price, the profile, the pre-draft numbers, and each
+      player&rsquo;s own first, second and third NBA seasons lined up with each other.</p></div>
     <div class="cmp-bar">
       <div class="cmp-sbox">
         <input id="cmpIn" class="cmp-in" type="text" role="combobox" aria-expanded="false" aria-controls="cmpList"
@@ -5899,7 +5922,9 @@ function cmpRefresh(){
       CMP_SEL=b.dataset.ids.split(',').filter(id=>CMP_BY[id]); cmpHash(); cmpRefresh(); });
     return;
   }
+  ms.forEach(e=>cmpGames(e.y));/*CMPLIVE*/
   out.innerHTML=cmpTable(ms) + (ms.length<2?'<p class="cmp-hint">Add at least one more player to compare.</p>':'');
+  out.querySelectorAll('[data-cmode]').forEach(b=>b.onclick=()=>{ CMP_MODE=b.dataset.cmode; cmpRefresh(); });
   out.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>cmpDel(b.dataset.x));
   out.querySelectorAll('[data-open]').forEach(a=>a.onclick=ev=>{ ev.preventDefault(); cmpOpen(a.dataset.open); });
 }
@@ -5916,6 +5941,149 @@ async function cmpCopyLink(btn){
   btn.textContent = ok ? 'LINK COPIED' : 'SELECT THE ADDRESS BAR';
   setTimeout(()=>{ btn.textContent='COPY LINK'; },1800);
 }
+
+/*CMPLIVE-START*/
+/* ---------- the live season block (Nov 18 2026) ----------
+   This season, side by side, ahead of everything else. Sources, all already used by the prospectus:
+     GNOW[class]  = the nightly games file (<worker>/games/<class>.json): every game row this season, the
+                    official NBA.com advanced line (.nadv) for NBA players, league + school for college/pro;
+     LV.entry()   = live.json: live price, rank in class, small-sample flag, and the per-game line (the only
+                    source for OTC players, and the stand-in while a class's games file is still loading).
+   Nothing here reads FILM_LAB or requests a film file. Rows are cut before the first '#' divider
+   (preseason / playoffs), exactly like the prospectus CURRENT SEASON card, so the two always agree. */
+let CMP_MODE='pg';                 /* 'pg' per game | 'p36' per 36 minutes */
+const CMP_GF={};
+function cmpGames(y){
+  if((typeof GNOW!=='undefined' && GNOW[y]) || CMP_GF[y] || typeof glLive!=='function') return;
+  CMP_GF[y]=1;
+  glLive(y).then(G=>{ if(G){ GNOW[y]=G; if(currentRouteKey==='CMP') cmpRefresh(); } });
+}
+function cmpSeasonShort(){ const s=LV.season(); return s.length===7 ? "’"+s.slice(2) : s; }
+function cmpLive(e){
+  const y=e.y, p=e.p, M=CLASSMETA[y]||{}, pre=cmpPredraft(y);
+  const o={st:'none', lg:pre?'NCAA':'NBA', team:'', gp:0, pg:null, price:null};
+  if(pre && !M.liveSrc){ o.st='predraft'; return o; }
+  const le=LV.entry(LV.key(p),y);
+  const G=(typeof GNOW!=='undefined')?GNOW[y]:null, ge=(G&&G.players&&p.tkr)?G.players[p.tkr]:null;
+  if(ge){ o.team=ge.sc||ge.tm||''; if(ge.pro){ o.pro=1; o.lg='PRO'; o.lgs=(ge.lg||[]).join(' / '); } if(ge.nadv) o.nadv=ge.nadv; }
+  if(le && le.intl){ o.pro=1; o.lg='PRO'; }
+  if(le && le.gp && !le.intl && lvOn(y)){ o.price=lvpx(p,y); o.rank=le.rank; o.sm=!!le.sm; }
+  let R=[];
+  if(ge && ge.rows && ge.rows.length){ const fd=ge.rows.findIndex(r=>r[0]==='#'); R=(fd>=0?ge.rows.slice(0,fd):ge.rows).filter(r=>r[0]!=='#'); }
+  const sum=A=>{ const t={n:A.length,min:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,reb:0,ast:0,stl:0,blk:0,to:0,pts:0,w:0,l:0};
+    A.forEach(r=>{ t.min+=glMin(r[3]); t.fgm+=r[5]||0; t.fga+=r[6]||0; t.tpm+=r[7]||0; t.tpa+=r[8]||0; t.ftm+=r[9]||0; t.fta+=r[10]||0;
+      t.reb+=r[11]||0; t.ast+=r[12]||0; t.stl+=r[13]||0; t.blk+=r[14]||0; t.to+=r[15]||0; t.pts+=r[17]||0;
+      if(r[2]==='W') t.w++; else if(r[2]==='L') t.l++; });
+    const n=t.n||1, pc=(m,a)=>a?100*m/a:null;
+    return {gp:t.n, w:t.w, l:t.l, mp:t.min/n, pts:t.pts/n, reb:t.reb/n, ast:t.ast/n, stl:t.stl/n, blk:t.blk/n, to:t.to/n,
+      fgm:t.fgm/n, fga:t.fga/n, tpm:t.tpm/n, tpa:t.tpa/n, ftm:t.ftm/n, fta:t.fta/n,
+      fgp:pc(t.fgm,t.fga), tpp:pc(t.tpm,t.tpa), ftp:pc(t.ftm,t.fta),
+      ts:(t.fga+0.44*t.fta)>0 ? 100*t.pts/(2*(t.fga+0.44*t.fta)) : null,
+      efg:t.fga ? 100*(t.fgm+0.5*t.tpm)/t.fga : null, ato:t.to ? t.ast/t.to : null}; };
+  if(R.length){
+    o.st='ok'; o.src='games'; o.gp=R.length; o.pg=sum(R);
+    if(R.length>=6) o.l5=sum(R.slice(-5));
+    o.games=R.map(r=>({d:r[0],op:r[1],wl:r[2],v:r[17]||0}));
+  } else if(le && le.gp && le.st){
+    const s=le.st;
+    o.st='ok'; o.src='live'; o.gp=le.gp;
+    o.pg={gp:le.gp, mp:s.min, pts:s.pts, reb:s.reb, ast:s.ast, stl:s.stl, blk:s.blk, to:s.to, tpm:s.tpm,
+      fgp:s.fg, ftp:s.ft, ato:s.to?s.ast/s.to:null};
+  } else if(LV.pending()) o.st='loading';
+  else if(!LV.stamp()) o.st='unavail';
+  return o;
+}
+/* a counting stat in the current view: per game, or scaled to 36 minutes */
+function cmpV(o,k){
+  const v=o.pg?o.pg[k]:null; if(v==null) return null;
+  if(CMP_MODE!=='p36') return v;
+  return o.pg.mp>0 ? v*36/o.pg.mp : null;
+}
+function cmpOrd(n){ const m=n%100; return n+((m>10&&m<14)?'th':(['th','st','nd','rd'][n%10]||'th')); }
+function cmpSpark(o){
+  const a=o.games; if(!a||a.length<2) return null;
+  const n=a.length, W=168, H=40, gap=n>24?1:2, bw=Math.max(1.5,Math.min(12,(W-(n-1)*gap)/n));
+  const mx=Math.max(10,...a.map(g=>g.v)), top=Math.max(...a.map(g=>g.v)), avg=o.pg.pts, ay=(H-1-avg/mx*(H-6)).toFixed(1);
+  const bars=a.map((g,i)=>{ const h=Math.max(1.5,g.v/mx*(H-6)), x=i*(bw+gap);
+    return `<rect class="${g.v===top?'hi':i>=n-5?'l5':''}" x="${x.toFixed(1)}" y="${(H-1-h).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}"><title>${cmpEsc(g.d)} ${cmpEsc(g.op)} (${cmpEsc(g.wl||'')}): ${g.v} PTS</title></rect>`; }).join('');
+  return `<svg class="cmp-spk" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Points in each of his ${n} games, high ${top}">${bars}<line x1="0" x2="${W}" y1="${ay}" y2="${ay}"/></svg>`+
+    `<span class="cmp-sm">high ${top} &middot; dashed line = his average &middot; last 5 in amber</span>`;
+}
+function cmpLiveRows(ms,rows,DASH){
+  const S=LV.season(), LVs=ms.map(e=>e.lv), ok=LVs.filter(o=>o.st==='ok');
+  const lgs={}; ok.forEach(o=>lgs[o.lg]=1);
+  const mixed=Object.keys(lgs).length>1;
+  const n1=v=>v==null?DASH:(+v).toFixed(1), n2=v=>v==null?DASH:(+v).toFixed(2);
+  const lrow=(lab,fn,num,dir,noB)=>{
+    const cells=ms.map((e,i)=>LVs[i].st==='ok'||fn.always ? fn(LVs[i],e) : DASH);
+    if(cells.every(c=>c===DASH||c===''||c==null)) return;
+    rows.push({lab:lab,cells:cells,vals:num?ms.map((e,i)=>LVs[i].st==='ok'?num(LVs[i],e):null):null,dir:dir||'hi',nob:!!noB||mixed,lv:1});
+  };
+  const mode=`<span class="cmp-mode" role="group" aria-label="Stat view">`+
+    `<button type="button" data-cmode="pg" aria-pressed="${CMP_MODE!=='p36'}">PER GAME</button>`+
+    `<button type="button" data-cmode="p36" aria-pressed="${CMP_MODE==='p36'}">PER 36</button></span>`;
+  const upd=LV.when()?`<span class="ls">UPDATED ${cmpEsc(LV.when().toUpperCase())}</span>`:'';
+  rows.push({sec:`${S} SEASON &middot; LIVE${mode}${upd}`, cl:'lvsec'});
+  const status=o=>{
+    const pre=o.lg==='NCAA';
+    return o.st==='predraft' ? '<span class="cmp-st">PRE-DRAFT &middot; NO GAMES YET</span>'
+      : o.st==='loading' ? '<span class="cmp-st">LOADING&hellip;</span>'
+      : o.st==='unavail' ? '<span class="cmp-st">LIVE STATS UNAVAILABLE RIGHT NOW</span>'
+      : `<span class="cmp-st">NO ${S} ${o.pro?'PRO':pre?'COLLEGE':'NBA'} GAMES${pre?' YET':''}</span>`;
+  };
+  const lgCell=o=>{
+    if(o.st!=='ok') return status(o);
+    const lg=o.lg==='PRO' ? 'PRO'+(o.lgs?' &middot; '+cmpEsc(o.lgs):'') : o.lg;
+    return `<b>${lg}</b>${o.team?' &middot; '+cmpEsc(o.team):''}`;
+  };
+  lgCell.always=1;
+  lrow('LEAGUE / TEAM',lgCell);
+  const pxCell=(o,e)=> o.price!=null ? `<b>$${f2(o.price)}</b>${o.sm?' <span class="lvt">SMALL SAMPLE</span>':''}`
+    : o.pro ? '<span class="cmp-st">PRO &middot; NOT LIVE-PRICED</span>' : DASH;
+  rows.push({lab:'LIVE PRICE',cells:ms.map((e,i)=>pxCell(LVs[i],e)),vals:LVs.map(o=>o.price),dir:'hi',lv:1});
+  if(rows[rows.length-1].cells.every(c=>c===DASH)) rows.pop();
+  const rcells=ms.map(e=>(HASS(e.p)||lvOn(e.y))?retCell(e.p,e.y):DASH);
+  if(!rcells.every(c=>c===DASH)) rows.push({lab:'RETURN VS IPO',cells:rcells,vals:ms.map(e=>(HASS(e.p)||lvOn(e.y))?ret(e.p,e.y):null),dir:'hi',lv:1});
+  lrow('LIVE RANK IN CLASS',(o,e)=>o.rank!=null?`#${o.rank} <span class="mut">in ${e.y} &middot; IPO #${e.p.crank!=null?e.p.crank:'—'}</span>`:DASH);
+  lrow('GAMES',o=>`<b>${o.gp}</b>`+(o.pg&&o.pg.w+o.pg.l?` <span class="mut">${o.pg.w}-${o.pg.l} in his games</span>`:''),o=>o.gp);
+  lrow('MINUTES',o=>n1(o.pg.mp),o=>o.pg.mp);
+  const P=CMP_MODE==='p36'?' <span class="mut">/36</span>':'';
+  [['POINTS','pts'],['REBOUNDS','reb'],['ASSISTS','ast'],['STEALS','stl'],['BLOCKS','blk'],['TURNOVERS','to','lo']].forEach(a=>
+    lrow(a[0],o=>{ const v=cmpV(o,a[1]); return v==null?DASH:'<b>'+v.toFixed(1)+'</b>'+P; },o=>cmpV(o,a[1]),a[2]));
+  const shoot=(m,a,pc)=>o=>{
+    const M=cmpV(o,m), A=cmpV(o,a), Q=o.pg[pc];
+    if(M==null&&Q==null) return DASH;
+    const ma=(M!=null&&A!=null)?`${M.toFixed(1)}-${A.toFixed(1)}`:(M!=null?M.toFixed(1)+' made':'');
+    return (Q!=null?`<b>${Q.toFixed(1)}%</b>`:'')+(ma?` <span class="cmp-sm">${ma}${P?' per 36':''}</span>`:'');
+  };
+  lrow('FIELD GOALS',shoot('fgm','fga','fgp'),o=>o.pg.fga||o.pg.fgp!=null?o.pg.fgp:null);
+  lrow('3-POINTERS',shoot('tpm','tpa','tpp'),o=>o.pg.tpa>=1?o.pg.tpp:null);
+  lrow('FREE THROWS',shoot('ftm','fta','ftp'),o=>o.pg.fta>=1||o.pg.fta==null?o.pg.ftp:null);
+  lrow('TRUE SHOOTING',o=>o.pg.ts==null?DASH:o.pg.ts.toFixed(1)+'%',o=>o.pg.ts);
+  lrow('EFFECTIVE FG',o=>o.pg.efg==null?DASH:o.pg.efg.toFixed(1)+'%',o=>o.pg.efg);
+  lrow('AST / TO',o=>n2(o.pg.ato),o=>o.pg.ato);
+  lrow('LAST 5 GAMES',o=>{
+    if(!o.l5) return DASH;
+    const d=o.l5.pts-o.pg.pts, tr=Math.abs(d)<0.05?'<span class="mut">even</span>':`<span class="${cls(d)}">${arw(d)} ${Math.abs(d).toFixed(1)}</span>`;
+    return `<b>${o.l5.pts.toFixed(1)}</b> PTS &middot; <b>${o.l5.reb.toFixed(1)}</b> REB &middot; <b>${o.l5.ast.toFixed(1)}</b> AST`+
+      `<span class="cmp-sm">${o.l5.fgp!=null?o.l5.fgp.toFixed(1)+'% FG &middot; ':''}${o.l5.mp.toFixed(1)} MIN &middot; PTS vs season ${tr}</span>`;
+  },o=>o.l5?o.l5.pts:null,'hi',true);
+  lrow('POINTS BY GAME',o=>cmpSpark(o)||DASH);
+  /* NBA.com advanced (NBA players only); percentile is versus every qualified NBA player this season */
+  if(ok.some(o=>o.nadv)){
+    rows.push({sec:`NBA ADVANCED &middot; ${S} &middot; NBA.COM <span class="ls">SMALL NUMBER = LEAGUE PERCENTILE</span>`, cl:'lvsec'});
+    const A=(lab,k,fmt,dir)=>lrow(lab,o=>{
+      const x=o.nadv; if(!x||x[k]==null) return DASH;
+      const pc=(x.q&&x.pc&&x.pc[k]!=null)?`<span class="cmp-pc">${cmpOrd(x.pc[k]).replace(/(\d+)(\D+)/,'$1<small>$2</small>')}</span>`:'';
+      return fmt(x[k])+pc;
+    },o=>o.nadv?o.nadv[k]:null,dir);
+    const p1=v=>(+v).toFixed(1)+'%', r1=v=>(+v).toFixed(1), pm=v=>(v>0?'+':'')+(+v).toFixed(1);
+    A('USAGE','usg',p1); A('ASSIST %','ast',p1); A('REBOUND %','reb',p1); A('TURNOVER %','tov',p1,'lo');
+    A('OFFENSIVE RATING','ortg',r1); A('DEFENSIVE RATING','drtg',r1,'lo'); A('NET RATING','net',pm); A('PIE','pie',p1);
+  }
+  return mixed;
+}
+/*CMPLIVE-END*/
 
 /* ---------- the comparison table ---------- */
 const CMP_DASH='<span class="mut">—</span>';
@@ -5940,7 +6108,9 @@ function cmpHead(e){
     <div class="cmp-nm">${e.g==='top'?`<a href="#" data-open="${e.id}" title="Open ${cmpEsc(p.name)}&rsquo;s full profile">${cmpEsc(p.name)}</a>`:cmpEsc(p.name)}</div>
     <div class="cmp-sub">${e.y} CLASS &middot; ${cmpEsc(cmpPickTxt(e))}</div>
     ${e.origin?`<div class="cmp-sub">${cmpEsc(e.origin)}</div>`:''}
-    <span class="cmp-tag">${e.g==='top'?'LISTED &middot; '+cmpEsc(p.tkr):'OTC &middot; NO PROFILE PAGE'}</span></th>`;
+    <span class="cmp-tag">${e.g==='top'?'LISTED &middot; '+cmpEsc(p.tkr):'OTC &middot; NO PROFILE PAGE'}</span>${(()=>{
+      const o=e.lv; if(!o||o.st!=='ok') return '';
+      return `<div class="cmp-lv"><span class="s">${cmpSeasonShort()}</span><b>${o.pg.pts.toFixed(1)}</b> PTS &middot; <b>${o.pg.reb.toFixed(1)}</b> REB &middot; <b>${o.pg.ast.toFixed(1)}</b> AST &middot; ${o.gp} GP${o.price!=null?` &middot; <span class="px">$${f2(o.price)}</span>`:''}</div>`; })()}</th>`;
 }
 
 function cmpSeasonCell(p,S,si){
@@ -5972,6 +6142,9 @@ function cmpTable(ms){
   const L=e=>e.p.line||{}, A=e=>e.p.adv||{};
   const num=(v,fmt)=>v==null?CMP_DASH:fmt(v);
 
+  ms.forEach(e=>{ e.lv=cmpLive(e); });
+  const lvMixed=cmpLiveRows(ms,rows,CMP_DASH);/*CMPLIVE*/
+
   sec('PROFILE');
   row('CLASS',e=>e.y+' CLASS');
   row('DRAFT POSITION',e=>cmpEsc(cmpPickTxt(e)));
@@ -5998,7 +6171,6 @@ function cmpTable(ms){
     if(e.g==='top'&&e.p.rating&&!NORATE(e.y)) return `<b class="${e.p.rating>=4?'up':e.p.rating<=2?'down':''}">${RATE[e.p.rating]}</b> <span class="mut">model rating</span>`;
     return CMP_DASH; });
   row('’25-’26 CLOSE',e=>HASS(e.p)?'$'+f2(rpx(e.p)):CMP_DASH,e=>HASS(e.p)?rpx(e.p):null);
-  row('RETURN VS IPO',e=>(HASS(e.p)||lvOn(e.y))?retCell(e.p,e.y):CMP_DASH,e=>(HASS(e.p)||lvOn(e.y))?ret(e.p,e.y):null);
   row('RANK: IPO → NOW',e=>HASS(e.p)&&lastS(e.p).crank!=null?'#'+e.p.crank+' &rarr; #'+lastS(e.p).crank:CMP_DASH);
   /* only a class that has not played yet: on a settled class `pop` is not the Summer League move,
      and the profile page does not show it there either */
@@ -6048,21 +6220,26 @@ function cmpTable(ms){
   const kept=rows.filter((r,i)=>!(r.sec && (i===rows.length-1 || rows[i+1].sec)));
 
   const body=kept.map(r=>{
-    if(r.sec) return `<tr class="sec"><td colspan="${n+1}">${r.sec}</td></tr>`;
+    if(r.sec) return `<tr class="sec${r.cl?' '+r.cl:''}"><td colspan="${n+1}">${r.sec}</td></tr>`;
     let best=[];
-    if(r.vals){
+    if(r.vals && !r.nob){
       const v=r.vals.map(x=>(x==null||isNaN(x))?null:+x), ok=v.filter(x=>x!=null);
       if(ok.length>=2){ const t=r.dir==='lo'?Math.min.apply(null,ok):Math.max.apply(null,ok);
         if(Math.max.apply(null,ok)!==Math.min.apply(null,ok)) best=v.map(x=>x===t); }
     }
-    return `<tr${r.seas?' class="seas"':''}><th scope="row" class="lab">${r.lab}</th>${
+    return `<tr${r.seas?' class="seas"':r.lv?' class="lvrow"':''}><th scope="row" class="lab">${r.lab}</th>${
       r.cells.map((c,i)=>`<td class="${best[i]?'best':''}">${c}</td>`).join('')}</tr>`;
   }).join('');
 
   return `<div class="cmp-wrap"><table class="cmpt" style="min-width:${150+n*190}px">
     <thead><tr><th class="lab corner" scope="col">${n} PLAYER${n>1?'S':''}</th>${ms.map(cmpHead).join('')}</tr></thead>
     <tbody>${body}</tbody></table></div>
-  <div class="cmp-legend"><b>How to read this.</b> Prices are each player&rsquo;s frozen IPO price on the same ladder for every class, so they compare
+  <div class="cmp-legend"><b>The ${LV.season()} block is live.</b> NBA regular-season games from NBA.com box scores, college games from ESPN,
+  pros overseas from their own leagues&rsquo; box scores, rebuilt every morning; preseason and playoff games are not counted. PER 36 scales
+  every counting stat to 36 minutes so a starter and a bench player read on the same footing; minutes and percentages do not change.
+  Live price and rank are inside each player&rsquo;s own class.${lvMixed?' <b>Shading is off in the live block</b> because these players are in different leagues (NBA, college, pro overseas), and those numbers are not on the same scale.':''}
+  The advanced numbers are NBA.com&rsquo;s; the small figure is his percentile among every qualified NBA player this season.<br>
+  <b>How to read this.</b> Prices are each player&rsquo;s frozen IPO price on the same ladder for every class, so they compare
   across years. A shaded cell marks the leader in that row (lowest, for ranks and turnovers).
   A dash means no verified figure exists &mdash; it is never estimated. Seasons line up by each player&rsquo;s own years in the league, not by calendar.
   Click a listed player&rsquo;s name to open the full profile; OTC players have no profile page, so their columns are shorter.</div>`;
