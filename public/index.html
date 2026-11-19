@@ -1755,10 +1755,15 @@ td.lv .lvtags .lvt{margin-left:0}
   background:transparent;border:1px solid transparent;border-bottom:2px solid transparent;border-radius:3px 3px 0 0;color:var(--lbl);cursor:pointer;white-space:nowrap}
 .ptabs button:hover,.ptabs button:focus-visible{color:var(--amber);outline:none}
 .ptabs button[aria-selected="true"]{color:var(--amber);background:#0A0C11;border-color:var(--line2);border-bottom-color:var(--amber)}
-#main .card[hidden],#main .grid2[hidden]{display:none!important}
 #main .grid2.pt1{grid-template-columns:1fr!important}
 @media (max-width:700px){ .ptabs button{padding:12px 13px;font-size:11.5px} }
 /*PTABS-CSS-END*/
+/*LPCT-CSS-START*/
+#main .pt-off{display:none!important}
+.lpct[data-wait]{display:none}
+.lpct h3 .lvt{margin-left:8px}
+/*LPCT-CSS-END*/
+
 
 
 /*DESK-CSS-START*/
@@ -2365,7 +2370,8 @@ function jumpPaint(){
 /*JUMP-JS-END*/
 /*PTABS-JS-START*/
 /* prospect page tabs. EVERYTHING = the whole page as before (default). Other tabs show a group of the same cards.
-   Cards are grouped by their heading text after every redraw / late-arriving card, so no template changes.
+   Cards are grouped by their heading text on every pass (cards that fill in late, like NBA ADVANCED, are regrouped when their heading arrives);
+   hiding uses its own class (.pt-off) so cards that hide themselves with [hidden] are never un-hidden by the tabs.
    The tab lives in ?tab= (history.replaceState keeps history.state; the #year/TKR route is untouched). */
 var PT_TABS=[['all','EVERYTHING'],['overview','OVERVIEW'],['stats','STATS'],['log','GAME LOG'],['scouting','SCOUTING'],['talk','MARKET TALK']];
 var PT_SEL=(function(){ try{ var t=new URLSearchParams(location.search).get('tab'); for(var i=0;i<PT_TABS.length;i++) if(PT_TABS[i][0]===t) return t; }catch(e){} return 'all'; })();
@@ -2384,11 +2390,12 @@ function ptUrl(){
 }
 function ptApply(){
   var m=document.getElementById('main'); if(!m||!m.querySelector('.qhead')) return;
-  var cards=m.querySelectorAll(':scope > .card, :scope > .grid2 > .card'), n={all:1}, first=null;
+  var cards=m.querySelectorAll(':scope > .card, :scope > .grid2 > .card'), n={all:1}, first=null, gs_=[];
   for(var i=0;i<cards.length;i++){
-    var c=cards[i], h=c.querySelector(':scope > h3');
-    var g=c.getAttribute('data-pg'); if(!g){ g=ptGroup(h?((h.firstChild&&h.firstChild.textContent)||h.textContent).trim():''); c.setAttribute('data-pg',g); }
-    n[g]=(n[g]||0)+1; if(!first && c.parentElement===m) first=c;
+    var c=cards[i], h=c.querySelector(':scope > h3'), g=null;
+    if(h){ g=ptGroup(((h.firstChild&&h.firstChild.textContent)||h.textContent).trim()); n[g]=(n[g]||0)+1; }
+    gs_[i]=g;
+    if(!first && c.parentElement===m) first=c;
   }
   if(!first){ var g0=m.querySelector(':scope > .grid2'); if(g0) first=g0; }
   var bar=m.querySelector('.ptabs');
@@ -2405,10 +2412,10 @@ function ptApply(){
       return '<button type="button" role="tab" data-pt="'+t[0]+'" aria-selected="'+(t[0]===PT_SEL)+'" tabindex="'+(t[0]===PT_SEL?0:-1)+'">'+t[1]+'</button>'; }).join('');
   }
   m.setAttribute('data-pt',PT_SEL);
-  for(var j=0;j<cards.length;j++){ var hid=PT_SEL!=='all' && cards[j].getAttribute('data-pg')!==PT_SEL; if(cards[j].hidden!==hid) cards[j].hidden=hid; }
+  for(var j=0;j<cards.length;j++){ cards[j].classList.toggle('pt-off', PT_SEL!=='all' && gs_[j]!==PT_SEL); }
   var gs=m.querySelectorAll(':scope > .grid2');
-  for(var k=0;k<gs.length;k++){ var kids=gs[k].querySelectorAll(':scope > .card'), vis=0; for(var q=0;q<kids.length;q++) if(!kids[q].hidden) vis++;
-    gs[k].hidden=(kids.length>0 && vis===0); gs[k].classList.toggle('pt1',vis===1); }
+  for(var k=0;k<gs.length;k++){ var kids=gs[k].querySelectorAll(':scope > .card'), vis=0; for(var q=0;q<kids.length;q++) if(!kids[q].classList.contains('pt-off') && !kids[q].hidden) vis++;
+    gs[k].classList.toggle('pt-off', PT_SEL!=='all' && kids.length>0 && vis===0); gs[k].classList.toggle('pt1', PT_SEL!=='all' && vis===1); }
 }
 function ptSet(id,keepPos){
   if(id===PT_SEL) return; PT_SEL=id; ptApply(); ptUrl();
@@ -2434,6 +2441,96 @@ function ptSet(id,keepPos){
   });
 })();
 /*PTABS-JS-END*/
+/*LPCT-JS-START*/
+/* LIVE PERCENTILES VS EVERY DRAFTEE (Nov 18 2026): this season's games so far, same layout as the pre-draft card.
+   NBA classes 2020-2026: his per-40 and NBA.com rates against every listed 2020-2026 draftee playing this season (same position group).
+   2027 college prospects: his per-40 against the pre-draft college pool the original card uses. Nothing new is stored: the games come from
+   the nightly games/<class>.json files the Game Log already reads. */
+var LPCT_MODE='pos', LPCT_POOL=null;
+var LPCT_ROWS=[['pts40','Points per 40',1,0],['reb40','Rebounds per 40',1,0],['ast40','Assists per 40',1,0],['stl40','Steals per 40',1,0],['blk40','Blocks per 40',1,0],
+  ['tpm40','Threes per 40',1,0],['to40','Turnovers per 40',1,1],['ft','Free-throw %',1,0],['ts','True shooting %',1,0],['usg','Usage %',1,0],
+  ['astp','Assist rate',1,0],['orb','Off. rebound rate',1,0],['drb','Def. rebound rate',1,0],['pie','PIE (overall impact)',1,0]];
+var LPCT_AX=[['SCORING',['pts40']],['SHOOTING',['ft','tpm40']],['EFFICIENCY',['ts']],['PLAYMAKING',['ast40','astp']],
+  ['REBOUNDING',['reb40','orb','drb']],['DEFENSE',['stl40','blk40']],['IMPACT',['pie']]];
+function lpMin(v){ if(typeof v==='string'){ var a=v.split(':'); return (+a[0]||0)+(+a[1]||0)/60; } return +v||0; }
+function lpAgg(rows){
+  var s={g:0,min:0,fga:0,tpm:0,ftm:0,fta:0,reb:0,ast:0,stl:0,blk:0,to:0,pts:0};
+  (rows||[]).forEach(function(r){ if(!r || r[0]==='#') return; var m=lpMin(r[3]); if(!(m>0)) return;
+    s.g++; s.min+=m; s.fga+=+r[6]||0; s.tpm+=+r[7]||0; s.ftm+=+r[9]||0; s.fta+=+r[10]||0; s.reb+=+r[11]||0; s.ast+=+r[12]||0; s.stl+=+r[13]||0; s.blk+=+r[14]||0; s.to+=+r[15]||0; s.pts+=+r[17]||0; });
+  return s;
+}
+function lpFeat(s,A){
+  var f={}; if(!(s.min>0)) return f;
+  ['pts','reb','ast','stl','blk','to','tpm'].forEach(function(k){ f[k+'40']=s[k]*40/s.min; });
+  if(s.fta>0) f.ft=s.ftm/s.fta*100;
+  var d=2*(s.fga+0.44*s.fta); if(d>0) f.ts=s.pts/d;
+  if(A){ if(A.usg!=null) f.usg=A.usg; if(A.ast!=null) f.astp=A.ast; if(A.oreb!=null) f.orb=A.oreb; if(A.dreb!=null) f.drb=A.dreb; if(A.pie!=null) f.pie=A.pie; }
+  return f;
+}
+/* every listed 2020-2026 draftee with at least 100 minutes this season */
+function lpctPool(){
+  if(LPCT_POOL) return LPCT_POOL;
+  var ys=['2020','2021','2022','2023','2024','2025','2026'];
+  LPCT_POOL=Promise.all(ys.map(function(y){ return glLive(y); })).then(function(Gs){
+    var all=[];
+    ys.forEach(function(y,i){ var G=Gs[i], C=CLASSES[y]; if(!G||!C||!C.top) return;
+      C.top.forEach(function(p){ var e=G.players[p.tkr]||G.players[LV.key(p)]; if(!e||!e.rows) return;
+        var s=lpAgg(e.rows); if(s.min<100) return; all.push({y:y,p:p,f:lpFeat(s,e.nadv)}); }); });
+    return all;
+  }).catch(function(){ LPCT_POOL=null; return null; });
+  return LPCT_POOL;
+}
+function lpctCard(p){
+  var y=CURCLASS; if(+y<2020 || typeof glLive!=='function') return '';
+  setTimeout(function(){ lpctFill(p,y); },0);
+  return '<div class="card pct lpct" data-lpct="'+p.tkr+'" data-wait="1"><h3>LIVE PERCENTILES VS EVERY DRAFTEE</h3></div>';
+}
+async function lpctFill(p,y){
+  var G=await glLive(y); if(!G||!G.players) return;
+  var el=document.querySelector('[data-lpct="'+p.tkr+'"]'); if(!el || CURCLASS!==y) return;
+  var e=G.players[p.tkr]||G.players[LV.key(p)]; if(!e||!e.rows) return;
+  var s=lpAgg(e.rows); if(s.g<2 || s.min<30) return;
+  var pre=CM().predraft, grp=pctGroup(p.pos), pool, who, span;
+  if(pre){
+    if(!e.col) return;                      /* overseas pros are not comparable to the college pool */
+    var C=compsBuild();
+    pool=C.all.filter(function(q){ return q.lv==='ncaa' && +q.y<=2026 && (LPCT_MODE==='all' || pctGroup(q.p.pos)===grp); });
+    who=(LPCT_MODE==='all'?'ALL COLLEGE DRAFTEES':'COLLEGE '+(PCT_LAB[grp]||'DRAFTEES')); span='2013&ndash;2026 PRE-DRAFT SEASONS';
+  } else {
+    var P=await lpctPool(); if(!P) return;
+    pool=P.filter(function(q){ return LPCT_MODE==='all' || pctGroup(q.p.pos)===grp; });
+    who=(LPCT_MODE==='all'?'ALL':'')+' '+(LPCT_MODE==='all'?'DRAFTEES':(PCT_LAB[grp]||'DRAFTEES')); span='2020&ndash;2026 CLASSES PLAYING NOW';
+  }
+  if(!document.body.contains(el)) return;
+  var f=lpFeat(s,e.nadv);
+  var rows=LPCT_ROWS.map(function(r){ return {k:r[0],lab:r[1],d:r[2],inv:r[3],v:f[r[0]],pc:pctOf(pool,r[0],f[r[0]],r[3])}; }).filter(function(r){ return r.v!=null && r.pc!=null; });
+  if(rows.length<5){ return; }
+  var pcK={}; rows.forEach(function(r){ pcK[r.k]=r.pc; });
+  var ax=LPCT_AX.map(function(a){ var v=a[1].map(function(k){ return pcK[k]; }).filter(function(x){ return x!=null; }); return {lab:a[0],v:v.length?Math.round(v.reduce(function(a,b){ return a+b; },0)/v.length):null}; }).filter(function(a){ return a.v!=null; });
+  var bar=function(r){ return '<div class="pc-r"><span class="l">'+r.lab+(r.inv?' <i title="Lower is better, so the bar is flipped">&#8597;</i>':'')+'</span><span class="v">'+pctFmt(r.k,r.v,r.d)+'</span>'+
+    '<span class="b"><i style="width:'+r.pc+'%"></i><em style="left:50%"></em></span><span class="p">'+r.pc+'<small>'+tvOrd(r.pc)+'</small></span></div>'; };
+  var mpg=s.min/s.g, small=s.g<10;
+  el.removeAttribute('data-wait');
+  el.innerHTML='<h3>LIVE PERCENTILES VS EVERY DRAFTEE <em>'+(G.season||'THIS SEASON')+' &middot; '+s.g+' GP &middot; '+mpg.toFixed(1)+' MPG &middot; '+who.trim()+' &middot; '+pool.length+' PLAYERS</em>'+
+    (small?'<span class="lvt" title="Fewer than 10 games: early-season percentiles swing a lot">SMALL SAMPLE</span>':'')+'</h3>'+
+    '<div class="pc-bar"><div class="ldb-chips"><button type="button" class="ldb-chip" data-lpctm="pos" aria-pressed="'+(LPCT_MODE==='pos')+'">'+(PCT_LAB[grp]||'POSITION')+'</button>'+
+    '<button type="button" class="ldb-chip" data-lpctm="all" aria-pressed="'+(LPCT_MODE==='all')+'">ALL POSITIONS</button></div></div>'+
+    '<div class="pc-g"><div class="pc-rad">'+pctRadar(ax)+'<div class="pc-cap">Each spoke averages his percentiles in that area. The dashed ring is the 50th percentile.</div></div>'+
+    '<div class="pc-list">'+rows.map(bar).join('')+'</div></div>'+
+    '<div class="pad"><div class="legend">His '+(G.season||'current')+' games so far ('+s.g+' GP, '+Math.round(s.min)+' minutes), per 40 minutes, against '+
+    (pre?'the final pre-draft season of every listed college player drafted 2013&ndash;2026 at his position group (the same pool as the card above).'
+        :'every listed 2020&ndash;2026 draftee with at least 100 minutes this season'+(LPCT_MODE==='all'?'':' at his position group')+'. 50th is the typical one of those draftees, not the typical NBA player.')+
+    ' Turnovers are flipped: fewer is better. '+(pre?'Usage, assist rate, rebound rates and impact are not tracked for college games this season, so those rows are left off.'
+        :'Usage, assist rate, rebound rates and PIE come from NBA.com; steal rate, block rate, BPM and age are not shown live.')+
+    ' Percentiles move every day and swing a lot over a small number of games.</div></div>';
+}
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest && ev.target.closest('[data-lpctm]'); if(!b) return;
+  LPCT_MODE=b.dataset.lpctm; var card=b.closest('[data-lpct]'), p=card && byT[card.dataset.lpct];
+  if(p) lpctFill(p,CURCLASS);
+});
+/*LPCT-JS-END*/
+
 
 
 
@@ -3194,7 +3291,7 @@ document.addEventListener('click',function(ev){
   PCT_MODE=b.dataset.pctm; const card=b.closest('[data-pct]'); const p=card && byT[card.dataset.pct];
   if(p) card.outerHTML=pctCard(p);
 });
-function tvCards(p){ let o=''; try{ o+=pctCard(p); }catch(e){ console.error(e); } try{ o+=tvShotCard(p)+tvQocCard(p); }catch(e){ console.error(e); } return o; }
+function tvCards(p){ let o=''; try{ o+=pctCard(p); }catch(e){ console.error(e); } try{ o+=lpctCard(p); }catch(e){ console.error(e); } try{ o+=tvShotCard(p)+tvQocCard(p); }catch(e){ console.error(e); } return o; }
 /* ---- NBA ADVANCED (under Current Season) ---- */
 var NADV_L=[['TS%','ts',1],['eFG%','efg',1],['USG%','usg',1],['AST%','ast',1],['AST/TO','ato',2],['REB%','reb',1],['OREB%','oreb',1],['DREB%','dreb',1],['TOV%','tov',1],['ORTG','ortg',1],['DRTG','drtg',1],['NET','net',1],['PIE','pie',1],['PACE','pace',1]];
 function nadvCard(p){
