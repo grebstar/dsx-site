@@ -66,9 +66,9 @@ svg text{font-family:var(--mono)}
 #classSel option{background:var(--panel);color:var(--ink)}
 /* the quote board view selector sits in the card heading, so it is sized to
    the heading rather than to the topbar */
-#boardView{background:transparent;border:0;color:var(--amber);font-family:var(--mono);font-weight:600;font-size:9.5px;letter-spacing:.14em;cursor:pointer;outline:none;padding:0 2px}
-#boardView:focus-visible{outline:1px solid var(--amber)}
-#boardView option{background:var(--panel);color:var(--ink);letter-spacing:normal;font-weight:400}
+#boardView,#retView{background:transparent;border:0;color:var(--amber);font-family:var(--mono);font-weight:600;font-size:9.5px;letter-spacing:.14em;cursor:pointer;outline:none;padding:0 2px}
+#boardView:focus-visible,#retView:focus-visible{outline:1px solid var(--amber)}
+#boardView option,#retView option{background:var(--panel);color:var(--ink);letter-spacing:normal;font-weight:400}
 .card>h3 .selwrap .cv{width:9px;height:6px}
 /* the view selector belongs next to the title it changes, not stranded at the
    far edge of the card. SORTABLE keeps the right edge, where every other card
@@ -495,7 +495,7 @@ tbody tr:last-child td{border-bottom:0}
 /* ---- draft-class selector ------------------------------------------------ */
 /* A native select with its border stripped draws no arrow on iOS, which is why
    this did not read as a dropdown on a phone. Draw the chevron ourselves. */
-#classSel,#classSelHero,#boardView{appearance:none;-webkit-appearance:none;-moz-appearance:none}
+#classSel,#classSelHero,#boardView,#retView{appearance:none;-webkit-appearance:none;-moz-appearance:none}
 .selwrap{position:relative;display:inline-flex;align-items:center;gap:.4em}
 .selwrap .cv{flex:0 0 auto;pointer-events:none;color:var(--amber)}
 .pill .selwrap .cv{width:9px;height:6px}
@@ -4004,11 +4004,16 @@ function promoRows(){
      - priced at zero today  -> the bar runs to the floor of the axis, -100%
      - unlisted at the offer -> no ratio exists at all; a tinted full-width row
      - neither               -> cannot reach this chart; promoRows() excludes it  */
+/* PRICE RETURN view: 'px' = ranked by live price (default every page load), 'ret' = sorted by return */
+let RETVIEW = 'px', RETCLS = null;
+/* every class opens on the live-price ranking; the dropdown choice holds only while you stay on that class */
+function retView(){ if(RETCLS !== CURCLASS){ RETCLS = CURCLASS; RETVIEW = 'px'; } return RETVIEW; }
 function returnChart(){
   const LIVE = lvOn(), SEAS = LV.season();
+  const RK = retView() === 'px';
   const all = [...D, ...promoRows()];
   const rv = p => { const r=ret(p); return r==null ? Infinity : r; };
-  const byR = (a,b) => rv(b) - rv(a);
+  const byR = RK ? ((a,b) => (nowpx(b)||0) - (nowpx(a)||0) || rv(b) - rv(a)) : ((a,b) => rv(b) - rv(a));
   const live  = all.filter(p=>{ const m=rmode(p); return m==='live' || m==='static'; }).sort(byR);
   const close = all.filter(p=>rmode(p)==='close').sort(byR);
   const none  = all.filter(p=>rmode(p)==='none').sort((a,b)=>(a.crank||999)-(b.crank||999));
@@ -4019,7 +4024,7 @@ function returnChart(){
     E = Math.min(4, Math.max(2, Math.ceil(far)));
   }
   const LO = Math.pow(10,-E), HI = Math.pow(10,E);
-  const W = 980, GUT = 196, RIGHT = 88, RH = 15, PT = 30, SH = 24;
+  const W = 980, GUT = RK ? 336 : 196, RIGHT = 88, RH = 15, PT = RK ? 44 : 30, SH = 24;
   const w = W - GUT - RIGHT;
   const bx = m => GUT + (Math.log10(Math.min(Math.max(m,LO),HI)) + E)/(2*E)*w;
   const zero = bx(1);
@@ -4027,7 +4032,7 @@ function returnChart(){
   let body = '', y = PT; const segs = [];
   const head = t => { body += `<line x1="6" x2="${W-6}" y1="${y+7}" y2="${y+7}" stroke="#2E323D"/>`
     + `<text x="6" y="${y+SH-5}" fill="#E0B24A" font-size="9" letter-spacing=".14em">${t}</text>`; y += SH; };
-  const row = (p,kind) => {
+  const row = (p,kind,ix) => {
     const P = perf(p), c = P.c, r = ret(p), now = nowpx(p), L = lastS(p);
     const tk = p.tkr || 'OTC';
     const nm = p.name.length>23 ? p.name.slice(0,22)+'…' : p.name;
@@ -4061,12 +4066,18 @@ function returnChart(){
     body += open
       + `<title>${tip}</title>`
       + `<rect class="rhit" x="0" y="${y}" width="${W}" height="${RH}" fill="transparent"/>`
-      + `<text x="6" y="${y+RH/2+3.2}" fill="${p.tkr?'#E0B24A':'#8B8271'}" font-size="9.5" font-weight="600" letter-spacing=".06em">${tk}</text>`
-      + `<text x="46" y="${y+RH/2+3.2}" fill="#ECE6D8" fill-opacity="${kind==='live'||kind==='static'?'.82':'.6'}" font-size="9.5">${nm}</text>`
+      + (RK
+        ? `<text x="24" y="${y+RH/2+3.2}" text-anchor="end" fill="${(kind==='live'||kind==='static')?'#ECE6D8':'#8B8271'}" font-size="9.5" font-weight="700">${(kind==='live'||kind==='static')?ix+1:'—'}</text>`
+          + `<text x="32" y="${y+RH/2+3.2}" fill="${p.tkr?'#E0B24A':'#8B8271'}" font-size="9.5" font-weight="600" letter-spacing=".06em">${tk}</text>`
+          + `<text x="72" y="${y+RH/2+3.2}" fill="#ECE6D8" fill-opacity="${kind==='live'||kind==='static'?'.82':'.6'}" font-size="9.5">${nm}</text>`
+          + (kind==='none' ? '' :
+            `<text x="${GUT-10}" y="${y+RH/2+3.2}" text-anchor="end" font-size="9"><tspan fill="#8B8271">${px(p)>0?'$'+f2(px(p)):'UNLISTED'} → </tspan><tspan fill="${c}" font-weight="600">$${f2(now||0)}</tspan></text>`)
+        : `<text x="6" y="${y+RH/2+3.2}" fill="${p.tkr?'#E0B24A':'#8B8271'}" font-size="9.5" font-weight="600" letter-spacing=".06em">${tk}</text>`
+          + `<text x="46" y="${y+RH/2+3.2}" fill="#ECE6D8" fill-opacity="${kind==='live'||kind==='static'?'.82':'.6'}" font-size="9.5">${nm}</text>`)
       + mark + '</g>';
     y += RH;
   };
-  const sect = (list,kind) => { if(!list.length) return; const y0=y; list.forEach(p=>row(p,kind)); segs.push([y0,y]); };
+  const sect = (list,kind) => { if(!list.length) return; const y0=y; list.forEach((p,i)=>row(p,kind,i)); segs.push([y0,y]); };
   sect(live, LIVE ? 'live' : 'static');
   if(close.length){ head(`NO ${SEAS} GAMES · LAST FULL-SEASON CLOSE & VERDICT · NOT IN THE LIVE RANKING`); sect(close,'close'); }
   if(none.length){ head(`NO ${SEAS} GAMES YET · NO LIVE PRICE, NO RETURN`); sect(none,'none'); }
@@ -4095,7 +4106,8 @@ function returnChart(){
     A row that never had an offer price has no ratio and is drawn as a band instead. ${nList}`;
   return `<div style="padding:12px"><svg viewBox="0 0 ${W} ${H}" role="img"
       aria-label="Price return for every listing on the quote board, ${LIVE?'IPO price to today\'s live price':'offer price to today'}, on a logarithmic scale about break even.">
-    <text x="${GUT}" y="17" fill="#8B8271" font-size="9" letter-spacing=".16em">${LIVE?'WHAT A DOLLAR AT THE OFFER IS WORTH AT TODAY’S LIVE PRICE · LOG SCALE':'WHAT A DOLLAR AT THE OFFER IS WORTH NOW · LOG SCALE'}</text>
+    ${RK?`<text x="24" y="38" text-anchor="end" fill="#8B8271" font-size="8.5" letter-spacing=".12em">#</text><text x="32" y="38" fill="#8B8271" font-size="8.5" letter-spacing=".12em">TKR</text><text x="72" y="38" fill="#8B8271" font-size="8.5" letter-spacing=".12em">PROSPECT</text><text x="${GUT-10}" y="38" text-anchor="end" fill="#8B8271" font-size="8.5" letter-spacing=".12em">IPO → ${LIVE?'LIVE':'NOW'}</text>`:''}
+    <text x="${GUT}" y="17" fill="#8B8271" font-size="9" letter-spacing=".16em">${RK?(LIVE?'RANKED BY TODAY’S LIVE PRICE · BAR = IPO-TO-LIVE RETURN · LOG SCALE':'RANKED BY PRICE NOW · BAR = RETURN · LOG SCALE'):(LIVE?'WHAT A DOLLAR AT THE OFFER IS WORTH AT TODAY’S LIVE PRICE · LOG SCALE':'WHAT A DOLLAR AT THE OFFER IS WORTH NOW · LOG SCALE')}</text>
     ${grid}${body}
   </svg>
   <div class="legend" style="display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center">
@@ -4225,7 +4237,7 @@ function market(){
   </div>
 
   ${(SETTLED() || lvOn())
-    ? `<div class="card"><h3>PRICE RETURN <em>${lvOn()?'EVERY LISTING, IPO TO LIVE &middot; UPDATED '+LV.when().toUpperCase():'EVERY LISTING, OFFER TO TODAY'}</em></h3>${returnChart()}</div>`
+    ? `<div class="card"><h3><span class="hgrp">PRICE RETURN <span class="selwrap"><select id="retView" aria-label="Price return view"><option value="px"${retView()==='px'?' selected':''}>RANKED BY ${lvOn()?'LIVE PRICE':'PRICE'}</option><option value="ret"${RETVIEW==='ret'?' selected':''}>SORTED BY RETURN</option></select><svg class="cv" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.6 L6 6.4 L11 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><em>${lvOn()?'EVERY LISTING, IPO TO LIVE &middot; UPDATED '+LV.when().toUpperCase():'EVERY LISTING, OFFER TO TODAY'}</em></h3>${returnChart()}</div>`
     : (CM().predraft
       ? `<div class="card"><h3>BOARD SPREAD <em>BID / ASK ACROSS ${CM().nb} ANALYSTS</em></h3>${spreadTable()}</div>`
       : (LV.pending()
@@ -4313,6 +4325,8 @@ function market(){
   m.querySelectorAll('.tile,tbody tr[data-k],.pt').forEach(e=>e.onclick=()=>route(e.dataset.k));
   const bv=m.querySelector('#boardView');
   if(bv) bv.onchange=()=>{ boardView=bv.value; market(); };
+  const rvw=m.querySelector('#retView');
+  if(rvw) rvw.onchange=()=>{ RETVIEW=rvw.value; market(); };
   m.querySelectorAll('.srt').forEach(e=>e.onclick=()=>{
     if(sortK===e.dataset.k) sortD*=-1; else {sortK=e.dataset.k; sortD=-1;} market();});
   annotateTerms(); wireClassSel('MKT');
