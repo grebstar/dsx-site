@@ -1747,6 +1747,19 @@ td.lv .lvtags .lvt{margin-left:0}
   .jumpbar button{padding:9px 11px;font-size:11px}
 }
 /*JUMP-CSS-END*/
+/*PTABS-CSS-START*/
+/* prospect page tabs: EVERYTHING (the full page, default) + section groups */
+.ptabs{display:flex;gap:4px;margin:2px 0 14px;border-bottom:1px solid var(--line2);overflow-x:auto;scrollbar-width:none}
+.ptabs::-webkit-scrollbar{display:none}
+.ptabs button{flex:0 0 auto;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;padding:10px 14px;margin-bottom:-1px;
+  background:transparent;border:1px solid transparent;border-bottom:2px solid transparent;border-radius:3px 3px 0 0;color:var(--lbl);cursor:pointer;white-space:nowrap}
+.ptabs button:hover,.ptabs button:focus-visible{color:var(--amber);outline:none}
+.ptabs button[aria-selected="true"]{color:var(--amber);background:#0A0C11;border-color:var(--line2);border-bottom-color:var(--amber)}
+#main .card[hidden],#main .grid2[hidden]{display:none!important}
+#main .grid2.pt1{grid-template-columns:1fr!important}
+@media (max-width:700px){ .ptabs button{padding:12px 13px;font-size:11.5px} }
+/*PTABS-CSS-END*/
+
 
 /*DESK-CSS-START*/
 /* desklav Nov 6: Analyst Desk secondary text = lavender, same as the Closing/Opening Bell (was --mute #8B8271) */
@@ -2350,6 +2363,78 @@ function jumpPaint(){
   });
 })();
 /*JUMP-JS-END*/
+/*PTABS-JS-START*/
+/* prospect page tabs. EVERYTHING = the whole page as before (default). Other tabs show a group of the same cards.
+   Cards are grouped by their heading text after every redraw / late-arriving card, so no template changes.
+   The tab lives in ?tab= (history.replaceState keeps history.state; the #year/TKR route is untouched). */
+var PT_TABS=[['all','EVERYTHING'],['overview','OVERVIEW'],['stats','STATS'],['log','GAME LOG'],['scouting','SCOUTING'],['talk','MARKET TALK']];
+var PT_SEL=(function(){ try{ var t=new URLSearchParams(location.search).get('tab'); for(var i=0;i<PT_TABS.length;i++) if(PT_TABS[i][0]===t) return t; }catch(e){} return 'all'; })();
+function ptGroup(t){
+  t=(t||'').toUpperCase();
+  if(/^MARKET TALK/.test(t)) return 'talk';
+  if(/COVERAGE$|^SCOUTING REPORT/.test(t)) return 'scouting';
+  if(/^GAME LOG/.test(t)) return 'log';
+  if(/^(STREET SENTIMENT|SUMMER LEAGUE|UNDERWRITING|PROSPECT PROFILE|COMPARABLE IPO|PATHWAY TO|LONG-TERM STARTER)/.test(t)) return 'overview';
+  if(/SEASON|STAT LINE|ADVANCED|CATEGORY YIELD|PERCENTILES|SHOT PROFILE|QUALITY COMP/.test(t)) return 'stats';
+  return 'overview';
+}
+function ptUrl(){
+  try{ var q=new URLSearchParams(location.search); if(PT_SEL==='all') q.delete('tab'); else q.set('tab',PT_SEL);
+    var s=q.toString(); history.replaceState(history.state,'',location.pathname+(s?'?'+s:'')+location.hash); }catch(e){}
+}
+function ptApply(){
+  var m=document.getElementById('main'); if(!m||!m.querySelector('.qhead')) return;
+  var cards=m.querySelectorAll(':scope > .card, :scope > .grid2 > .card'), n={all:1}, first=null;
+  for(var i=0;i<cards.length;i++){
+    var c=cards[i], h=c.querySelector(':scope > h3');
+    var g=c.getAttribute('data-pg'); if(!g){ g=ptGroup(h?((h.firstChild&&h.firstChild.textContent)||h.textContent).trim():''); c.setAttribute('data-pg',g); }
+    n[g]=(n[g]||0)+1; if(!first && c.parentElement===m) first=c;
+  }
+  if(!first){ var g0=m.querySelector(':scope > .grid2'); if(g0) first=g0; }
+  var bar=m.querySelector('.ptabs');
+  if(!bar && first){
+    bar=document.createElement('div'); bar.className='ptabs'; bar.setAttribute('role','tablist'); bar.setAttribute('aria-label','Prospect page sections');
+    first.parentNode.insertBefore(bar,first);
+  }
+  if(!bar) return;
+  if(PT_SEL!=='all' && !n[PT_SEL]) PT_SEL='all';
+  var sig=PT_TABS.map(function(t){return n[t[0]]?t[0]:''}).join(',')+'|'+PT_SEL;
+  if(bar.getAttribute('data-sig')!==sig){
+    bar.setAttribute('data-sig',sig);
+    bar.innerHTML=PT_TABS.filter(function(t){return n[t[0]]}).map(function(t){
+      return '<button type="button" role="tab" data-pt="'+t[0]+'" aria-selected="'+(t[0]===PT_SEL)+'" tabindex="'+(t[0]===PT_SEL?0:-1)+'">'+t[1]+'</button>'; }).join('');
+  }
+  m.setAttribute('data-pt',PT_SEL);
+  for(var j=0;j<cards.length;j++){ var hid=PT_SEL!=='all' && cards[j].getAttribute('data-pg')!==PT_SEL; if(cards[j].hidden!==hid) cards[j].hidden=hid; }
+  var gs=m.querySelectorAll(':scope > .grid2');
+  for(var k=0;k<gs.length;k++){ var kids=gs[k].querySelectorAll(':scope > .card'), vis=0; for(var q=0;q<kids.length;q++) if(!kids[q].hidden) vis++;
+    gs[k].hidden=(kids.length>0 && vis===0); gs[k].classList.toggle('pt1',vis===1); }
+}
+function ptSet(id,keepPos){
+  if(id===PT_SEL) return; PT_SEL=id; ptApply(); ptUrl();
+  var bar=document.querySelector('#main .ptabs');
+  if(!keepPos && bar && bar.getBoundingClientRect().top<0) bar.scrollIntoView({block:'start'});
+}
+(function(){
+  var m=document.getElementById('main'); if(!m) return;
+  var raf=0; function soon(){ if(raf) return; raf=requestAnimationFrame(function(){ raf=0; ptApply(); }); }
+  if(window.MutationObserver) new MutationObserver(soon).observe(m,{childList:true,subtree:true});
+  ptApply();
+  m.addEventListener('click',function(e){
+    var b=e.target.closest && e.target.closest('[data-pt]'); if(b && b.closest('.ptabs')){ ptSet(b.getAttribute('data-pt')); return; }
+    /* the JUMP TO buttons scroll to a card: open the full page first so the target is on screen */
+    if(e.target.closest && e.target.closest('[data-jump]') && PT_SEL!=='all'){ ptSet('all',true); }
+  },true);
+  m.addEventListener('keydown',function(e){
+    if(e.key!=='ArrowRight' && e.key!=='ArrowLeft') return;
+    var b=e.target.closest && e.target.closest('.ptabs button'); if(!b) return;
+    var all=[].slice.call(b.parentNode.children), i=all.indexOf(b)+(e.key==='ArrowRight'?1:-1);
+    if(i<0||i>=all.length) return; e.preventDefault(); ptSet(all[i].getAttribute('data-pt'),true);
+    var nb=document.querySelector('#main .ptabs [data-pt="'+PT_SEL+'"]'); if(nb) nb.focus();
+  });
+})();
+/*PTABS-JS-END*/
+
 
 
 /* ---------- pricing mode: vs NBA veterans (default) or rookie class only ---------- */
