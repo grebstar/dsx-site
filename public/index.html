@@ -3505,11 +3505,11 @@ function player(p){
     <div class="jumpbar" aria-label="Jump to a section"></div>
     ${HASS(p)?`<div class="qpx settled">
       <div class="chain">${[{l:'IPO',v:px(p)}].concat(p.seasons.map((S,si)=>
-          ({l:si===p.seasons.length-1?'NOW':S.label, v:spx(p,S)})))
+          ({l:si===p.seasons.length-1?'LAST SEASON CLOSE &middot; '+S.label:S.label, v:spx(p,S)})))
         .map((s,i,a)=>`${i?'<span class="arrow">&rarr;</span>':''}<span class="stp${i===a.length-1?' now':''}">`+
              `<span class="sl">${s.l}</span><span class="sv">$${f2(s.v)}</span></span>`).join('')}</div>
       <div data-lvret="${p.tkr}">${retBlock(p)}</div>
-      <div class="lbl">IPO #${p.crank} &rarr; NOW #${lastS(p).crank} &middot; UNIVERSE #${p.U} ${p.tier!=null?'&middot; TIER '+p.tier:''}</div>${typeof navShareBtn==='function'?navShareBtn(p):''}</div>`
+      <div class="lbl">IPO #${p.crank} &rarr; ${lastS(p).label} CLOSE #${lastS(p).crank} &middot; UNIVERSE #${p.U} ${p.tier!=null?'&middot; TIER '+p.tier:''}</div>${typeof navShareBtn==='function'?navShareBtn(p):''}</div>`
     :(p.watch?`<div class="qpx"><div class="p" style="font-size:34px">UNRANKED</div><div class="c mut">NO IPO PRICE</div><div class="lbl">ON ${p.cov} OF ${CM().nb} BOARDS &middot; NEEDS 3 TO RANK</div>${typeof navShareBtn==='function'?navShareBtn(p):''}</div>`:`<div class="qpx"><div class="p">$${f2(px(p))}</div>
       <div data-lvret26="${p.tkr}">${ret26(p)}</div>
       <div class="c ${p.pop==null?'mut':cls(p.pop)}">${p.pop==null?'NO SUMMER LEAGUE DATA':arw(p.pop)+' '+pct(p.pop)+' <span class="mut">POST-VEGAS</span>'}</div>
