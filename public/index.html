@@ -1747,6 +1747,45 @@ td.lv .lvtags .lvt{margin-left:0}
   .jumpbar button{padding:9px 11px;font-size:11px}
 }
 /*JUMP-CSS-END*/
+/*PHIST-CSS-START*/
+/* PRICE HISTORY card (Nov 23 2026): the price at IPO, after every priced season, and live, with the move each step */
+.ph-wrap{padding:12px 14px 6px}
+.ph-scroll{overflow-x:auto;padding-bottom:4px}
+.ph-leg{font-size:9.5px;letter-spacing:.12em;color:var(--mute);margin-bottom:8px}
+.ph-leg i{display:inline-block;width:22px;border-top:1px dashed rgba(224,178,74,.7);vertical-align:middle;margin-right:7px}
+.ph-span{font-size:10px;color:var(--mute);font-weight:400;margin-top:2px}
+.ph-chart{position:relative;display:flex;align-items:stretch;gap:8px;min-width:min-content}
+.ph-col{flex:1 1 0;min-width:92px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.ph-col.ph-gap{flex:.7 1 0;min-width:74px}
+.ph-plot{position:relative;width:100%;height:150px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.ph-px{font-family:var(--cond);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;white-space:nowrap}
+.ph-col.ph-ipo .ph-px{color:var(--mute)}
+.ph-bar{position:relative;z-index:1;width:62%;max-width:58px;min-height:2px;border-radius:2px 2px 0 0;background:var(--mute);opacity:.55}
+.ph-bar.up{background:var(--up);opacity:.9}.ph-bar.down{background:var(--down);opacity:.9}.ph-bar.flat{background:#9A917F;opacity:.7}
+.ph-bar.ph-lv{background:var(--cy);opacity:.95}
+.ph-col.ph-gap .ph-plot{justify-content:center}
+.ph-gapbox{position:relative;z-index:1;background:var(--panel);width:100%;height:84%;border:1px dashed var(--line2);border-radius:3px;display:flex;align-items:center;justify-content:center;
+  font-size:9px;letter-spacing:.12em;color:var(--mute);line-height:1.5;padding:4px}
+.ph-ipoln{position:absolute;left:0;right:0;border-top:1px dashed rgba(224,178,74,.45);pointer-events:none}
+.ph-ipoln span{position:absolute;right:2px;top:2px;font-size:9px;letter-spacing:.12em;color:var(--amber-d)}
+.ph-base{height:1px;background:var(--line2);width:100%}
+.ph-lab{margin-top:7px;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--lbl);white-space:nowrap}
+.ph-col.ph-live .ph-lab{color:var(--cy)}
+.ph-rk{margin-top:3px;font-size:10px;color:var(--mute);letter-spacing:.06em}
+.ph-chg{margin-top:4px;font-size:11px;font-weight:700;white-space:nowrap}
+.ph-chg.up{color:var(--up)}.ph-chg.down{color:var(--down)}.ph-chg.flat,.ph-chg.mut{color:var(--mute);font-weight:400}
+.ph-tb{width:100%;border-collapse:collapse;margin:10px 0 2px;font-size:12px}
+.ph-tb th{font-size:9.5px;letter-spacing:.13em;color:var(--lbl);font-weight:700;text-align:right;padding:6px 10px;border-bottom:1px solid var(--line)}
+.ph-tb th:first-child,.ph-tb td:first-child{text-align:left}
+.ph-tb td{text-align:right;padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+.ph-tb tr.ph-gap td{color:var(--mute);font-size:11px;letter-spacing:.06em;text-align:left;border-bottom-style:dashed}
+.ph-tb tr.ph-live td:first-child{color:var(--cy)}
+.ph-tb .up{color:var(--up)}.ph-tb .down{color:var(--down)}.ph-tb .mut{color:var(--mute)}
+.ph-note{padding:4px 14px 12px;font-size:11px;color:var(--mute);line-height:1.55}
+.ph-note b{color:var(--ink);font-weight:600}
+@media (max-width:640px){ .ph-col{min-width:76px}.ph-col.ph-gap{min-width:64px}.ph-plot{height:120px}.ph-px{font-size:13.5px}
+  .ph-tb{font-size:10.5px}.ph-tb th,.ph-tb td{padding:6px 4px}.ph-tb th:nth-child(2),.ph-tb td:nth-child(2){display:none}.ph-tb tr.ph-gap td{display:table-cell}.ph-tb th{font-size:8.5px;letter-spacing:.08em} }
+/*PHIST-CSS-END*/
 /*PTABS-CSS-START*/
 /* prospect page tabs: EVERYTHING (the full page, default) + section groups */
 .ptabs{display:flex;gap:4px;margin:2px 0 14px;border-bottom:1px solid var(--line2);overflow-x:auto;scrollbar-width:none}
@@ -2342,7 +2381,7 @@ function tapeTog(force){
 /*TAPETOG-JS-END*/
 /*JUMP-JS-START*/
 /* prospectus quick-jump buttons: one per section that exists on this page (filled after every redraw of #main) */
-var JUMPS=[['SEASON',/^CURRENT SEASON/],['GAME LOG',/^GAME LOG/],['STATS',/^(ADVANCED STATS|PRE-DRAFT STAT LINE)/],['SHOT PROFILE',/^SHOT PROFILE/],
+var JUMPS=[['SEASON',/^CURRENT SEASON/],['GAME LOG',/^GAME LOG/],['PRICE',/^PRICE HISTORY/],['STATS',/^(ADVANCED STATS|PRE-DRAFT STAT LINE)/],['SHOT PROFILE',/^SHOT PROFILE/],
   ['COMPS',/^COMPARABLE IPO/],['CAREER',/^ROOKIE SEASON/],['BOARDS',/COVERAGE$/],['SCOUTING',/^SCOUTING REPORT/]];
 function jumpTarget(i){
   var hs=document.querySelectorAll('#main .card > h3');
@@ -2368,6 +2407,83 @@ function jumpPaint(){
   });
 })();
 /*JUMP-JS-END*/
+/*PHIST-JS-START*/
+/* PRICE HISTORY (Nov 23 2026). One card on a drafted player's prospectus: IPO -> every priced season -> LIVE.
+   Each step shows its price, class rank, and the move from the step before; the table adds the running return vs IPO.
+   Seasons that are not priced yet (older classes keep rookie year, year two and 2025-26 only) show as a dashed gap.
+   Live step only when he has games this season (rmode 'live'); repaints with the other live pieces via [data-ph]. */
+function phSteps(p){
+  const out=[{k:'ipo',l:'IPO',v:px(p),rk:p.crank}];
+  let prevY=null;
+  (p.seasons||[]).forEach(S=>{
+    const y=parseInt(String(S.label||'').slice(0,4),10);
+    if(prevY!=null && y>prevY+1){
+      const miss=[]; for(let z=prevY+1; z<y; z++) miss.push(String(z).slice(2)+'-'+String(z+1).slice(2));
+      out.push({k:'gap',miss:miss});
+    }
+    const out_=/NO LONGER IN THE NBA/i.test(S.badge||'');
+    out.push({k:'season',l:S.label,v:spx(p,S),rk:S.crank,gone:out_});
+    if(!isNaN(y)) prevY=y;
+  });
+  if(rmode(p)==='live'){
+    const v=lvpx(p), e=LV.entry(LV.key(p),lvY());
+    if(v!=null){
+      const sy=parseInt(String(LV.season()).slice(0,4),10);
+      if(prevY!=null && sy>prevY+1){ const miss=[]; for(let z=prevY+1; z<sy; z++) miss.push(String(z).slice(2)+'-'+String(z+1).slice(2)); out.push({k:'gap',miss:miss}); }
+      out.push({k:'live',l:'LIVE '+LV.season(),v:v,rk:e&&e.rank!=null?e.rank:null});
+    }
+  }
+  /* move vs the previous priced step, and vs IPO */
+  let prev=null; const ipo=out[0].v;
+  out.forEach(s=>{
+    if(s.k==='gap'){ s.span=true; return; }
+    if(prev){ s.chg = prev.v>0 ? +((s.v/prev.v-1)*100).toFixed(1) : null; s.overGap = !!prev.afterGap; }
+    s.tot = (s.k!=='ipo' && ipo>0) ? +((s.v/ipo-1)*100).toFixed(1) : null;
+    prev=s;
+  });
+  for(let i=1;i<out.length;i++) if(out[i].k!=='gap' && out[i-1].k==='gap') out[i].gapBefore=out[i-1].miss.length;
+  return out;
+}
+function phChg(n,flatTxt){
+  if(n==null) return '<span class="mut">&mdash;</span>';
+  if(Math.abs(n)<0.05) return '<span class="flat">'+(flatTxt||'&plusmn;0.0%')+'</span>';
+  return '<span class="'+cls(n)+'">'+arw(n)+' '+pct(n)+'</span>';
+}
+function phInner(p){
+  const st=phSteps(p), pr=st.filter(s=>s.k!=='gap');
+  const hd=`<h3>PRICE HISTORY <em>SEASON BY SEASON &middot; CLASS RANK &rarr; PRICE</em></h3>`;
+  if(pr.length<2) return hd+`<div class="ph-note">No priced season yet. The price history starts after his first priced season or first live games.</div>`;
+  const mx=Math.max(1000, ...pr.map(s=>s.v||0)), ipo=pr[0].v;
+  const h=v=>Math.max(1.5,(v||0)/mx*84);
+  const ln=(last)=> ipo>0 ? `<div class="ph-ipoln" style="bottom:${h(ipo)}%"></div>` : '';
+  const col=(s,i,a)=>{ const last=i===a.length-1;
+    if(s.k==='gap') return `<div class="ph-col ph-gap"><div class="ph-plot">${ln(last)}<div class="ph-gapbox">NOT PRICED<br>YET<br>${s.miss.length>3?`&rsquo;${s.miss[0]}<br>&darr;<br>&rsquo;${s.miss[s.miss.length-1]}<br>${s.miss.length} SEASONS`:s.miss.map(m=>"&rsquo;"+m).join('<br>')}</div></div><div class="ph-base" style="opacity:0"></div><div class="ph-lab">&nbsp;</div></div>`;
+    const dir = s.k==='ipo' ? '' : s.k==='live' ? 'ph-lv' : (s.chg==null ? 'flat' : Math.abs(s.chg)<0.05 ? 'flat' : s.chg>0 ? 'up' : 'down');
+    const chg = s.k==='ipo' ? '<div class="ph-chg mut">THE OFFER</div>'
+              : `<div class="ph-chg ${s.chg==null?'mut':Math.abs(s.chg)<0.05?'flat':cls(s.chg)}">${s.chg==null?'&mdash;':Math.abs(s.chg)<0.05?'&plusmn;0.0%':arw(s.chg)+' '+pct(s.chg)}</div>`;
+    return `<div class="ph-col ph-${s.k}"><div class="ph-plot">${ln(last)}<div class="ph-px">$${f2(s.v||0)}</div><div class="ph-bar ${dir}" style="height:${h(s.v)}%"></div></div>`+
+      `<div class="ph-base"></div><div class="ph-lab">${s.l}</div><div class="ph-rk">${s.gone?'OUT OF NBA':s.rk!=null?'CLASS #'+s.rk:'&nbsp;'}</div>${chg}</div>`;
+  };
+  const rows=st.map(s=>{
+    if(s.k==='gap') return `<tr class="ph-gap"><td colspan="5">${s.miss.length>3?`&rsquo;${s.miss[0]} &ndash; &rsquo;${s.miss[s.miss.length-1]} (${s.miss.length} seasons)`:s.miss.map(m=>"&rsquo;"+m).join(' &middot; ')} &middot; NOT PRICED YET</td></tr>`;
+    const chgTxt = s.k==='ipo' ? '<span class="mut">&mdash;</span>' : phChg(s.chg)+(s.gapBefore?`<div class="ph-span">over ${s.gapBefore+1} seasons</div>`:'');
+    return `<tr class="ph-${s.k}"><td>${s.l}</td><td>${s.gone?'<span class="mut">OUT OF NBA</span>':s.rk!=null?'#'+s.rk:'&mdash;'}</td><td>$${f2(s.v||0)}</td><td>${chgTxt}</td><td>${s.k==='ipo'?'<span class="mut">&mdash;</span>':phChg(s.tot)}</td></tr>`;
+  }).join('');
+  const hasGap=st.some(s=>s.k==='gap');
+  const top1=pr.every(s=>s.rk===1);
+  const note=(ipo<=0?'He was unlisted at the IPO (below the replacement line), so there is no percentage from the offer. ':'')+
+    (top1?'<b>Flat at $1,000:</b> he has been #1 in his class at every step, and #1 is the top of the scale. ':'')+
+    'Prices follow where he ranks inside his own draft class at each step (#1 = $1,000), so this chart tracks his standing in the class, not raw stats.'+
+    (hasGap?' Dashed seasons have not been priced on the site yet.':'');
+  return hd+`<div class="ph-wrap">${ipo>0?`<div class="ph-leg"><i></i>IPO PRICE $${f2(ipo)} &middot; BARS = PRICE AFTER EACH STEP</div>`:''}<div class="ph-scroll"><div class="ph-chart">${st.map(col).join('')}</div></div>`+
+    `<table class="ph-tb"><thead><tr><th>STEP</th><th>CLASS RANK</th><th>PRICE</th><th>MOVE</th><th>VS IPO</th></tr></thead><tbody>${rows}</tbody></table></div>`+
+    `<div class="ph-note">${note}</div>`;
+}
+function phCard(p){
+  if(!p || p.watch || (typeof CM==='function' && CM().predraft)) return '';
+  return `<div class="card" data-ph="${p.tkr}">${phInner(p)}</div>`;
+}
+/*PHIST-JS-END*/
 /*PTABS-JS-START*/
 /* prospect page tabs. EVERYTHING = the whole page as before (default). Other tabs show a group of the same cards.
    Cards are grouped by their heading text on every pass (cards that fill in late, like NBA ADVANCED, are regrouped when their heading arrives);
@@ -2647,6 +2763,7 @@ function liveRetRefresh(){
   document.querySelectorAll('[data-lvret]').forEach(el=>{ const p=byT[el.getAttribute('data-lvret')]; if(p) el.innerHTML=retBlock(p); });
   document.querySelectorAll('[data-lvret26]').forEach(el=>{ const p=byT[el.getAttribute('data-lvret26')]; if(p) el.innerHTML=ret26(p); });
   document.querySelectorAll('[data-lvvrd]').forEach(el=>{ const p=byT[el.getAttribute('data-lvvrd')]; if(p) el.outerHTML=vrdBox(p); });
+  document.querySelectorAll('[data-ph]').forEach(el=>{ const p=byT[el.getAttribute('data-ph')]; if(p && typeof phInner==='function') el.innerHTML=phInner(p); });
 }
 /*LIVE-RET-END*/
 
@@ -3573,6 +3690,7 @@ ${typeof nadvCard==='function'?nadvCard(p):''}
   <div class="card" data-cs="${p.tkr}">${csInner(p)}</div>
 ${typeof nadvCard==='function'?nadvCard(p):''}
   ${typeof glCard==='function'?glCard(p):''}
+${typeof phCard==='function'?phCard(p):''}
   <div class="card" data-lvc="${p.tkr}"><h3>CATEGORY YIELD <em>PERCENTILE VS CLASS</em></h3>
       <div class="cats">${cats.map(c=>`<div class="crow">
         <span class="clab">${CATN[c]}</span>
