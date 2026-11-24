@@ -627,10 +627,11 @@ tbody tr:last-child td{border-bottom:0}
 .gllab.alt{top:14px}
 .gllab.r{padding:0 4px 0 0;border-left:0;border-right:1px solid var(--line2)}
 .glwrap{max-height:460px;overflow:auto;border-top:1px solid var(--line);margin-top:8px}
-.gltbl{min-width:760px}
+.gltbl{min-width:760px;border-collapse:separate;border-spacing:0}
 .gltbl th,.gltbl td{text-align:right;padding:5px 7px;white-space:nowrap}
 .gltbl th:nth-child(-n+3),.gltbl td:nth-child(-n+3){text-align:left}
-.gltbl thead th{position:sticky;top:0;background:var(--panel2);z-index:1}
+.gltbl thead{position:sticky;top:0;z-index:2}
+.gltbl thead th{background:var(--panel2)}
 .gltbl tbody tr:hover td{background:var(--amber-g)}
 .gltbl td.glopp{color:var(--ink);max-width:190px;overflow:hidden;text-overflow:ellipsis}
 .gltbl td.up{color:var(--up);font-weight:700} .gltbl td.down{color:var(--down);font-weight:700}
@@ -638,7 +639,9 @@ tbody tr:last-child td{border-bottom:0}
 .gltbl td.glpts.big{font-weight:800}
 .gltbl td.glpts.hi{color:var(--gold);font-weight:800}
 .gltbl tr.glsec td{text-align:left;font-size:10px;letter-spacing:.14em;color:var(--amber);background:var(--amber-g);border-top:1px solid var(--amber-d);padding:5px 7px}
-.gltbl tfoot td{position:sticky;bottom:0;background:var(--panel2);color:var(--lbl);font-weight:600;border-top:1px solid var(--line2)}
+.gltbl thead tr.glavgr td{background:var(--panel2);color:var(--lbl);font-weight:600;border-top:1px solid var(--line);border-bottom:1px solid var(--line2)}
+.glord{margin-top:8px;font-size:9.5px;letter-spacing:.16em;color:var(--lbl);font-weight:700;text-align:right;padding:0 2px}
+.glord+.glwrap{margin-top:4px}
 .glfoot{font-size:10.5px;color:var(--mute);padding:9px 12px;line-height:1.6;border-top:1px solid var(--line)}
 .glfoot a{color:var(--lbl)} .glfoot b{color:var(--ink)}
 .glnone{font-size:12px;color:var(--mute);line-height:1.6}
@@ -5963,6 +5966,20 @@ function glTabs(tkr,D,si){
       return `<button type="button" class="gltab${i===si?' on':''}" onclick="glPick('${tkr}',${i})">${sw}${s.y} &middot; ${glEsc(kind==='nba'?s.tm:s.sc)} <span>${n} G</span></button>`;}).join('')}</div>`; };
   return grp('nba','NBA')+grp('col','PRO',1)+grp('col','COLLEGE',0);
 }
+/*GLNEWEST Nov 24 2026: the table lists the newest game first. Postseason sections (play-in, playoffs,
+  conference/NCAA tournaments) go above the regular season, newest section first; preseason/Super Cup
+  sections stay at the bottom. The points chart above the table stays oldest -> newest (left to right). */
+function glNewest(rows){
+  const segs=[{h:null,r:[]}];
+  rows.forEach(r=>{ if(r[0]==='#') segs.push({h:r[1],r:[]}); else segs[segs.length-1].r.push(r); });
+  const main=segs[0], rest=segs.slice(1).filter(s=>s.r.length);
+  const late=rest.filter(s=>!/PRESEASON/i.test(s.h)).reverse(), early=rest.filter(s=>/PRESEASON/i.test(s.h));
+  const out=[], add=s=>{ out.push(['#',s.h]); out.push(...s.r.slice().reverse()); };
+  late.forEach(add);
+  if(main.r.length){ if(late.length) out.push(['#','REGULAR SEASON']); out.push(...main.r.slice().reverse()); }
+  early.forEach(add);
+  return out;
+}
 function glInner(tkr,si){
   const ix=glIdx(tkr)||[0,0,0,''], D=GLD[CURCLASS+'/'+tkr], S=D.tabs[si], nba=S.kind==='nba';
   // regular season = rows before the first divider (NBA); college: every game
@@ -5976,7 +5993,7 @@ function glInner(tkr,si){
   const multiTeam=nba && new Set(all.map(r=>r[19])).size>1;
   const d=iso=>iso.slice(5,7).replace(/^0/,'')+'/'+iso.slice(8,10).replace(/^0/,'');
   const mn=v=>v==null?'&mdash;':(typeof v==='number'?v:String(v).replace(/^(\d+):(\d\d)$/,'$1:$2'));
-  const body=S.rows.map(r=>{
+  const body=glNewest(S.rows).map(r=>{
     if(r[0]==='#') return `<tr class="glsec"><td colspan="${nba?(multiTeam?17:16):15}">${glEsc(r[1])}</td></tr>`;
     const top=r===hi;
     return `<tr><td>${d(r[0])}</td><td class="glopp" title="${glEsc(r[1])}">${glEsc(r[1])}</td><td class="${r[2]==='W'?'up':'down'}">${glEsc(r[2])}</td>
@@ -6009,13 +6026,14 @@ function glInner(tkr,si){
     <div><div class="glk">SEASON HIGH</div><div class="glv">${hi?`${hi[17]} PTS <span class="glsub">${glEsc(hi[1])}, ${d(hi[0])}</span>`:'&mdash;'}</div></div>
   </div>
   ${glChart(S.rows,t.pts/n)}
+  <div class="glord">GAMES &middot; NEWEST FIRST &#9662;</div>
   <div class="glwrap"><table class="gltbl">
     <thead><tr><th>DATE</th><th>OPPONENT</th><th></th>${multiTeam?'<th>TM</th>':''}<th>MIN</th><th title="Game Score (Hollinger)">GS</th><th>FG</th><th>3PT</th><th>FT</th>
-      <th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>TO</th><th>PF</th><th>PTS</th>${nba?'<th>+/-</th>':''}</tr></thead>
-    <tbody>${body}</tbody>
-    <tfoot><tr><td colspan="${multiTeam?4:3}">${nba?'REG. SEASON ':''}PER GAME &middot; ${t.gp} G</td><td>${f1(t.min)}</td><td>${f1(t.gs)}</td>
+      <th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>TO</th><th>PF</th><th>PTS</th>${nba?'<th>+/-</th>':''}</tr>
+    <tr class="glavgr"><td colspan="${multiTeam?4:3}">${nba?'REG. SEASON ':''}PER GAME &middot; ${t.gp} G</td><td>${f1(t.min)}</td><td>${f1(t.gs)}</td>
       <td>${f1(t.fgm)}-${f1(t.fga)}</td><td>${f1(t.tpm)}-${f1(t.tpa)}</td><td>${f1(t.ftm)}-${f1(t.fta)}</td>
-      <td>${f1(t.reb)}</td><td>${f1(t.ast)}</td><td>${f1(t.stl)}</td><td>${f1(t.blk)}</td><td>${f1(t.to)}</td><td>${f1(t.pf)}</td><td>${f1(t.pts)}</td>${nba?`<td>${t.pm>=0?'+':''}${f1(t.pm)}</td>`:''}</tr></tfoot>
+      <td>${f1(t.reb)}</td><td>${f1(t.ast)}</td><td>${f1(t.stl)}</td><td>${f1(t.blk)}</td><td>${f1(t.to)}</td><td>${f1(t.pf)}</td><td>${f1(t.pts)}</td>${nba?`<td>${t.pm>=0?'+':''}${f1(t.pm)}</td>`:''}</tr></thead>
+    <tbody>${body}</tbody>
   </table></div>
   <div class="glfoot">${src}
     <b>GS</b> = Game Score (Hollinger), a one-number summary of a single box score. Season high in gold; 30-point games bold.${!ix[1]&&nba?' No college log on file (pre-draft basketball outside the NCAA).':''}</div>`;
@@ -8762,6 +8780,12 @@ setTimeout(function(){ try{ mhDot(); setInterval(()=>{ if(!document.hidden && cu
    Actions: 'BELL' | 'OPEN' | 'UNI' | 'FIND' | 'CMP' | 'TOUR' | 'CLASS:2027' (any class year).
    The top-bar button shows a dot until a visitor opens the page after the newest entry (per-browser only). */
 const WN_LOG=[
+ {d:'2026-11-24',tag:'GAME LOGS',t:'Game logs now show the newest game first',
+  b:'The Game Log table on every prospect page now lists the most recent game at the top, so last night&rsquo;s box score is the first row you see. The per-game average row sits right under the column headers and stays in view while you scroll. Postseason games (play-in, playoffs, conference and NCAA tournaments) sit above the regular season. The points-by-game chart above the table still runs oldest to newest, left to right.'},
+ {d:'2026-11-23',tag:'PROSPECT PAGES',t:'Price history, season by season, on every prospect page',
+  b:'Every drafted player&rsquo;s prospect page now has a PRICE HISTORY card, after the Game Log on the Everything tab, on the Overview tab, and under PRICE in Jump To. Bars show his price at the IPO, after each season and live this season, with his class rank and the move from the step before, and a table adds games, points, rebounds, assists and any All-NBA team for each season. Seasons for the 2013 to 2022 classes that had no price before are now priced by class rank from Basketball-Reference stats, the same way as the rest of the site.'},
+ {d:'2026-11-23',tag:'PROSPECT PAGES',t:'Last season&rsquo;s closing price is labeled as such',
+  b:'At the top of each prospect page, the last step of the price line now reads LAST SEASON CLOSE with the season, such as LAST SEASON CLOSE &middot; 2025-26, instead of NOW, so it is not confused with the live 2026-27 price. The rank line under it reads the same way, for example IPO #14 &rarr; 2025-26 CLOSE #1.'},
  {d:'2026-11-18',tag:'THE BOARD',t:'Price Return card now ranks each class by live price',
   b:'The PRICE RETURN card on the class board now opens RANKED BY LIVE PRICE: the player with the highest live price in the class is #1, and each row shows his IPO price, his live price and the same return bar. Choose SORTED BY RETURN in the card heading for the original order. Every class opens on the live-price ranking.'},
  {d:'2026-11-18',tag:'PROSPECT PAGES',t:'Live percentiles against every draftee',
